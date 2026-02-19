@@ -239,7 +239,11 @@ header{
   <header class="anim">
     <div class="logo-block">
       <div class="logo-jp">日本語道場</div>
-      <div style="font-family:Outfit;font-size:18px;font-weight:700;color:var(--white);margin-top:6px">Yor's Road to Reading Japanese Manga</div><div class="logo-sub" style="margin-top:4px">Personal Learning System · Stage 1–3</div>
+      <div style="font-family:Outfit;font-size:18px;font-weight:700;color:var(--white);margin-top:6px">Yor's Road to Reading Japanese Manga</div>
+      <div class="logo-sub" style="margin-top:4px;display:flex;align-items:center;gap:8px">
+        Personal Learning System · Stage 1–3
+        <span style="font-family:'DM Mono';font-size:9px;font-weight:700;background:rgba(232,84,122,.15);border:1px solid rgba(232,84,122,.3);color:var(--sakura);border-radius:6px;padding:1px 7px;letter-spacing:1px">v1.4.1</span>
+      </div>
       <div class="logo-desc">เส้นทางเรียนภาษาญี่ปุ่นส่วนตัวของ Yor — จาก Hiragana จนถึงอ่านมังงะได้</div>
     </div>
     <div class="header-right">
@@ -570,7 +574,7 @@ function renderToday(){
   const streak=getStreak();
   const due=s3.due;
   const td=today();
-  const didReviewToday=s3.stats.lastDate===td;
+  const didReviewToday = s3.stats.lastDate===td || localStorage.getItem('s1_lastStudied')===td;
 
   let icon,title,desc,actions=[];
   const tasks=[];
@@ -654,8 +658,14 @@ function renderHeader(){
   const streak=getStreak();const s3=getS3();const td=today();
   document.getElementById('hdr-streak').textContent=streak;
   document.getElementById('hdr-fire').textContent=streak>=7?'🔥':streak>=3?'✨':'💧';
-  const last=s3.stats.lastDate;
-  document.getElementById('hdr-last').textContent=last===td?'✅ เรียนแล้ววันนี้':last?`เรียนล่าสุด: ${last}`:'ยังไม่ได้เรียนวันนี้';
+  const srsLast=s3.stats.lastDate;
+  const s1Last=localStorage.getItem('s1_lastStudied')||'';
+  const studiedToday = srsLast===td || s1Last===td;
+  const lastAny = [srsLast,s1Last].filter(Boolean).sort().reverse()[0]||'';
+  document.getElementById('hdr-last').textContent=
+    studiedToday ? '✅ เรียนแล้ววันนี้' :
+    lastAny      ? `เรียนล่าสุด: ${lastAny}` :
+                   'ยังไม่ได้เรียนวันนี้';
 }
 
 // ═══════════════════════════════════════

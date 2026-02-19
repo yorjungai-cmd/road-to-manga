@@ -3,7 +3,7 @@
 > Personal Japanese learning system — Stage 1 to 3, with Google login and cloud sync.
 
 **Live:** https://road-to-manga.vercel.app  
-**Version:** v1.4
+**Version:** v1.4.1
 
 ---
 
@@ -96,28 +96,30 @@ Stage 3 → SRS Vocabulary 250+ คำ
 
 ## 📝 Changelog
 
+### v1.4.1 — 2026-02-19
+**Commit:** `v1.4.1 — Fix heatmap tooltip clipping on top rows`
+- 🐛 แก้ Heatmap tooltip หายเมื่อ hover แถวบนสุด (overflow clipping)
+- 🐛 แก้ cell แถวที่ 2 โดนตัดด้านบน
+- ✨ Tooltip แถว Sun/Mon พลิกโผล่ลงข้างล่างแทนขึ้นข้างบน
+
 ### v1.4 — 2026-02-19
-
-#### Commits สำหรับ push ครั้งนี้ (ทำตามลำดับ):
-
+**Commits:**
 ```
 v1.4 — Add Student Dashboard page (dashboard.html)
 v1.4 — Add Dashboard navigation to all pages
 v1.4 — Fix Thai encoding (mojibake) across all HTML files
 v1.4 — Update README to v1.4
 ```
-
-#### สิ่งที่เปลี่ยน:
 - ✨ เพิ่มหน้า `dashboard.html` — Student Dashboard ใหม่ทั้งหน้า
   - Activity Heatmap 52 สัปดาห์ (GitHub-style)
   - Grammar Weak Sections — 5 progress bars พร้อม tip เฉพาะจุด
   - Lapse Tracker — Top 10 คำที่จำยากที่สุด พร้อม SRS state
   - Overview stats: Overall %, Vocab learned, Due today, Total lapses, Streak
-- 🔗 เพิ่มปุ่ม **📊 Dashboard** ใน Portal header
-- 🔗 เพิ่ม Dashboard card ใน Quick Actions section ของ Portal
+- 🔗 เพิ่มปุ่ม 📊 Dashboard ใน Portal header
+- 🔗 เพิ่ม Dashboard card ใน Quick Actions ของ Portal
 - 🔗 เพิ่ม Dashboard + Portal links ใน Sidebar ทุกหน้า (Stage 1–3)
-- ▶️ Smart **Continue Learning** button ใน Dashboard — จำว่าเรียนค้างอยู่หน้าไหน
-- 🐛 แก้ bug Thai/Japanese mojibake encoding ใน **ทุกไฟล์** — ข้อความภาษาไทยแสดงผลถูกต้องแล้ว
+- ▶️ Smart **Continue Learning** button — จำว่าเรียนค้างอยู่หน้าไหน
+- 🐛 แก้ Thai/Japanese mojibake encoding ในทุกไฟล์
 
 ### v1.3 — 2026-02-19
 - ♻️ แยก Firebase logic ออกเป็น `firebase.js` ไฟล์เดี่ยว

@@ -11,9 +11,11 @@
 | File | Description |
 |------|-------------|
 | `index.html` | **Main Portal** — Dashboard, overall progress, daily mission, roadmap |
-| `japanese-learning.html` | **Stage 1** — Hiragana & Katakana (Daily Learning system), Kanji N5, Grammar N5 basics |
-| `grammar-stage2.html` | **Stage 2** — Grammar N5→N4, Particles, Conditionals, Verb Conjugation, Sentence Endings |
-| `vocab-stage3.html` | **Stage 3** — SRS Vocabulary system, 250+ cards, Quiz modes, Matching game, Typing practice |
+| `japanese-learning.html` | **Stage 1** — Hiragana & Katakana (Daily Learning), Kanji N5, Grammar N5 basics |
+| `grammar-stage2.html` | **Stage 2** — Grammar N5→N4, Particles, Conditionals, Verb Conjugation |
+| `vocab-stage3.html` | **Stage 3** — SRS Vocabulary 250+ cards, Quiz modes, Matching game, Typing |
+| `firebase.js` | **Firebase module** — Google Auth + Firestore sync (shared across all pages) |
+| `README.md` | Documentation |
 
 ---
 
@@ -21,30 +23,28 @@
 
 ### 📅 Daily Learning System
 - เรียนทีละ **5 ตัวอักษรต่อวัน** สำหรับ Hiragana, Katakana, Kanji
-- 3 rounds ต่อวัน: Study → Quiz → Mastery typing
-- ต้องผ่าน Mastery ≥ 80% ถึง unlock วันถัดไปได้
+- 3 rounds: Study → Quiz → Mastery typing (ต้องผ่าน ≥ 80% ถึง unlock วันถัดไป)
 - Memory tips ช่วยจำแต่ละตัวอักษร
+- แผนที่ตัวอักษรแสดง progress ทั้งหมด
 
 ### 🔁 SRS (Spaced Repetition System)
-- ระบบ Leitner algorithm ทบทวนตามความยาก
-- 4 card states: New → Learning → Young → Mature
+- Leitner algorithm — 4 states: New → Learning → Young → Mature
 - Due date tracking อัตโนมัติ
+- Activity heatmap 48 สัปดาห์
 
 ### ☁️ Google Login + Cloud Sync
 - Login ด้วย Google 1 คลิก
 - Progress sync ข้ามเครื่อง ข้าม Browser
 - Fallback เป็น localStorage ถ้าไม่ได้ login
-- Auto-sync ทุก 30 วินาที
+- Auto-sync ทุก 30 วินาที + sync ตอนปิดหน้าต่าง
 
 ### 🎯 Quiz & Games
-- Multiple choice, Reverse quiz, Speed round
-- Matching game (จับคู่ JP ↔ Thai)
-- Typing practice (พิมพ์ romaji)
+- Multiple choice, Reverse quiz, Speed round (60 วินาที)
+- Matching game (JP ↔ Thai), Typing practice
 
 ### 📊 Progress Tracking
-- Overall progress dashboard
-- Streak tracking 🔥
-- Activity heatmap 48 สัปดาห์
+- Overall progress dashboard + Streak 🔥
+- Stage unlock system (Stage 2 ล็อคจน Stage 1 ≥30%)
 - SRS distribution chart
 
 ---
@@ -56,10 +56,10 @@ Stage 1 → Hiragana 46 ตัว  (Daily Learning tab)
        → Katakana 46 ตัว  (Daily Learning tab)
        → Kanji N5 80 ตัว  (Daily Learning tab)
        ↓
-Stage 2 → Grammar N5→N4  (5 chapters, Quiz แต่ละบท)
+Stage 2 → Grammar N5→N4  (5 chapters)
        ↓
 Stage 3 → SRS Vocabulary 250+ คำ
-       → + Anki (Kaishi 1.5k / Core 2000)  สำหรับ 1,500–2,000 คำ
+       → + Anki (Kaishi 1.5k / Core 2000) สำหรับ 1,500–2,000 คำ
        ↓
        🎌 อ่านมังงะได้!
 ```
@@ -82,7 +82,42 @@ Stage 3 → SRS Vocabulary 250+ คำ
 
 เปิด `index.html` ในเว็บ Browser ได้เลย — ไม่ต้องการ server
 
-ไฟล์ทั้งหมดต้องอยู่ใน **folder เดียวกัน**
+> ⚠️ ไฟล์ทั้งหมดต้องอยู่ใน **folder เดียวกัน** รวมถึง `firebase.js`
+
+---
+
+## 📝 Changelog
+
+### v1.3 — 2026-02-19
+- ♻️ แยก Firebase logic ออกเป็น `firebase.js` ไฟล์เดี่ยว (ไม่ต้องแก้ 4 ไฟล์แล้ว)
+- ✨ เพิ่ม Skeleton loading state ระหว่าง Firebase pull ข้อมูล
+- 🧹 HTML แต่ละไฟล์เล็กลงเฉลี่ย 9KB
+- 📝 เพิ่ม `data-fb-stat` attribute บน Streak และ Overall %
+
+### v1.2 — 2026-02-19
+- ☁️ เพิ่มระบบ Google Login ด้วย Firebase Authentication
+- 🔄 Auto-sync progress ขึ้น Firestore ทุก 30 วินาที
+- 🔒 ตั้ง Firebase Security Rules (เฉพาะเจ้าของข้อมูล)
+- 🌐 ตั้ง Authorized Domains (vercel.app + github.io)
+- 💾 Fallback เป็น localStorage ถ้าไม่ได้ login
+- 🟢 Sync status dot ในทุก credit bar
+
+### v1.1 — 2026-02-19
+- 🏗️ สร้าง Portal หลัก (`index.html`) รวม 3 Stage ไว้ในที่เดียว
+- 📅 เพิ่ม Daily Learning system (5 ตัว/วัน) สำหรับ Hiragana, Katakana, Kanji
+- 🎮 3 rounds ต่อวัน: Study → Quiz → Mastery typing
+- 🗺️ แผนที่ตัวอักษรทั้งหมดแสดง progress แบบ visual
+- 🔗 Credit bar + ← Portal button ในทุกหน้า
+- 📊 Cross-stage progress tracking
+- 🔓 Stage unlock system
+
+### v1.0 — 2026-02-19
+- 🎉 Initial release — อัปขึ้น GitHub + Vercel ครั้งแรก
+- 📖 Stage 1: Hiragana 46, Katakana 46, Kanji N5 80 ตัว, Flashcard, Quiz
+- 📝 Stage 2: Grammar N5→N4 (5 บท), Particles, Conditionals, Verb conjugation
+- 🔁 Stage 3: SRS Vocabulary 250+ คำ, Matching game, Typing, Speed round
+- 💾 localStorage สำหรับเก็บ progress
+- 🎨 Dark theme สไตล์ญี่ปุ่น, Sakura pink accent
 
 ---
 

@@ -108,6 +108,10 @@ header{
   white-space:nowrap;pointer-events:none;z-index:100;
 }
 .hm-cell:hover .hm-tooltip{display:block}
+/* Flip tooltip downward for top 2 rows */
+.hm-cell.row-top .hm-tooltip{
+  bottom:auto;top:calc(100% + 6px);
+}
 
 /* GRAMMAR BARS */
 .grammar-sections{display:flex;flex-direction:column;gap:16px}
@@ -230,7 +234,7 @@ footer{text-align:center;padding:32px 0 8px;border-top:1px solid var(--border);m
       <div class="card-desc">แต่ละช่องคือ 1 วัน · ช่องสีชมพูคือวันที่ทำ SRS Review</div>
       <div style="display:flex;gap:0">
         <div class="hm-day-labels" id="day-labels"></div>
-        <div style="flex:1;overflow:hidden">
+        <div style="flex:1;overflow:visible;padding-top:30px;margin-top:-30px">
           <div class="hm-labels-months" id="month-labels"></div>
           <div class="heatmap-grid" id="heatmap-grid"></div>
         </div>
@@ -614,7 +618,8 @@ function renderHeatmap(){
       if(isStudied)studiedCount++;
 
       const cell=document.createElement('div');
-      cell.className='hm-cell'+(isStudied?(isRecent?' studied-recent':' studied'):'');
+      const rowTop = d <= 1 ? ' row-top' : '';
+      cell.className='hm-cell'+rowTop+(isStudied?(isRecent?' studied-recent':' studied'):'');
       if(isToday){cell.style.outline='2px solid var(--gold)';cell.style.outlineOffset='1px';}
 
       // Tooltip

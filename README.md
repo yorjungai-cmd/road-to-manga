@@ -2,7 +2,8 @@
 
 > Personal Japanese learning system — Stage 1 to 3, with Google login and cloud sync.
 
-**Live:** https://road-to-manga.vercel.app
+**Live:** https://road-to-manga.vercel.app  
+**Version:** v1.4
 
 ---
 
@@ -14,6 +15,7 @@
 | `japanese-learning.html` | **Stage 1** — Hiragana & Katakana (Daily Learning), Kanji N5, Grammar N5 basics |
 | `grammar-stage2.html` | **Stage 2** — Grammar N5→N4, Particles, Conditionals, Verb Conjugation |
 | `vocab-stage3.html` | **Stage 3** — SRS Vocabulary 250+ cards, Quiz modes, Matching game, Typing |
+| `dashboard.html` | **Student Dashboard** — Activity heatmap, Grammar weak spots, Lapse tracker |
 | `firebase.js` | **Firebase module** — Google Auth + Firestore sync (shared across all pages) |
 | `README.md` | Documentation |
 
@@ -30,7 +32,7 @@
 ### 🔁 SRS (Spaced Repetition System)
 - Leitner algorithm — 4 states: New → Learning → Young → Mature
 - Due date tracking อัตโนมัติ
-- Activity heatmap 48 สัปดาห์
+- Activity heatmap 52 สัปดาห์
 
 ### ☁️ Google Login + Cloud Sync
 - Login ด้วย Google 1 คลิก
@@ -42,10 +44,16 @@
 - Multiple choice, Reverse quiz, Speed round (60 วินาที)
 - Matching game (JP ↔ Thai), Typing practice
 
-### 📊 Progress Tracking
-- Overall progress dashboard + Streak 🔥
-- Stage unlock system (Stage 2 ล็อคจน Stage 1 ≥30%)
-- SRS distribution chart
+### 📊 Student Dashboard *(new in v1.4)*
+- **Activity Heatmap** — กราฟ 52 สัปดาห์ GitHub-style แสดงวันที่เรียน
+- **Grammar Weak Sections** — Progress bar 5 หัวข้อ พร้อม tip เฉพาะจุด
+- **Lapse Tracker** — Top 10 คำที่จำยากที่สุด เรียงตามจำนวน lapse
+- **Continue Learning** — ปุ่มกลับหน้าเรียนล่าสุดทันที
+
+### 🧭 Navigation *(new in v1.4)*
+- ปุ่ม **📊 Dashboard** ใน Portal header
+- Dashboard quick action card ใน Portal
+- ทุกหน้าเรียนมีลิงก์ Dashboard + Portal ใน Sidebar
 
 ---
 
@@ -88,8 +96,31 @@ Stage 3 → SRS Vocabulary 250+ คำ
 
 ## 📝 Changelog
 
+### v1.4 — 2026-02-19
+
+#### Commits สำหรับ push ครั้งนี้ (ทำตามลำดับ):
+
+```
+v1.4 — Add Student Dashboard page (dashboard.html)
+v1.4 — Add Dashboard navigation to all pages
+v1.4 — Fix Thai encoding (mojibake) across all HTML files
+v1.4 — Update README to v1.4
+```
+
+#### สิ่งที่เปลี่ยน:
+- ✨ เพิ่มหน้า `dashboard.html` — Student Dashboard ใหม่ทั้งหน้า
+  - Activity Heatmap 52 สัปดาห์ (GitHub-style)
+  - Grammar Weak Sections — 5 progress bars พร้อม tip เฉพาะจุด
+  - Lapse Tracker — Top 10 คำที่จำยากที่สุด พร้อม SRS state
+  - Overview stats: Overall %, Vocab learned, Due today, Total lapses, Streak
+- 🔗 เพิ่มปุ่ม **📊 Dashboard** ใน Portal header
+- 🔗 เพิ่ม Dashboard card ใน Quick Actions section ของ Portal
+- 🔗 เพิ่ม Dashboard + Portal links ใน Sidebar ทุกหน้า (Stage 1–3)
+- ▶️ Smart **Continue Learning** button ใน Dashboard — จำว่าเรียนค้างอยู่หน้าไหน
+- 🐛 แก้ bug Thai/Japanese mojibake encoding ใน **ทุกไฟล์** — ข้อความภาษาไทยแสดงผลถูกต้องแล้ว
+
 ### v1.3 — 2026-02-19
-- ♻️ แยก Firebase logic ออกเป็น `firebase.js` ไฟล์เดี่ยว (ไม่ต้องแก้ 4 ไฟล์แล้ว)
+- ♻️ แยก Firebase logic ออกเป็น `firebase.js` ไฟล์เดี่ยว
 - ✨ เพิ่ม Skeleton loading state ระหว่าง Firebase pull ข้อมูล
 - 🧹 HTML แต่ละไฟล์เล็กลงเฉลี่ย 9KB
 - 📝 เพิ่ม `data-fb-stat` attribute บน Streak และ Overall %
@@ -104,18 +135,16 @@ Stage 3 → SRS Vocabulary 250+ คำ
 
 ### v1.1 — 2026-02-19
 - 🏗️ สร้าง Portal หลัก (`index.html`) รวม 3 Stage ไว้ในที่เดียว
-- 📅 เพิ่ม Daily Learning system (5 ตัว/วัน) สำหรับ Hiragana, Katakana, Kanji
+- 📅 เพิ่ม Daily Learning system (5 ตัว/วัน)
 - 🎮 3 rounds ต่อวัน: Study → Quiz → Mastery typing
 - 🗺️ แผนที่ตัวอักษรทั้งหมดแสดง progress แบบ visual
-- 🔗 Credit bar + ← Portal button ในทุกหน้า
-- 📊 Cross-stage progress tracking
-- 🔓 Stage unlock system
+- 📊 Cross-stage progress tracking + Stage unlock system
 
 ### v1.0 — 2026-02-19
 - 🎉 Initial release — อัปขึ้น GitHub + Vercel ครั้งแรก
-- 📖 Stage 1: Hiragana 46, Katakana 46, Kanji N5 80 ตัว, Flashcard, Quiz
-- 📝 Stage 2: Grammar N5→N4 (5 บท), Particles, Conditionals, Verb conjugation
-- 🔁 Stage 3: SRS Vocabulary 250+ คำ, Matching game, Typing, Speed round
+- 📖 Stage 1: Hiragana 46, Katakana 46, Kanji N5 80 ตัว
+- 📝 Stage 2: Grammar N5→N4 (5 บท)
+- 🔁 Stage 3: SRS Vocabulary 250+ คำ, Matching, Typing, Speed round
 - 💾 localStorage สำหรับเก็บ progress
 - 🎨 Dark theme สไตล์ญี่ปุ่น, Sakura pink accent
 

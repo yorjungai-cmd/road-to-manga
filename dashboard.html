@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Student Dashboard — Yor's Road to Manga</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#0f0f1a;--surface:#141420;--surface2:#1a1a28;
+  --border:#232338;--border2:#2e2e4a;
+  --sakura:#e8547a;--sakura2:#f07090;--sakura3:#ffa0b8;
+  --gold:#d4a83a;--gold2:#f0c84c;
+  --jade:#2db87e;--jade2:#4dd9a0;
+  --blue:#4a8fff;--purple:#9b7aff;--red:#e05c4a;--red2:#ff7060;
+  --text:#c8c8e8;--text2:#7a7a9a;--text3:#3a3a5a;
+  --white:#f0f0ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit','Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%,rgba(232,84,122,.07),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 100%,rgba(45,184,126,.05),transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,rgba(212,168,58,.03),transparent 60%);
+  pointer-events:none;z-index:0;
+  animation:bgShift 20s ease-in-out infinite alternate;
+}
+@keyframes bgShift{0%{opacity:1}100%{opacity:.6;transform:scale(1.05)}}
+.wrap{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 24px 80px}
+
+/* HEADER */
+header{
+  padding:40px 0 32px;border-bottom:1px solid var(--border);margin-bottom:40px;
+  display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;
+}
+.back-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'DM Mono';font-size:11px;color:var(--text3);
+  text-decoration:none;letter-spacing:1px;text-transform:uppercase;
+  border:1px solid var(--border2);padding:7px 14px;border-radius:8px;
+  transition:all .2s;margin-bottom:16px;
+}
+.back-btn:hover{color:var(--sakura);border-color:var(--sakura);background:rgba(232,84,122,.06)}
+.continue-btn{
+  background:linear-gradient(135deg,var(--sakura),var(--sakura2)) !important;
+  color:#fff !important;border-color:transparent !important;
+  font-weight:700;
+}
+.continue-btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(232,84,122,.4);color:#fff !important}
+.hd-title{font-family:'Shippori Mincho';font-size:36px;font-weight:800;color:var(--white);letter-spacing:2px;line-height:1}
+.hd-sub{font-size:11px;color:var(--text3);font-family:'DM Mono';letter-spacing:3px;text-transform:uppercase;margin-top:6px}
+.hd-desc{font-size:14px;color:var(--text2);margin-top:10px;line-height:1.6}
+
+/* STAT CARDS ROW */
+.stat-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;margin-bottom:40px}
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  padding:18px 20px;position:relative;overflow:hidden;
+}
+.stat-card::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.08;pointer-events:none}
+.sc-sakura::before{background:var(--sakura)}
+.sc-gold::before{background:var(--gold)}
+.sc-jade::before{background:var(--jade)}
+.sc-blue::before{background:var(--blue)}
+.sc-purple::before{background:var(--purple)}
+.stat-num{font-family:'Shippori Mincho';font-size:34px;font-weight:800;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:10px;color:var(--text3);font-family:'DM Mono';letter-spacing:2px;text-transform:uppercase}
+.stat-sub{font-size:12px;color:var(--text2);margin-top:5px}
+
+/* SECTION LABEL */
+.section-label{font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;font-family:'DM Mono';margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.section-wrap{margin-bottom:44px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px}
+.card-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.card-desc{font-size:12px;color:var(--text2);margin-top:-12px;margin-bottom:18px;line-height:1.6}
+
+/* HEATMAP */
+.heatmap-wrap{overflow-x:auto;padding-bottom:8px}
+.heatmap-grid{display:flex;gap:3px;min-width:fit-content}
+.hm-col{display:flex;flex-direction:column;gap:3px}
+.hm-cell{
+  width:13px;height:13px;border-radius:2px;
+  background:var(--surface2);border:1px solid rgba(255,255,255,.04);
+  cursor:default;transition:transform .1s;flex-shrink:0;position:relative;
+}
+.hm-cell:hover{transform:scale(1.4);z-index:10}
+.hm-cell.studied{background:rgba(232,84,122,.8);border-color:rgba(232,84,122,.4)}
+.hm-cell.studied-recent{background:var(--sakura);border-color:var(--sakura2);box-shadow:0 0 6px rgba(232,84,122,.4)}
+.hm-labels-months{display:flex;gap:3px;margin-bottom:4px;min-width:fit-content;height:14px;position:relative}
+.hm-month-label{font-size:9px;font-family:'DM Mono';color:var(--text3);position:absolute;white-space:nowrap}
+.hm-day-labels{display:flex;flex-direction:column;gap:3px;margin-right:6px;flex-shrink:0;padding-top:0}
+.hm-day-label{height:13px;font-size:9px;font-family:'DM Mono';color:var(--text3);display:flex;align-items:center;white-space:nowrap}
+.heatmap-footer{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;color:var(--text3);font-family:'DM Mono'}
+.hm-legend{display:flex;gap:3px;align-items:center}
+.hm-leg-cell{width:11px;height:11px;border-radius:2px}
+
+/* TOOLTIP */
+.hm-tooltip{
+  display:none;position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--surface2);border:1px solid var(--border2);border-radius:6px;
+  padding:4px 8px;font-size:10px;font-family:'DM Mono';color:var(--text);
+  white-space:nowrap;pointer-events:none;z-index:100;
+}
+.hm-cell:hover .hm-tooltip{display:block}
+
+/* GRAMMAR BARS */
+.grammar-sections{display:flex;flex-direction:column;gap:16px}
+.gs-row{display:flex;flex-direction:column;gap:6px}
+.gs-header{display:flex;justify-content:space-between;align-items:center}
+.gs-name{font-size:13px;font-weight:600;color:var(--white);display:flex;align-items:center;gap:8px}
+.gs-pct{font-family:'DM Mono';font-size:13px;font-weight:600}
+.gs-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.gs-fill{height:100%;border-radius:3px;transition:width .8s cubic-bezier(.4,.2,.2,1)}
+.gs-tip{font-size:11px;color:var(--text2);margin-top:2px}
+.gs-badge{
+  font-size:9px;font-family:'DM Mono';letter-spacing:1px;font-weight:700;
+  padding:2px 8px;border-radius:6px;text-transform:uppercase;
+}
+.badge-great{background:rgba(45,184,126,.2);color:var(--jade2);border:1px solid rgba(45,184,126,.3)}
+.badge-ok{background:rgba(212,168,58,.15);color:var(--gold2);border:1px solid rgba(212,168,58,.3)}
+.badge-weak{background:rgba(224,92,74,.15);color:var(--red2);border:1px solid rgba(224,92,74,.3)}
+
+/* LAPSE TRACKER */
+.lapse-list{display:flex;flex-direction:column;gap:8px}
+.lapse-row{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:12px 16px;position:relative;overflow:hidden;
+  transition:border-color .2s;
+}
+.lapse-row:hover{border-color:var(--border2)}
+.lapse-row::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:2px 0 0 2px;
+}
+.lapse-rank{
+  font-family:'DM Mono';font-size:11px;color:var(--text3);
+  width:20px;text-align:center;flex-shrink:0;
+}
+.lapse-rank.top3{font-weight:700}
+.lapse-jp{font-family:'Shippori Mincho';font-size:22px;color:var(--white);font-weight:700;flex-shrink:0;min-width:55px}
+.lapse-kana{font-size:11px;color:var(--text2);font-family:'Shippori Mincho';flex-shrink:0;min-width:70px}
+.lapse-th{font-size:13px;color:var(--text);flex:1}
+.lapse-type{font-size:9px;font-family:'DM Mono';letter-spacing:1px;padding:2px 7px;border-radius:5px;flex-shrink:0;text-transform:uppercase}
+.tag-noun{background:rgba(74,143,255,.15);color:var(--blue);border:1px solid rgba(74,143,255,.3)}
+.tag-verb{background:rgba(45,184,126,.12);color:var(--jade2);border:1px solid rgba(45,184,126,.25)}
+.tag-adj{background:rgba(155,122,255,.15);color:var(--purple);border:1px solid rgba(155,122,255,.3)}
+.tag-adv{background:rgba(212,168,58,.12);color:var(--gold2);border:1px solid rgba(212,168,58,.25)}
+.tag-expr{background:rgba(224,92,74,.12);color:var(--red2);border:1px solid rgba(224,92,74,.25)}
+.lapse-count{
+  font-family:'DM Mono';font-size:13px;font-weight:700;
+  min-width:36px;text-align:right;flex-shrink:0;
+}
+.lapse-bar-bg{
+  height:3px;background:var(--border);border-radius:2px;overflow:hidden;
+  position:absolute;bottom:0;left:0;right:0;
+}
+.lapse-bar-fill{height:100%;border-radius:2px}
+.lapse-empty{
+  text-align:center;padding:36px 24px;
+  background:rgba(45,184,126,.05);border:1px dashed rgba(45,184,126,.2);border-radius:12px;
+}
+.lapse-empty .icon{font-size:36px;margin-bottom:10px}
+.lapse-empty .msg{font-size:14px;color:var(--jade2);font-weight:600}
+.lapse-empty .sub{font-size:12px;color:var(--text2);margin-top:6px}
+
+/* TWO-COL GRID */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:40px 24px;color:var(--text2);font-size:13px}
+.empty-state .icon{font-size:32px;margin-bottom:10px;opacity:.5}
+
+/* ANIM */
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:slideUp .5s ease forwards;opacity:0}
+.anim-1{animation-delay:.05s}.anim-2{animation-delay:.15s}.anim-3{animation-delay:.25s}.anim-4{animation-delay:.35s}
+
+/* NOTIF */
+.notif{position:fixed;bottom:18px;right:18px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:13px;z-index:999;transform:translateY(60px);opacity:0;transition:all .3s}
+.notif.show{transform:translateY(0);opacity:1}
+
+/* FOOTER */
+footer{text-align:center;padding:32px 0 8px;border-top:1px solid var(--border);margin-top:16px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="anim">
+    <div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center">
+        <a class="back-btn" href="index.html" id="back-portal">← Portal</a>
+        <a class="continue-btn back-btn" href="index.html" id="continue-btn" style="display:none">▶ Continue</a>
+      </div>
+      <div class="hd-title">📊 Student Dashboard</div>
+      <div class="hd-sub">Yor's Road to Reading Japanese Manga</div>
+      <div class="hd-desc">ประวัติการเรียน · จุดอ่อน · กราฟกิจกรรม</div>
+    </div>
+    <div id="hdr-streak-badge" style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;margin-top:auto">
+      <div style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(212,168,58,.15),rgba(212,168,58,.05));border:1px solid rgba(212,168,58,.3);border-radius:14px;padding:10px 16px">
+        <div style="font-size:22px" id="fire-icon">💧</div>
+        <div>
+          <div style="font-family:'Shippori Mincho';font-size:28px;font-weight:800;color:var(--gold2);line-height:1" id="streak-num">0</div>
+          <div style="font-size:10px;color:var(--gold);font-family:'DM Mono';letter-spacing:1px;text-transform:uppercase">Day Streak</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text3);font-family:'DM Mono'" id="last-study-label">ยังไม่ได้เรียนวันนี้</div>
+    </div>
+  </header>
+
+  <!-- OVERVIEW STATS -->
+  <div class="section-label anim anim-1">📈 Overview</div>
+  <div class="stat-row anim anim-1" id="stat-row">
+    <!-- JS render -->
+  </div>
+
+  <!-- ACTIVITY HEATMAP -->
+  <div class="section-wrap anim anim-2">
+    <div class="section-label">📅 Activity Heatmap — กิจกรรมการเรียน</div>
+    <div class="card">
+      <div class="card-title">🗓️ 52 Weeks — บันทึกวันที่ทบทวน SRS</div>
+      <div class="card-desc">แต่ละช่องคือ 1 วัน · ช่องสีชมพูคือวันที่ทำ SRS Review</div>
+      <div style="display:flex;gap:0">
+        <div class="hm-day-labels" id="day-labels"></div>
+        <div style="flex:1;overflow:hidden">
+          <div class="hm-labels-months" id="month-labels"></div>
+          <div class="heatmap-grid" id="heatmap-grid"></div>
+        </div>
+      </div>
+      <div class="heatmap-footer">
+        <span>น้อยกว่า</span>
+        <div class="hm-legend">
+          <div class="hm-leg-cell" style="background:var(--surface2);border:1px solid rgba(255,255,255,.05)"></div>
+          <div class="hm-leg-cell" style="background:rgba(232,84,122,.3)"></div>
+          <div class="hm-leg-cell" style="background:rgba(232,84,122,.6)"></div>
+          <div class="hm-leg-cell" style="background:var(--sakura)"></div>
+        </div>
+        <span>มากกว่า</span>
+        <span style="margin-left:auto;color:var(--text2)" id="hm-summary">กำลังโหลด...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TWO COL: GRAMMAR + LAPSE -->
+  <div class="two-col anim anim-3">
+
+    <!-- GRAMMAR WEAK SECTIONS -->
+    <div class="section-wrap">
+      <div class="section-label">🎯 Grammar Weak Sections — Stage 2</div>
+      <div class="card">
+        <div class="card-title">📖 ผลการเรียน Grammar N5→N4</div>
+        <div class="card-desc">บทที่ได้น้อยกว่า 70% ควรกลับไปทบทวนก่อน</div>
+        <div class="grammar-sections" id="grammar-sections">
+          <div class="empty-state"><div class="icon">📚</div>ยังไม่มีข้อมูล Grammar<br><small>ไปทำ Quiz ที่ Stage 2 ก่อนนะ!</small></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAPSE TRACKER -->
+    <div class="section-wrap">
+      <div class="section-label">🔴 Lapse Tracker — คำที่ลืมบ่อย</div>
+      <div class="card">
+        <div class="card-title">💔 คำที่ตอบผิดซ้ำบ่อยที่สุด</div>
+        <div class="card-desc">เรียงจากมากไปน้อย · ควรให้ความสนใจพิเศษกับคำเหล่านี้</div>
+        <div class="lapse-list" id="lapse-list">
+          <div class="empty-state"><div class="icon">✨</div>ยังไม่มีข้อมูล Lapse<br><small>ไปทำ SRS Review ก่อนนะ!</small></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end two-col -->
+
+</div><!-- end wrap -->
+
+<footer>
+  <div style="font-family:'Shippori Mincho';font-size:20px;color:var(--sakura);font-weight:700;letter-spacing:2px">Yor</div>
+  <div style="font-size:11px;color:var(--text3);font-family:'DM Mono';letter-spacing:3px;text-transform:uppercase;margin-top:4px">Student Dashboard · 学習記録</div>
+</footer>
+
+<div class="notif" id="notif"></div>
+<script src="firebase.js" type="module"></script>
+<script>
+// ════════════════════════════════════════════
+// SMART BACK BUTTON
+// ════════════════════════════════════════════
+function initBackButton(){
+  const from = sessionStorage.getItem('db_from') || 'portal';
+  const map = {
+    'portal':  { href: 'index.html',             label: '← Portal' },
+    'stage1':  { href: 'japanese-learning.html', label: '← กลับ Stage 1 (Kana)' },
+    'stage2':  { href: 'grammar-stage2.html',    label: '← กลับ Stage 2 (Grammar)' },
+    'stage3':  { href: 'vocab-stage3.html',       label: '← กลับ Stage 3 (Vocab)' },
+  };
+  const target = map[from] || map['portal'];
+  const btn = document.getElementById('back-btn');
+  if(btn){
+    btn.href = target.href;
+    btn.textContent = target.label;
+    if(from !== 'portal'){
+      btn.style.color = 'var(--sakura)';
+      btn.style.borderColor = 'rgba(232,84,122,.4)';
+      btn.style.background = 'rgba(232,84,122,.06)';
+    }
+  }
+}
+
+// ════════════════════════════════════════════
+// VOCAB LOOKUP MAP (from Stage 3)
+// ════════════════════════════════════════════
+const VOCAB=[
+// KAISHI
+{id:'k001',jp:'人',kana:'ひと',th:'คน, มนุษย์',type:'noun'},
+{id:'k002',jp:'日本',kana:'にほん',th:'ญี่ปุ่น (ประเทศ)',type:'noun'},
+{id:'k003',jp:'今',kana:'いま',th:'ตอนนี้, ขณะนี้',type:'adv'},
+{id:'k004',jp:'何',kana:'なに',th:'อะไร',type:'noun'},
+{id:'k005',jp:'言う',kana:'いう',th:'พูด, บอก',type:'verb'},
+{id:'k006',jp:'見る',kana:'みる',th:'ดู, มอง',type:'verb'},
+{id:'k007',jp:'来る',kana:'くる',th:'มา',type:'verb'},
+{id:'k008',jp:'行く',kana:'いく',th:'ไป',type:'verb'},
+{id:'k009',jp:'食べる',kana:'たべる',th:'กิน',type:'verb'},
+{id:'k010',jp:'飲む',kana:'のむ',th:'ดื่ม',type:'verb'},
+{id:'k011',jp:'大きい',kana:'おおきい',th:'ใหญ่',type:'adj'},
+{id:'k012',jp:'小さい',kana:'ちいさい',th:'เล็ก',type:'adj'},
+{id:'k013',jp:'多い',kana:'おおい',th:'เยอะ, มาก',type:'adj'},
+{id:'k014',jp:'少ない',kana:'すくない',th:'น้อย',type:'adj'},
+{id:'k015',jp:'好き',kana:'すき',th:'ชอบ',type:'adj'},
+{id:'k016',jp:'嫌い',kana:'きらい',th:'ไม่ชอบ, เกลียด',type:'adj'},
+{id:'k017',jp:'良い',kana:'いい',th:'ดี',type:'adj'},
+{id:'k018',jp:'悪い',kana:'わるい',th:'แย่, ไม่ดี',type:'adj'},
+{id:'k019',jp:'分かる',kana:'わかる',th:'เข้าใจ, รู้',type:'verb'},
+{id:'k020',jp:'思う',kana:'おもう',th:'คิดว่า, รู้สึก',type:'verb'},
+{id:'k021',jp:'時間',kana:'じかん',th:'เวลา',type:'noun'},
+{id:'k022',jp:'場所',kana:'ばしょ',th:'สถานที่',type:'noun'},
+{id:'k023',jp:'気持ち',kana:'きもち',th:'ความรู้สึก',type:'noun'},
+{id:'k024',jp:'声',kana:'こえ',th:'เสียง (ของคน)',type:'noun'},
+{id:'k025',jp:'顔',kana:'かお',th:'ใบหน้า',type:'noun'},
+{id:'k026',jp:'目',kana:'め',th:'ตา',type:'noun'},
+{id:'k027',jp:'手',kana:'て',th:'มือ',type:'noun'},
+{id:'k028',jp:'心',kana:'こころ',th:'หัวใจ, จิตใจ',type:'noun'},
+{id:'k029',jp:'力',kana:'ちから',th:'พลัง, ความสามารถ',type:'noun'},
+{id:'k030',jp:'夢',kana:'ゆめ',th:'ฝัน, ความฝัน',type:'noun'},
+// N5
+{id:'n001',jp:'私',kana:'わたし',th:'ฉัน (สุภาพ)',type:'noun'},
+{id:'n002',jp:'あなた',kana:'あなた',th:'คุณ',type:'noun'},
+{id:'n003',jp:'彼',kana:'かれ',th:'เขา (ผู้ชาย) / แฟน',type:'noun'},
+{id:'n004',jp:'彼女',kana:'かのじょ',th:'เธอ (ผู้หญิง) / แฟน',type:'noun'},
+{id:'n005',jp:'家族',kana:'かぞく',th:'ครอบครัว',type:'noun'},
+{id:'n006',jp:'友達',kana:'ともだち',th:'เพื่อน',type:'noun'},
+{id:'n007',jp:'先生',kana:'せんせい',th:'ครู, อาจารย์',type:'noun'},
+{id:'n008',jp:'学生',kana:'がくせい',th:'นักเรียน, นักศึกษา',type:'noun'},
+{id:'n009',jp:'学校',kana:'がっこう',th:'โรงเรียน',type:'noun'},
+{id:'n010',jp:'本',kana:'ほん',th:'หนังสือ',type:'noun'},
+{id:'n011',jp:'車',kana:'くるま',th:'รถยนต์',type:'noun'},
+{id:'n012',jp:'電車',kana:'でんしゃ',th:'รถไฟฟ้า',type:'noun'},
+{id:'n013',jp:'駅',kana:'えき',th:'สถานีรถไฟ',type:'noun'},
+{id:'n014',jp:'水',kana:'みず',th:'น้ำ',type:'noun'},
+{id:'n015',jp:'おお金',kana:'おかね',th:'เงิน',type:'noun'},
+{id:'n016',jp:'仕事',kana:'しごと',th:'งาน, อาชีพ',type:'noun'},
+{id:'n017',jp:'名前',kana:'なまえ',th:'ชื่อ',type:'noun'},
+{id:'n018',jp:'言葉',kana:'ことば',th:'คำ, ภาษา',type:'noun'},
+{id:'n019',jp:'話す',kana:'はなす',th:'พูด, คุย',type:'verb'},
+{id:'n020',jp:'書く',kana:'かく',th:'เขียน',type:'verb'},
+{id:'n021',jp:'読む',kana:'よむ',th:'อ่าน',type:'verb'},
+{id:'n022',jp:'聞く',kana:'きく',th:'ฟัง, ถาม',type:'verb'},
+{id:'n023',jp:'買う',kana:'かう',th:'ซื้อ',type:'verb'},
+{id:'n024',jp:'使う',kana:'つかう',th:'ใช้',type:'verb'},
+{id:'n025',jp:'作る',kana:'つくる',th:'ทำ, สร้าง',type:'verb'},
+{id:'n026',jp:'待つ',kana:'まつ',th:'รอ, คอย',type:'verb'},
+{id:'n027',jp:'会う',kana:'あう',th:'พบ, เจอ',type:'verb'},
+{id:'n028',jp:'帰る',kana:'かえる',th:'กลับบ้าน',type:'verb'},
+{id:'n029',jp:'起きる',kana:'おきる',th:'ตื่นนอน',type:'verb'},
+{id:'n030',jp:'寝る',kana:'ねる',th:'นอน, นอนหลับ',type:'verb'},
+{id:'n031',jp:'新しい',kana:'あたらしい',th:'ใหม่',type:'adj'},
+{id:'n032',jp:'古い',kana:'ふるい',th:'เก่า',type:'adj'},
+{id:'n033',jp:'高い',kana:'たかい',th:'แพง / สูง',type:'adj'},
+{id:'n034',jp:'安い',kana:'やすい',th:'ถูก (ราคา)',type:'adj'},
+{id:'n035',jp:'今日',kana:'きょう',th:'วันนี้',type:'adv'},
+{id:'n036',jp:'明日',kana:'あした',th:'พรุ่งนี้',type:'adv'},
+{id:'n037',jp:'昨日',kana:'きのう',th:'เมื่อวาน',type:'adv'},
+{id:'n038',jp:'もう',kana:'もう',th:'แล้ว / อีกแล้ว',type:'adv'},
+{id:'n039',jp:'まだ',kana:'まだ',th:'ยังคง, ยังไม่',type:'adv'},
+{id:'n040',jp:'とても',kana:'とても',th:'มาก, ยิ่งนัก',type:'adv'},
+// N4
+{id:'f001',jp:'決める',kana:'きめる',th:'ตัดสินใจ',type:'verb'},
+{id:'f002',jp:'始める',kana:'はじめる',th:'เริ่มต้น',type:'verb'},
+{id:'f003',jp:'続ける',kana:'つづける',th:'ทำต่อไป, ต่อเนื่อง',type:'verb'},
+{id:'f004',jp:'終わる',kana:'おわる',th:'จบ, สิ้นสุด',type:'verb'},
+{id:'f005',jp:'変わる',kana:'かわる',th:'เปลี่ยน',type:'verb'},
+{id:'f006',jp:'考える',kana:'かんがえる',th:'คิด, ตรึกตรอง',type:'verb'},
+{id:'f007',jp:'感じる',kana:'かんじる',th:'รู้สึก',type:'verb'},
+{id:'f008',jp:'気づく',kana:'きづく',th:'สังเกตเห็น, ตระหนัก',type:'verb'},
+{id:'f009',jp:'選ぶ',kana:'えらぶ',th:'เลือก',type:'verb'},
+{id:'f010',jp:'調べる',kana:'しらべる',th:'ค้นหา, ตรวจสอบ',type:'verb'},
+{id:'f011',jp:'説明する',kana:'せつめいする',th:'อธิบาย',type:'verb'},
+{id:'f012',jp:'練習する',kana:'れんしゅうする',th:'ฝึกซ้อม',type:'verb'},
+{id:'f013',jp:'準備する',kana:'じゅんびする',th:'เตรียม',type:'verb'},
+{id:'f014',jp:'心配する',kana:'しんぱいする',th:'กังวล, เป็นห่วง',type:'verb'},
+{id:'f015',jp:'大切な',kana:'たいせつな',th:'สำคัญ, มีค่า',type:'adj'},
+{id:'f016',jp:'必要な',kana:'ひつような',th:'จำเป็น',type:'adj'},
+{id:'f017',jp:'便利な',kana:'べんりな',th:'สะดวก',type:'adj'},
+{id:'f018',jp:'特別な',kana:'とくべつな',th:'พิเศษ',type:'adj'},
+{id:'f019',jp:'普通',kana:'ふつう',th:'ปกติ, ธรรมดา',type:'adv'},
+{id:'f020',jp:'最近',kana:'さいきん',th:'เร็วๆ นี้, ช่วงนี้',type:'adv'},
+{id:'f021',jp:'もちろん',kana:'もちろん',th:'แน่นอน, ก็ได้สิ',type:'adv'},
+{id:'f022',jp:'やっぱり',kana:'やっぱり',th:'อย่างที่คิด, ก็เหมือนเดิม',type:'adv'},
+{id:'f023',jp:'経験',kana:'けいけん',th:'ประสบการณ์',type:'noun'},
+{id:'f024',jp:'意味',kana:'いみ',th:'ความหมาย',type:'noun'},
+{id:'f025',jp:'理由',kana:'りゆう',th:'เหตุผล',type:'noun'},
+{id:'f026',jp:'問題',kana:'もんだい',th:'ปัญหา, โจทย์',type:'noun'},
+{id:'f027',jp:'答え',kana:'こたえ',th:'คำตอบ',type:'noun'},
+{id:'f028',jp:'文化',kana:'ぶんか',th:'วัฒนธรรม',type:'noun'},
+{id:'f029',jp:'社会',kana:'しゃかい',th:'สังคม',type:'noun'},
+{id:'f030',jp:'機会',kana:'きかい',th:'โอกาส',type:'noun'},
+// MANGA
+{id:'m001',jp:'敵',kana:'てき',th:'ศัตรู, ข้าศึก',type:'noun'},
+{id:'m002',jp:'仲間',kana:'なかま',th:'พวกเรา, เพื่อนร่วมทีม',type:'noun'},
+{id:'m003',jp:'希望',kana:'きぼう',th:'ความหวัง',type:'noun'},
+{id:'m004',jp:'運命',kana:'うんめい',th:'โชคชะตา, ชะตากรรม',type:'noun'},
+{id:'m005',jp:'覚悟',kana:'かくご',th:'ความมุ่งมั่น, ตั้งใจจริง',type:'noun'},
+{id:'m006',jp:'約束',kana:'やくそく',th:'สัญญา, นัด',type:'noun'},
+{id:'m007',jp:'戦う',kana:'たたかう',th:'ต่อสู้',type:'verb'},
+{id:'m008',jp:'守る',kana:'まもる',th:'ปกป้อง, รักษา',type:'verb'},
+{id:'m009',jp:'信じる',kana:'しんじる',th:'เชื่อ, ไว้วางใจ',type:'verb'},
+{id:'m010',jp:'諦める',kana:'あきらめる',th:'ยอมแพ้, ทอดทิ้ง',type:'verb'},
+{id:'m011',jp:'助ける',kana:'たすける',th:'ช่วยเหลือ',type:'verb'},
+{id:'m012',jp:'勝つ',kana:'かつ',th:'ชนะ',type:'verb'},
+{id:'m013',jp:'負ける',kana:'まける',th:'แพ้',type:'verb'},
+{id:'m014',jp:'強い',kana:'つよい',th:'แข็งแกร่ง, เก่ง',type:'adj'},
+{id:'m015',jp:'弱い',kana:'よわい',th:'อ่อนแอ',type:'adj'},
+{id:'m016',jp:'かっこいい',kana:'かっこいい',th:'เท่, หล่อ',type:'adj'},
+{id:'m017',jp:'やばい',kana:'やばい',th:'โหด!, เจ๋ง! (สแลง)',type:'expr'},
+{id:'m018',jp:'なるほど',kana:'なるほど',th:'ออ, เข้าใจแล้ว',type:'expr'},
+{id:'m019',jp:'さすが',kana:'さすが',th:'เก่งจริงๆ, ไม่แปลกใจ',type:'expr'},
+{id:'m020',jp:'本当に',kana:'ほんとうに',th:'จริงๆ, อย่างจริงจัง',type:'adv'},
+{id:'m021',jp:'絶対に',kana:'ぜったいに',th:'แน่นอนที่สุด, ต้อง',type:'adv'},
+{id:'m022',jp:'まじで',kana:'まじで',th:'จริงเหรอ? (สแลง)',type:'expr'},
+{id:'m023',jp:'うそ',kana:'うそ',th:'โกหก / "ไม่จริงนะ!"',type:'expr'},
+{id:'m024',jp:'死ぬ',kana:'しぬ',th:'ตาย',type:'verb'},
+{id:'m025',jp:'生きる',kana:'いきる',th:'มีชีวิตอยู่',type:'verb'},
+// DAILY LIFE
+{id:'d001',jp:'食べ物',kana:'たべもの',th:'อาหาร',type:'noun'},
+{id:'d002',jp:'飲み物',kana:'のみもの',th:'เครื่องดื่ม',type:'noun'},
+{id:'d003',jp:'店',kana:'みせ',th:'ร้านค้า',type:'noun'},
+{id:'d004',jp:'病院',kana:'びょういん',th:'โรงพยาบาล',type:'noun'},
+{id:'d005',jp:'銀行',kana:'ぎんこう',th:'ธนาคาร',type:'noun'},
+{id:'d006',jp:'会社',kana:'かいしゃ',th:'บริษัท',type:'noun'},
+{id:'d007',jp:'電話',kana:'でんわ',th:'โทรศัพท์',type:'noun'},
+{id:'d008',jp:'天気',kana:'てんき',th:'อากาศ, ดินฟ้าอากาศ',type:'noun'},
+{id:'d009',jp:'料理',kana:'りょうり',th:'อาหาร (การทำ) / ทำอาหาร',type:'noun'},
+{id:'d010',jp:'旅行',kana:'りょこう',th:'การท่องเที่ยว',type:'noun'},
+{id:'d011',jp:'音楽',kana:'おんがく',th:'ดนตรี',type:'noun'},
+{id:'d012',jp:'映画',kana:'えいが',th:'ภาพยนตร์',type:'noun'},
+{id:'d013',jp:'スポーツ',kana:'スポーツ',th:'กีฬา',type:'noun'},
+{id:'d014',jp:'買い物',kana:'かいもの',th:'การซื้อของ, ช้อปปิ้ง',type:'noun'},
+{id:'d015',jp:'散歩',kana:'さんぽ',th:'เดินเล่น',type:'noun'},
+{id:'d016',jp:'暑い',kana:'あつい',th:'ร้อน (อากาศ)',type:'adj'},
+{id:'d017',jp:'寒い',kana:'さむい',th:'หนาว',type:'adj'},
+{id:'d018',jp:'疲れる',kana:'つかれる',th:'เหนื่อย, อ่อนเพลีย',type:'verb'},
+{id:'d019',jp:'忘れる',kana:'わすれる',th:'ลืม',type:'verb'},
+{id:'d020',jp:'覚える',kana:'おぼえる',th:'จำ, เรียนรู้',type:'verb'},
+{id:'d021',jp:'急ぐ',kana:'いそぐ',th:'รีบ, เร่งรีบ',type:'verb'},
+{id:'d022',jp:'困る',kana:'こまる',th:'ลำบาก, เดือดร้อน',type:'verb'},
+{id:'d023',jp:'楽しい',kana:'たのしい',th:'สนุก, มีความสุข',type:'adj'},
+{id:'d024',jp:'嬉しい',kana:'うれしい',th:'ดีใจ, มีความสุข',type:'adj'},
+{id:'d025',jp:'悲しい',kana:'かなしい',th:'เศร้า',type:'adj'},
+];
+const VOCAB_MAP={};VOCAB.forEach(v=>{VOCAB_MAP[v.id]=v;});
+
+// ════════════════════════════════════════════
+// DATA LOADERS
+// ════════════════════════════════════════════
+function loadSRS(){
+  try{return JSON.parse(localStorage.getItem('vd_srs')||'{}');}catch(e){return {};}
+}
+function loadStats(){
+  try{
+    const raw=localStorage.getItem('vd_stats');
+    if(raw) return JSON.parse(raw);
+  }catch(e){}
+  return {streak:0,lastDate:'',totalSeen:0,reviewed:0,dailyReviewed:0,history:[]};
+}
+function loadGrammar(){
+  try{return JSON.parse(localStorage.getItem('gd_p')||'{}');}catch(e){return {};}
+}
+function loadS1(){
+  return {
+    hiraLearned: (() => { try{return JSON.parse(localStorage.getItem('hiraLearned')||'[]').length;}catch(e){return 0;}})(),
+    kataLearned: (() => { try{return JSON.parse(localStorage.getItem('kataLearned')||'[]').length;}catch(e){return 0;}})(),
+    kanjiKnown:  (() => { try{return JSON.parse(localStorage.getItem('kanjiKnown')||'[]').length;}catch(e){return 0;}})(),
+  };
+}
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function getStreak(){
+  const st=loadStats();const td=todayStr();
+  const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(st.lastDate===td||st.lastDate===yest) return st.streak||0;
+  return 0;
+}
+
+// ════════════════════════════════════════════
+// RENDER OVERVIEW STATS
+// ════════════════════════════════════════════
+function renderStats(){
+  const srs=loadSRS();const st=loadStats();const s1=loadS1();const gp=loadGrammar();
+  const cards=Object.values(srs);
+  const learned=cards.filter(c=>c.reps>0).length;
+  const mature=cards.filter(c=>c.state==='mature').length;
+  const due=cards.filter(c=>c.due<=Date.now()&&c.state!=='new').length;
+  const lapsedCards=cards.filter(c=>c.lapses>0);
+  const totalLapses=lapsedCards.reduce((a,c)=>a+c.lapses,0);
+  const streak=getStreak();
+  const grammarSections=['verb','part','nai','cond','end'];
+  const grammarVals=grammarSections.map(k=>gp[k]||0);
+  const grammarAvg=Math.round(grammarVals.reduce((a,b)=>a+b,0)/grammarSections.length);
+  const s1pct=Math.round((s1.hiraLearned/46+s1.kataLearned/46+Math.min(1,s1.kanjiKnown/80))/3*100);
+  const s3pct=Math.round(learned/150*100);
+  const overall=Math.round((s1pct*0.3+grammarAvg*0.3+s3pct*0.4));
+
+  // Streak display
+  document.getElementById('streak-num').textContent=streak;
+  document.getElementById('fire-icon').textContent=streak>=7?'🔥':streak>=3?'✨':'💧';
+  if(st.lastDate){
+    const d=new Date(st.lastDate);
+    document.getElementById('last-study-label').textContent='เรียนล่าสุด: '+d.toLocaleDateString('th-TH',{month:'short',day:'numeric'});
+  }
+
+  const stats=[
+    {num:overall+'%',lbl:'Overall Progress',sub:`S1:${s1pct}% · S2:${grammarAvg}% · S3:${s3pct}%`,cls:'sc-sakura',color:'var(--sakura)'},
+    {num:learned,lbl:'Vocab Learned',sub:`จาก 150 คำ · Mature: ${mature}`,cls:'sc-jade',color:'var(--jade2)'},
+    {num:due,lbl:'Due Today',sub:due>0?'ถึงเวลาทบทวนแล้ว!':'ไม่มี card ค้าง 🎉',cls:'sc-blue',color:'var(--blue)'},
+    {num:totalLapses,lbl:'Total Lapses',sub:`${lapsedCards.length} คำที่เคยผิด`,cls:'sc-sakura',color:'var(--red2)'},
+    {num:streak,lbl:'Day Streak',sub:streak>=7?'🔥 ยอดเยี่ยม!':streak>=1?'✨ สู้ต่อไป!':'💧 เริ่มใหม่วันนี้',cls:'sc-gold',color:'var(--gold2)'},
+  ];
+  const el=document.getElementById('stat-row');
+  el.innerHTML=stats.map(s=>`
+    <div class="stat-card ${s.cls}">
+      <div class="stat-num" style="color:${s.color}">${s.num}</div>
+      <div class="stat-lbl">${s.lbl}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════
+// RENDER HEATMAP
+// ════════════════════════════════════════════
+function renderHeatmap(){
+  const st=loadStats();
+  const history=new Set(st.history||[]);
+  const today=new Date();
+  today.setHours(0,0,0,0);
+  const WEEKS=52;
+  // Start: Sunday 52 weeks ago
+  const start=new Date(today);
+  start.setDate(start.getDate()-((WEEKS*7)-1));
+  // Snap to Sunday
+  const dow=start.getDay();
+  start.setDate(start.getDate()-dow);
+  const DAYS_TOTAL=WEEKS*7;
+
+  // Month labels
+  const monthEl=document.getElementById('month-labels');
+  monthEl.style.position='relative';monthEl.style.height='14px';
+  const months=[];
+  let cur=new Date(start);
+  for(let w=0;w<WEEKS;w++){
+    const d=new Date(cur);d.setDate(d.getDate()+w*7);
+    const m=d.getMonth();
+    if(w===0||d.getDate()<=7){
+      months.push({m,w});
+    }
+  }
+  const CELL=16;// cell + gap
+  monthEl.innerHTML=months.map(({m,w})=>`
+    <span class="hm-month-label" style="left:${w*CELL}px">
+      ${'JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDEC'.substring(m*3,m*3+3)}
+    </span>`).join('');
+
+  // Day labels (Mon, Wed, Fri)
+  const dayEl=document.getElementById('day-labels');
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  dayEl.innerHTML=dayNames.map((d,i)=>`
+    <div class="hm-day-label">${(i%2===1)?d:''}</div>`).join('');
+
+  // Grid
+  const gridEl=document.getElementById('heatmap-grid');
+  gridEl.innerHTML='';
+  let studiedCount=0;
+  const oneMonth=30*24*3600*1000;
+
+  for(let w=0;w<WEEKS;w++){
+    const col=document.createElement('div');
+    col.className='hm-col';
+    for(let d=0;d<7;d++){
+      const cellDate=new Date(start);
+      cellDate.setDate(cellDate.getDate()+w*7+d);
+      if(cellDate>today) {
+        const blank=document.createElement('div');
+        blank.style.cssText='width:13px;height:13px;flex-shrink:0';
+        col.appendChild(blank);
+        continue;
+      }
+      const dateStr=cellDate.toISOString().slice(0,10);
+      const isStudied=history.has(dateStr);
+      const isToday=dateStr===todayStr();
+      const isRecent=(today-cellDate)<oneMonth;
+      if(isStudied)studiedCount++;
+
+      const cell=document.createElement('div');
+      cell.className='hm-cell'+(isStudied?(isRecent?' studied-recent':' studied'):'');
+      if(isToday){cell.style.outline='2px solid var(--gold)';cell.style.outlineOffset='1px';}
+
+      // Tooltip
+      const friendly=cellDate.toLocaleDateString('th-TH',{weekday:'short',day:'numeric',month:'short'});
+      cell.innerHTML=`<div class="hm-tooltip">${friendly}${isStudied?' · ✅ เรียนแล้ว':''}</div>`;
+      col.appendChild(cell);
+    }
+    gridEl.appendChild(col);
+  }
+
+  // Summary
+  document.getElementById('hm-summary').textContent=`เรียน ${studiedCount} วัน จาก ${WEEKS} สัปดาห์ที่ผ่านมา`;
+}
+
+// ════════════════════════════════════════════
+// RENDER GRAMMAR WEAK SECTIONS
+// ════════════════════════════════════════════
+function renderGrammar(){
+  const gp=loadGrammar();
+  const sections=[
+    {key:'verb',name:'Verb Conjugation',jp:'動詞活用',tips:{high:'ผันกริยาได้แม่นมากแล้ว! 🎉',mid:'ลองฝึก て-form และ た-form เพิ่ม',low:'กลับไปทบทวนบทที่ 1 (ผัน -る/-う) ก่อนนะ'}},
+    {key:'part',name:'Particles',jp:'助詞',tips:{high:'ใช้ particle ได้ถูกต้องมาก! 🌟',mid:'หมั่นฝึก は vs が vs を บ่อยๆ',low:'Particle สำคัญมาก ต้องทบทวนด่วน!'}},
+    {key:'nai',name:'ない/たい Form',jp:'ない形・たい形',tips:{high:'Negative + Desire forms ดีมาก! ✨',mid:'ลองทำประโยค ～たくない เพิ่ม',low:'ต้องฝึก negative form ให้ชำนาญก่อน'}},
+    {key:'cond',name:'Conditionals',jp:'条件形',tips:{high:'เงื่อนไขได้ครบทุกแบบแล้ว! 💪',mid:'ทบทวนความต่างของ たら vs と vs ば',low:'Conditional หลายรูปแบบ ค่อยๆ ฝึกทีละอัน'}},
+    {key:'end',name:'Sentence Endings',jp:'文末表現',tips:{high:'จบประโยคได้หลากหลายมาก! 🔥',mid:'ลองฝึก んです / のです เพิ่ม',low:'ลองฝึก ～ね, ～よ, ～けど ในบทที่ 5'}},
+  ];
+
+  const el=document.getElementById('grammar-sections');
+  const hasData=sections.some(s=>(gp[s.key]||0)>0);
+  if(!hasData){
+    el.innerHTML=`<div class="empty-state"><div class="icon">📚</div>ยังไม่มีข้อมูล Grammar<br><small>ไปทำ Quiz ที่ Stage 2 ก่อนนะ!</small></div>`;
+    return;
+  }
+
+  el.innerHTML=sections.map(s=>{
+    const val=gp[s.key]||0;
+    let color,badge,tip;
+    if(val>=70){color='var(--jade2)';badge='badge-great';const b='GREAT';}
+    else if(val>=40){color='var(--gold2)';badge='badge-ok';}
+    else{color='var(--red2)';badge='badge-weak';}
+    const badgeText=val>=70?'GREAT':val>=40?'OK':'WEAK';
+    tip=val>=70?s.tips.high:val>=40?s.tips.mid:s.tips.low;
+
+    return `
+    <div class="gs-row">
+      <div class="gs-header">
+        <div class="gs-name">
+          <span>${s.name}</span>
+          <span style="font-family:'Shippori Mincho';font-size:11px;color:var(--text3)">${s.jp}</span>
+          <span class="gs-badge ${badge}">${badgeText}</span>
+        </div>
+        <div class="gs-pct" style="color:${color}">${val}%</div>
+      </div>
+      <div class="gs-bar">
+        <div class="gs-fill" style="width:${val}%;background:linear-gradient(90deg,${color}88,${color})"></div>
+      </div>
+      <div class="gs-tip">💡 ${tip}</div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// RENDER LAPSE TRACKER
+// ════════════════════════════════════════════
+function renderLapseTracker(){
+  const srs=loadSRS();
+  const lapsed=Object.entries(srs)
+    .filter(([,c])=>c.lapses>0)
+    .map(([id,c])=>({id,lapses:c.lapses,state:c.state,reps:c.reps}))
+    .sort((a,b)=>b.lapses-a.lapses)
+    .slice(0,10);
+
+  const el=document.getElementById('lapse-list');
+  if(lapsed.length===0){
+    el.innerHTML=`
+      <div class="lapse-empty">
+        <div class="icon">✨</div>
+        <div class="msg">ไม่มี Lapse เลย!</div>
+        <div class="sub">จำได้ทุกคำที่เคยเรียน — เยี่ยมมาก 🎉</div>
+      </div>`;
+    return;
+  }
+
+  const maxLapses=lapsed[0].lapses;
+  const rankEmoji=['🥇','🥈','🥉'];
+  const stateColors={learning:'var(--gold)',young:'var(--jade2)',mature:'var(--text2)',new:'var(--blue)'};
+  const lineColors=['var(--red2)','var(--sakura)','var(--gold2)'];
+
+  el.innerHTML=lapsed.map((item,i)=>{
+    const vocab=VOCAB_MAP[item.id];
+    const jp=vocab?vocab.jp:item.id;
+    const kana=vocab?vocab.kana:'?';
+    const th=vocab?vocab.th:'?';
+    const type=vocab?vocab.type:'noun';
+    const pct=Math.round(item.lapses/maxLapses*100);
+    const rankStr=i<3?rankEmoji[i]:`${i+1}.`;
+    const stateCol=stateColors[item.state]||'var(--text3)';
+    const lineCol=i<3?lineColors[i]:'var(--border2)';
+    const lapseColor=item.lapses>=5?'var(--red2)':item.lapses>=3?'var(--gold2)':'var(--text2)';
+
+    return `
+    <div class="lapse-row" style="--line-col:${lineCol}">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:3px;background:${lineCol};border-radius:2px 0 0 2px"></div>
+      <div class="lapse-rank ${i<3?'top3':''}" style="color:${lineCol}">${rankStr}</div>
+      <div class="lapse-jp">${jp}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+          <div class="lapse-kana">${kana}</div>
+          <div class="lapse-type tag-${type}">${type}</div>
+          <div style="font-size:9px;font-family:'DM Mono';color:${stateCol};margin-left:auto">${item.state}</div>
+        </div>
+        <div class="lapse-th">${th}</div>
+        <div style="margin-top:5px;height:2px;background:var(--border);border-radius:1px;overflow:hidden">
+          <div style="height:100%;width:${pct}%;background:${lapseColor};border-radius:1px;transition:width .6s"></div>
+        </div>
+      </div>
+      <div class="lapse-count" style="color:${lapseColor}">
+        ${item.lapses}x
+        <div style="font-size:8px;color:var(--text3);text-align:right">${item.reps} reps</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════
+function init(){
+  initBackButton();
+  renderStats();
+  renderHeatmap();
+  renderGrammar();
+  renderLapseTracker();
+}
+
+// Smart Continue button
+function setupContinueBtn(){
+  const lastPage = localStorage.getItem('lastPage');
+  const pageNames = {
+    'japanese-learning.html': '⬅ Stage 1 — Kana & Kanji',
+    'grammar-stage2.html':    '⬅ Stage 2 — Grammar',
+    'vocab-stage3.html':      '⬅ Stage 3 — Vocabulary',
+    'index.html':             '← Portal',
+  };
+  const btn = document.getElementById('continue-btn');
+  const portalBtn = document.getElementById('back-portal');
+  if(btn && lastPage && lastPage !== 'index.html' && pageNames[lastPage]){
+    btn.href = lastPage;
+    btn.innerHTML = '▶ Continue — ' + {
+      'japanese-learning.html': 'Stage 1 Kana',
+      'grammar-stage2.html':    'Stage 2 Grammar',
+      'vocab-stage3.html':      'Stage 3 Vocab',
+    }[lastPage];
+    btn.style.display = 'inline-flex';
+    if(portalBtn) portalBtn.style.display = 'inline-flex';
+  }
+}
+
+// Wait for Firebase (if loaded) then init
+window.addEventListener('load', ()=>{
+  // Small delay to let firebase.js pull from cloud
+  setTimeout(()=>{init();setupContinueBtn();}, 800);
+});
+
+// Also re-render when firebase pulls data
+window.addEventListener('fb-data-loaded', init);
+</script>
+</body>
+</html>

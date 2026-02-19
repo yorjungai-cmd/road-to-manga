@@ -176,6 +176,16 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <div class="ni" onclick="nav('stats')"><span>📊</span> สถิติ</div>
     <div class="ni" onclick="nav('decks')"><span>🗂️</span> Deck Manager</div>
   </div>
+  <div class="ng" style="margin-top:auto;border-top:1px solid var(--border);padding:8px 0">
+    <a class="ni" href="dashboard.html" onclick="localStorage.setItem('lastPage','vocab-stage3.html')" style="text-decoration:none;color:inherit">
+      <span>📊</span>
+      <span style="color:#e8547a;font-weight:600">Student Dashboard</span>
+    </a>
+    <a class="ni" href="index.html" style="text-decoration:none;color:inherit">
+      <span>🏠</span>
+      <span style="color:var(--text2)">← Portal</span>
+    </a>
+  </div>
 </nav>
 
 <main class="main">
@@ -954,6 +964,8 @@ window.onload=()=>{
 #yor-credit .yc-stage{font-size:10px;color:rgba(200,200,232,.5);font-family:'DM Mono',monospace}
 #yor-credit .yc-back{font-size:10px;color:rgba(200,200,232,.5);text-decoration:none;border:1px solid rgba(232,84,122,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
 #yor-credit .yc-back:hover{color:#e8547a;border-color:#e8547a}
+#yor-credit .yc-dash{font-size:10px;color:rgba(200,180,255,.5);text-decoration:none;border:1px solid rgba(155,122,255,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
+#yor-credit .yc-dash:hover{color:#c8a8ff;border-color:rgba(155,122,255,.8);background:rgba(155,122,255,.08)}
 body{padding-bottom:60px}
 </style>
 <div id="yor-credit">
@@ -961,8 +973,11 @@ body{padding-bottom:60px}
     <span class="yc-name">Yor</span>
     <span class="yc-stage">語彙道場 Stage 3 — Vocabulary SRS &nbsp;·&nbsp; Yor's Road to Reading Japanese Manga</span>
   </div>
-  <a class="yc-back" href="index.html">← Portal</a>
+  <div style="display:flex;align-items:center;gap:6px">
+    <a class="yc-dash" href="dashboard.html" onclick="sessionStorage.setItem('db_from','stage3')">📊 Dashboard</a>
+    <a class="yc-back" href="index.html">← Portal</a>
 </div>
+  </div>
 
 
 <!-- ═══════════════════════════════════════

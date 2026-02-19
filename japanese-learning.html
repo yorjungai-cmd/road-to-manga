@@ -671,6 +671,15 @@ body {
       <span class="icon">🔧</span> Tools & Apps
     </div>
   </div>
+  <div class="nav-section" style="margin-top:auto;border-top:1px solid var(--border)">
+    <a class="nav-item" href="dashboard.html" onclick="localStorage.setItem('lastPage','japanese-learning.html')" style="text-decoration:none;color:inherit">
+      <span class="icon">📊</span>
+      <b style="color:#e8547a">Student Dashboard</b>
+    </a>
+    <a class="nav-item" href="index.html" style="text-decoration:none;color:inherit">
+      <span class="icon">🏠</span> ← Portal
+    </a>
+  </div>
 </nav>
 
 <!-- MAIN CONTENT -->
@@ -2701,6 +2710,7 @@ function checkGoal() {
 // INIT
 // ============================================================
 window.onload = () => {
+  localStorage.setItem('lastPage','japanese-learning.html');
   buildKanaGrid('hira');
   buildKanaGrid('kata');
   buildComboGrid();
@@ -3820,15 +3830,20 @@ function dlResetDay(type) {
 #yor-credit .yc-stage{font-size:10px;color:rgba(200,200,232,.4);font-family:'Noto Sans JP',sans-serif}
 #yor-credit .yc-back{font-size:10px;color:rgba(200,200,232,.4);text-decoration:none;border:1px solid rgba(232,84,122,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
 #yor-credit .yc-back:hover{color:#e8547a;border-color:#e8547a}
+#yor-credit .yc-dash{font-size:10px;color:rgba(200,180,255,.5);text-decoration:none;border:1px solid rgba(155,122,255,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
+#yor-credit .yc-dash:hover{color:#c8a8ff;border-color:rgba(155,122,255,.8);background:rgba(155,122,255,.08)}
 body{padding-bottom:60px}
 </style>
 <div id="yor-credit">
   <div style="display:flex;align-items:center;gap:10px">
     <span class="yc-name">Yor</span>
     <span class="yc-stage">日本語学習 Stage 1 · Yor's Road to Reading Japanese Manga</span>
-  </div>
+  <div style="display:flex;align-items:center;gap:6px">
+    <a class="yc-dash" href="dashboard.html" onclick="sessionStorage.setItem('db_from','stage1')">📊 Dashboard</a>
+    
   <a class="yc-back" href="index.html">← Portal</a>
 </div>
+  </div>
 
 
 <!-- ═══════════════════════════════════════

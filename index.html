@@ -55,6 +55,15 @@ header{
 .logo-block .logo-desc{font-size:14px;color:var(--text2);margin-top:10px;line-height:1.6;max-width:360px}
 
 .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.dashboard-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(232,84,122,.15),rgba(212,168,58,.1));
+  border:1px solid rgba(232,84,122,.35);border-radius:10px;
+  padding:7px 14px;font-size:12px;font-weight:600;
+  color:var(--sakura);text-decoration:none;letter-spacing:.5px;
+  transition:all .2s;font-family:'Outfit';
+}
+.dashboard-btn:hover{background:linear-gradient(135deg,rgba(232,84,122,.25),rgba(212,168,58,.2));border-color:var(--sakura);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,84,122,.2)}
 .streak-badge{
   display:flex;align-items:center;gap:10px;
   background:linear-gradient(135deg,rgba(212,168,58,.15),rgba(212,168,58,.05));
@@ -241,6 +250,9 @@ header{
           <div class="streak-lbl">Day Streak</div>
         </div>
       </div>
+      <a href="dashboard.html" class="dashboard-btn" onclick="localStorage.setItem('lastPage','index.html')">
+        📊 Dashboard
+      </a>
       <div class="last-study" id="hdr-last">ยังไม่ได้เรียนวันนี้</div>
     </div>
   </header>
@@ -319,6 +331,11 @@ header{
       <div class="qa-icon">🌱</div>
       <div class="qa-title">Learn New Words</div>
       <div class="qa-desc">เรียนคำศัพท์ใหม่วันนี้</div>
+    </a>
+    <a class="qa" href="dashboard.html" onclick="localStorage.setItem('lastPage','index.html')" style="border-color:rgba(232,84,122,.25);background:linear-gradient(135deg,rgba(232,84,122,.06),transparent)">
+      <div class="qa-icon">📊</div>
+      <div class="qa-title" style="color:var(--sakura)">Student Dashboard</div>
+      <div class="qa-desc">ดูประวัติ · Lapse · Heatmap</div>
     </a>
   </div>
 
@@ -696,6 +713,7 @@ function showN(m){const e=document.getElementById('notif');e.textContent=m;e.cla
 // INIT
 // ═══════════════════════════════════════
 window.onload=()=>{
+  localStorage.setItem('lastPage','index.html');
   initParticles();
   renderHeader();
   renderToday();

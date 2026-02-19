@@ -3830,5 +3830,275 @@ body{padding-bottom:60px}
   <a class="yc-back" href="index.html">← Portal</a>
 </div>
 
+
+<!-- ═══════════════════════════════════════════════════════════
+     FIREBASE AUTH + CLOUD SYNC
+     ═══════════════════════════════════════════════════════════ -->
+<style>
+/* Firebase Auth UI */
+#fb-login-overlay{
+  position:fixed;inset:0;background:rgba(5,5,15,.92);backdrop-filter:blur(16px);
+  z-index:99999;display:flex;align-items:center;justify-content:center;
+  font-family:'Sarabun',sans-serif;
+}
+#fb-login-box{
+  background:#0f0f1a;border:1px solid rgba(232,84,122,.3);border-radius:20px;
+  padding:36px 40px;text-align:center;max-width:380px;width:90%;
+}
+#fb-login-box .fb-logo{font-size:48px;margin-bottom:12px}
+#fb-login-box .fb-title{font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
+#fb-login-box .fb-sub{font-size:13px;color:rgba(200,200,240,.5);margin-bottom:24px;line-height:1.7}
+#fb-google-btn{
+  display:flex;align-items:center;gap:10px;justify-content:center;
+  background:#fff;color:#333;border:none;border-radius:10px;
+  padding:12px 24px;font-size:14px;font-weight:700;cursor:pointer;
+  width:100%;transition:all .2s;font-family:'Sarabun',sans-serif;
+}
+#fb-google-btn:hover{background:#f0f0f0;transform:translateY(-2px);box-shadow:0 4px 16px rgba(255,255,255,.15)}
+#fb-google-btn img{width:20px;height:20px}
+#fb-skip{
+  display:block;margin-top:14px;font-size:11px;color:rgba(200,200,240,.35);
+  cursor:pointer;text-decoration:underline;transition:color .2s;
+}
+#fb-skip:hover{color:rgba(200,200,240,.7)}
+/* Credit bar additions */
+#fb-user-area{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#fb-avatar{width:22px;height:22px;border-radius:50%;border:1px solid rgba(232,84,122,.5)}
+#fb-username{font-size:11px;color:rgba(200,200,240,.7);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#fb-sync-dot{width:7px;height:7px;border-radius:50%;background:#3ddc84;flex-shrink:0;transition:background .3s}
+#fb-sync-dot.syncing{background:#f0c040;animation:fbPulse 1s infinite}
+#fb-sync-dot.offline{background:rgba(200,200,240,.2)}
+#fb-sync-dot.error{background:#e74c3c}
+#fb-logout-btn{font-size:10px;color:rgba(200,200,240,.3);cursor:pointer;padding:2px 6px;border:1px solid rgba(255,255,255,.1);border-radius:5px;transition:all .2s}
+#fb-logout-btn:hover{color:#e8547a;border-color:#e8547a}
+#fb-login-mini{font-size:10px;color:rgba(232,84,122,.8);cursor:pointer;padding:2px 8px;border:1px solid rgba(232,84,122,.4);border-radius:5px;transition:all .2s}
+#fb-login-mini:hover{background:rgba(232,84,122,.1)}
+@keyframes fbPulse{0%{opacity:1}50%{opacity:.4}100%{opacity:1}}
+</style>
+
+<!-- Login Overlay -->
+<div id="fb-login-overlay">
+  <div id="fb-login-box">
+    <div class="fb-logo">🎌</div>
+    <div class="fb-title">Yor's Road to Manga</div>
+    <div class="fb-sub">
+      Login ด้วย Google เพื่อ sync progress<br>
+      ข้ามเครื่อง ข้าม Browser ได้ทุกที่
+    </div>
+    <button id="fb-google-btn" onclick="fbSignIn()">
+      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google">
+      Login ด้วย Google
+    </button>
+    <span id="fb-skip" onclick="fbSkip()">ข้ามไปก่อน (ไม่ sync)</span>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, serverTimestamp }
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAOMhrwSur-5AV4XLw5JrqTcNKpBZU7YdM",
+  authDomain: "road-to-manga.firebaseapp.com",
+  projectId: "road-to-manga",
+  storageBucket: "road-to-manga.firebasestorage.app",
+  messagingSenderId: "784518497162",
+  appId: "1:784518497162:web:23a1c57ba6831964577e73"
+};
+
+const SYNC_KEYS = [
+  'hiraLearned','kataLearned','kanjiKnown','vocabKnown','kg_hs',
+  'dl_hira','dl_kata','dl_kj',
+  'gd','gd_p','gd_goals',
+  'vd_srs','vd_stats'
+];
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+let syncTimer = null;
+let lastSyncHash = '';
+
+// ── Expose global functions ──
+window.fbSignIn = async () => {
+  try {
+    const provider = new GoogleAuthProvider();
+    await signInWithPopup(auth, provider);
+  } catch(e) {
+    console.error('Login failed:', e);
+    alert('Login ไม่สำเร็จ: ' + e.message);
+  }
+};
+
+window.fbSignOut = async () => {
+  if (confirm('Logout จาก Google?')) {
+    await signOut(auth);
+  }
+};
+
+window.fbSkip = () => {
+  document.getElementById('fb-login-overlay').style.display = 'none';
+  sessionStorage.setItem('fb-skipped', '1');
+};
+
+// ── Gather all localStorage data ──
+function gatherLocal() {
+  const data = {};
+  SYNC_KEYS.forEach(k => {
+    const v = localStorage.getItem(k);
+    if (v !== null) data[k] = v;
+  });
+  return data;
+}
+
+// ── Write cloud data → localStorage ──
+function applyCloud(data) {
+  if (!data) return;
+  SYNC_KEYS.forEach(k => {
+    if (data[k] !== undefined) {
+      localStorage.setItem(k, data[k]);
+    }
+  });
+}
+
+// ── Simple hash to detect changes ──
+function hashData(data) {
+  return JSON.stringify(data);
+}
+
+// ── Push localStorage → Firestore ──
+async function pushToCloud() {
+  if (!currentUser) return;
+  const data = gatherLocal();
+  const h = hashData(data);
+  if (h === lastSyncHash) return; // no changes
+  setSyncStatus('syncing');
+  try {
+    await setDoc(doc(db, 'users', currentUser.uid, 'progress', 'data'), {
+      ...data, _updatedAt: serverTimestamp(), _page: window.location.pathname
+    });
+    lastSyncHash = h;
+    setSyncStatus('ok');
+  } catch(e) {
+    console.error('Sync failed:', e);
+    setSyncStatus('error');
+  }
+}
+
+// ── Pull Firestore → localStorage ──
+async function pullFromCloud() {
+  if (!currentUser) return;
+  setSyncStatus('syncing');
+  try {
+    const snap = await getDoc(doc(db, 'users', currentUser.uid, 'progress', 'data'));
+    if (snap.exists()) {
+      const cloudData = snap.data();
+      // Merge: cloud wins for keys that exist in cloud
+      // Local wins for keys that don't exist in cloud yet
+      const local = gatherLocal();
+      const merged = { ...local };
+      SYNC_KEYS.forEach(k => {
+        if (cloudData[k] !== undefined) merged[k] = cloudData[k];
+      });
+      applyCloud(merged);
+      lastSyncHash = hashData(gatherLocal());
+    }
+    setSyncStatus('ok');
+  } catch(e) {
+    console.error('Pull failed:', e);
+    setSyncStatus('error');
+  }
+}
+
+// ── Sync status indicator ──
+function setSyncStatus(status) {
+  const dot = document.getElementById('fb-sync-dot');
+  if (!dot) return;
+  dot.className = 'fb-sync-dot ' + status;
+}
+
+// ── Update credit bar UI ──
+function updateCreditBar(user) {
+  const creditEl = document.getElementById('yor-credit');
+  if (!creditEl) return;
+
+  let userArea = document.getElementById('fb-user-area');
+  if (!userArea) {
+    userArea = document.createElement('div');
+    userArea.id = 'fb-user-area';
+    // Insert before back button
+    const backBtn = creditEl.querySelector('.yc-back');
+    if (backBtn) creditEl.insertBefore(userArea, backBtn);
+    else creditEl.appendChild(userArea);
+  }
+
+  if (user) {
+    userArea.innerHTML = `
+      ${user.photoURL ? `<img id="fb-avatar" src="${user.photoURL}" alt="">` : ''}
+      <span id="fb-username">${user.displayName || user.email}</span>
+      <div id="fb-sync-dot" title="Sync status"></div>
+      <span id="fb-logout-btn" onclick="fbSignOut()">Logout</span>`;
+  } else {
+    userArea.innerHTML = `
+      <div id="fb-sync-dot" class="offline" title="ไม่ได้ login"></div>
+      <span id="fb-login-mini" onclick="document.getElementById('fb-login-overlay').style.display='flex'">☁️ Login</span>`;
+  }
+}
+
+// ── Auto sync every 30 seconds ──
+function startAutoSync() {
+  if (syncTimer) clearInterval(syncTimer);
+  syncTimer = setInterval(pushToCloud, 30000);
+  // Also sync on page visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) pullFromCloud();
+    else pushToCloud();
+  });
+  // Sync on before unload
+  window.addEventListener('beforeunload', () => { pushToCloud(); });
+}
+
+// ── Auth state listener ──
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+
+  if (user) {
+    // Hide login overlay
+    document.getElementById('fb-login-overlay').style.display = 'none';
+    updateCreditBar(user);
+
+    // Pull cloud data first, then start auto-push
+    await pullFromCloud();
+    startAutoSync();
+
+    // Reload page state if functions available (stage-specific)
+    if (typeof updateStats === 'function') updateStats();
+    if (typeof renderDashboard === 'function') renderDashboard();
+    if (typeof initPage === 'function') initPage();
+
+  } else {
+    updateCreditBar(null);
+    if (syncTimer) clearInterval(syncTimer);
+
+    // Show overlay unless skipped this session
+    const skipped = sessionStorage.getItem('fb-skipped');
+    if (!skipped) {
+      document.getElementById('fb-login-overlay').style.display = 'flex';
+    }
+  }
+});
+
+// ── Manual sync trigger (expose globally) ──
+window.fbSync = pushToCloud;
+window.fbPull = pullFromCloud;
+
+console.log('🔥 Firebase sync ready');
+</script>
+
 </body>
 </html>

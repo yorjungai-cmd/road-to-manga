@@ -531,9 +531,17 @@ function renderStats(){
   // Streak display
   document.getElementById('streak-num').textContent=streak;
   document.getElementById('fire-icon').textContent=streak>=7?'🔥':streak>=3?'✨':'💧';
-  if(st.lastDate){
-    const d=new Date(st.lastDate);
-    document.getElementById('last-study-label').textContent='เรียนล่าสุด: '+d.toLocaleDateString('th-TH',{month:'short',day:'numeric'});
+  const todayStr=new Date().toISOString().slice(0,10);
+  const s1Last=localStorage.getItem('s1_lastStudied')||'';
+  const lastAny=[st.lastDate,s1Last].filter(Boolean).sort().reverse()[0]||'';
+  const studiedToday=st.lastDate===todayStr||s1Last===todayStr;
+  const labelEl=document.getElementById('last-study-label');
+  if(studiedToday){
+    labelEl.textContent='✅ เรียนแล้ววันนี้';
+    labelEl.style.color='var(--jade2)';
+  } else if(lastAny){
+    const d=new Date(lastAny);
+    labelEl.textContent='เรียนล่าสุด: '+d.toLocaleDateString('th-TH',{month:'short',day:'numeric'});
   }
 
   const stats=[

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yor's Road to Reading Japanese Manga</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#0f0f1a;--surface:#141420;--surface2:#1a1a28;
+  --border:#232338;--border2:#2e2e4a;
+  --sakura:#e8547a;--sakura2:#f07090;--sakura3:#ffa0b8;
+  --gold:#d4a83a;--gold2:#f0c84c;
+  --jade:#2db87e;--jade2:#4dd9a0;
+  --blue:#4a8fff;--purple:#9b7aff;
+  --text:#c8c8e8;--text2:#7a7a9a;--text3:#3a3a5a;
+  --white:#f0f0ff;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit','Sarabun',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ANIMATED BACKGROUND */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%,rgba(232,84,122,.07),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 0% 100%,rgba(45,184,126,.05),transparent 60%),
+    radial-gradient(ellipse 40% 30% at 50% 50%,rgba(212,168,58,.03),transparent 60%);
+  pointer-events:none;z-index:0;
+  animation:bgShift 20s ease-in-out infinite alternate;
+}
+@keyframes bgShift{0%{opacity:1}100%{opacity:.6;transform:scale(1.05)}}
+
+/* PARTICLES */
+.particles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.p{position:absolute;border-radius:50%;animation:float linear infinite;opacity:0}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.6}90%{opacity:.2}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
+
+/* LAYOUT */
+.wrap{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:0 24px 60px}
+
+/* HEADER */
+header{
+  padding:48px 0 36px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:20px;
+  border-bottom:1px solid var(--border);margin-bottom:40px;
+}
+.logo-block .logo-jp{
+  font-family:'Shippori Mincho';font-size:42px;font-weight:800;
+  background:linear-gradient(135deg,var(--sakura),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  letter-spacing:4px;line-height:1;
+}
+.logo-block .logo-sub{font-size:11px;color:var(--text3);letter-spacing:4px;text-transform:uppercase;font-family:'DM Mono';margin-top:5px}
+.logo-block .logo-desc{font-size:14px;color:var(--text2);margin-top:10px;line-height:1.6;max-width:360px}
+
+.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.streak-badge{
+  display:flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,rgba(212,168,58,.15),rgba(212,168,58,.05));
+  border:1px solid rgba(212,168,58,.3);border-radius:14px;padding:10px 16px;
+}
+.streak-fire{font-size:22px}
+.streak-info .streak-num{font-family:'Shippori Mincho';font-size:28px;font-weight:800;color:var(--gold2);line-height:1}
+.streak-info .streak-lbl{font-size:10px;color:var(--gold);font-family:'DM Mono';letter-spacing:1px;text-transform:uppercase}
+.last-study{font-size:11px;color:var(--text3);font-family:'DM Mono'}
+
+/* TODAY MISSION */
+.today-section{margin-bottom:36px}
+.section-label{font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;font-family:'DM Mono';margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border)}
+
+.today-card{
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid var(--border2);border-radius:20px;padding:28px 32px;
+  position:relative;overflow:hidden;
+}
+.today-card::before{
+  content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;
+  border-radius:50%;background:radial-gradient(var(--sakura),transparent 70%);
+  opacity:.07;pointer-events:none;
+}
+.today-main{display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap}
+.today-icon{font-size:48px;flex-shrink:0;line-height:1}
+.today-content{flex:1;min-width:220px}
+.today-title{font-family:'Shippori Mincho';font-size:22px;font-weight:700;color:var(--white);margin-bottom:6px}
+.today-desc{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:18px}
+.today-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+.today-tasks{margin-top:22px;padding-top:22px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap}
+.task-item{flex:1;min-width:160px;display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;cursor:pointer;transition:all .2s;text-decoration:none}
+.task-item:hover{border-color:var(--sakura);background:rgba(232,84,122,.05)}
+.task-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.task-dot.done{background:var(--jade2)}.task-dot.todo{background:var(--sakura)}.task-dot.optional{background:var(--text3)}
+.task-text{font-size:12px;color:var(--text);font-weight:500}
+.task-sub{font-size:10px;color:var(--text3);font-family:'DM Mono'}
+
+/* BTN */
+.btn{padding:10px 22px;border:none;border-radius:10px;cursor:pointer;font-family:'Outfit';font-size:13px;font-weight:600;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:linear-gradient(135deg,var(--sakura),var(--sakura2));color:#fff;box-shadow:0 4px 16px rgba(232,84,122,.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,84,122,.4)}
+.btn-jade{background:linear-gradient(135deg,var(--jade),var(--jade2));color:#000;box-shadow:0 4px 16px rgba(45,184,126,.25)}
+.btn-jade:hover{transform:translateY(-2px)}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;box-shadow:0 4px 16px rgba(212,168,58,.25)}
+.btn-gold:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2)}.btn-ghost:hover{border-color:var(--text2);color:var(--white)}
+
+/* STAGE CARDS */
+.stages-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;margin-bottom:36px}
+.stage-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:18px;
+  padding:24px;position:relative;overflow:hidden;cursor:pointer;
+  transition:all .25s cubic-bezier(.4,.2,.2,1);text-decoration:none;display:block;
+}
+.stage-card:hover{transform:translateY(-4px)}
+.stage-card::after{content:'';position:absolute;inset:0;border-radius:18px;opacity:0;transition:opacity .2s}
+.stage-card:hover::after{opacity:1}
+.stage-card.s1{border-color:rgba(74,143,255,.2)}.stage-card.s1:hover{border-color:rgba(74,143,255,.5);box-shadow:0 8px 40px rgba(74,143,255,.1)}
+.stage-card.s2{border-color:rgba(212,168,58,.2)}.stage-card.s2:hover{border-color:rgba(212,168,58,.5);box-shadow:0 8px 40px rgba(212,168,58,.1)}
+.stage-card.s3{border-color:rgba(45,184,126,.2)}.stage-card.s3:hover{border-color:rgba(45,184,126,.5);box-shadow:0 8px 40px rgba(45,184,126,.1)}
+
+.stage-lock{position:absolute;top:16px;right:16px;font-size:14px;color:var(--text3)}
+.stage-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px}
+.stage-num{font-family:'Shippori Mincho';font-size:11px;font-weight:600;letter-spacing:2px;padding:4px 10px;border-radius:20px;text-transform:uppercase}
+.sn1{background:rgba(74,143,255,.15);color:var(--blue);border:1px solid rgba(74,143,255,.3)}
+.sn2{background:rgba(212,168,58,.12);color:var(--gold2);border:1px solid rgba(212,168,58,.3)}
+.sn3{background:rgba(45,184,126,.12);color:var(--jade2);border:1px solid rgba(45,184,126,.3)}
+
+.stage-icon{font-size:36px;flex-shrink:0;line-height:1}
+.stage-info{flex:1}
+.stage-title{font-family:'Shippori Mincho';font-size:18px;font-weight:700;color:var(--white);margin-bottom:4px}
+.stage-jp{font-size:11px;color:var(--text3);font-family:'Shippori Mincho';letter-spacing:2px}
+
+.stage-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+
+.stage-progress{margin-bottom:14px}
+.prog-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px;font-family:'DM Mono'}
+.pbar{height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.pbf{height:100%;border-radius:2px;transition:width .6s cubic-bezier(.4,.2,.2,1)}
+
+.stage-stats{display:flex;gap:12px;flex-wrap:wrap}
+.sstat{text-align:center;flex:1}
+.sstat-num{font-family:'Shippori Mincho';font-size:22px;font-weight:700;color:var(--white)}
+.sstat-lbl{font-size:9px;color:var(--text3);font-family:'DM Mono';text-transform:uppercase;letter-spacing:1px;margin-top:1px}
+
+.stage-action{
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.open-btn{font-size:12px;font-weight:600;display:flex;align-items:center;gap:5px}
+.s1 .open-btn{color:var(--blue)}.s2 .open-btn{color:var(--gold2)}.s3 .open-btn{color:var(--jade2)}
+
+/* GUIDE */
+.guide-section{margin-bottom:36px}
+.guide-steps{display:flex;flex-direction:column;gap:0}
+.guide-step{display:flex;gap:0;position:relative}
+.guide-step::before{content:'';position:absolute;left:19px;top:40px;bottom:0;width:1px;background:var(--border)}
+.guide-step:last-child::before{display:none}
+.gstep-left{flex-shrink:0;width:40px;display:flex;flex-direction:column;align-items:center;padding-top:6px}
+.gstep-num{
+  width:28px;height:28px;border-radius:50%;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono';flex-shrink:0;position:relative;z-index:1;
+}
+.gstep-body{flex:1;padding:6px 0 28px 16px}
+.gstep-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:4px}
+.gstep-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.gstep-time{font-size:10px;font-family:'DM Mono';margin-top:6px;padding:3px 10px;border-radius:10px;display:inline-block}
+
+/* QUICK ACTIONS */
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:36px}
+.qa{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px;
+  cursor:pointer;transition:all .2s;text-decoration:none;display:block;
+}
+.qa:hover{border-color:var(--border2);background:var(--surface2);transform:translateY(-2px)}
+.qa-icon{font-size:24px;margin-bottom:8px}
+.qa-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px}
+.qa-desc{font-size:11px;color:var(--text3)}
+
+/* BOTTOM TIPS */
+.tip-row{display:flex;gap:12px;margin-bottom:36px;flex-wrap:wrap}
+.tip{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;flex:1;min-width:220px}
+.tip-icon{font-size:18px;margin-bottom:6px}
+.tip-title{font-size:12px;font-weight:600;color:var(--white);margin-bottom:4px}
+.tip-text{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* OVERALL PROG */
+.overall{
+  background:linear-gradient(135deg,var(--surface2),var(--surface));
+  border:1px solid var(--border2);border-radius:18px;padding:24px 28px;
+  margin-bottom:36px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+}
+.overall-circle{width:88px;height:88px;border-radius:50%;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative}
+.overall-circle svg{position:absolute;inset:0;transform:rotate(-90deg)}
+.overall-pct{font-family:'Shippori Mincho';font-size:22px;font-weight:800;color:var(--white)}
+.overall-lbl{font-size:9px;color:var(--text3);font-family:'DM Mono'}
+.overall-info{flex:1;min-width:200px}
+.overall-title{font-family:'Shippori Mincho';font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px}
+.overall-bars{display:flex;flex-direction:column;gap:6px}
+.ob-row{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--text2)}
+.ob-label{width:80px;flex-shrink:0;font-family:'DM Mono'}
+.ob-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.ob-fill{height:100%;border-radius:2px}
+.ob-val{width:40px;text-align:right;font-family:'DM Mono'}
+
+/* RESPONSIVE */
+@media(max-width:640px){
+  header{padding:32px 0 24px}
+  .logo-block .logo-jp{font-size:32px}
+  .today-card{padding:20px}
+  .stage-card{min-width:unset}
+}
+/* ANIMATIONS */
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:slideUp .5s ease forwards;opacity:0}
+.anim-1{animation-delay:.1s}.anim-2{animation-delay:.2s}.anim-3{animation-delay:.3s}.anim-4{animation-delay:.4s}
+
+/* NOTIFY */
+.notif{position:fixed;bottom:18px;right:18px;background:var(--surface2);border:1px solid var(--border2);border-radius:12px;padding:12px 18px;font-size:13px;z-index:999;transform:translateY(60px);opacity:0;transition:all .3s}
+.notif.show{transform:translateY(0);opacity:1}
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="anim">
+    <div class="logo-block">
+      <div class="logo-jp">日本語道場</div>
+      <div style="font-family:Outfit;font-size:18px;font-weight:700;color:var(--white);margin-top:6px">Yor's Road to Reading Japanese Manga</div><div class="logo-sub" style="margin-top:4px">Personal Learning System · Stage 1–3</div>
+      <div class="logo-desc">เส้นทางเรียนภาษาญี่ปุ่นส่วนตัวของ Yor — จาก Hiragana จนถึงอ่านมังงะได้</div>
+    </div>
+    <div class="header-right">
+      <div class="streak-badge">
+        <div class="streak-fire" id="hdr-fire">💧</div>
+        <div class="streak-info">
+          <div class="streak-num" id="hdr-streak">0</div>
+          <div class="streak-lbl">Day Streak</div>
+        </div>
+      </div>
+      <div class="last-study" id="hdr-last">ยังไม่ได้เรียนวันนี้</div>
+    </div>
+  </header>
+
+  <!-- TODAY MISSION -->
+  <div class="today-section anim anim-1">
+    <div class="section-label">⚡ Today's Mission</div>
+    <div class="today-card">
+      <div class="today-main">
+        <div class="today-icon" id="td-icon">🎯</div>
+        <div class="today-content">
+          <div class="today-title" id="td-title">กำลังโหลด...</div>
+          <div class="today-desc" id="td-desc"></div>
+          <div class="today-actions" id="td-actions"></div>
+        </div>
+      </div>
+      <div class="today-tasks" id="td-tasks"></div>
+    </div>
+  </div>
+
+  <!-- OVERALL PROGRESS -->
+  <div class="section-label">📊 Overall Progress</div>
+  <div class="overall anim anim-2" id="overall-block">
+    <div class="overall-circle">
+      <svg viewBox="0 0 88 88" fill="none"><circle cx="44" cy="44" r="38" stroke="var(--border)" stroke-width="5"/><circle cx="44" cy="44" r="38" stroke="url(#pg)" stroke-width="5" stroke-linecap="round" stroke-dasharray="239" stroke-dashoffset="239" id="prog-circle"/><defs><linearGradient id="pg" x1="0" y1="0" x2="88" y2="88" gradientUnits="userSpaceOnUse"><stop stop-color="#e8547a"/><stop offset="1" stop-color="#f0c84c"/></linearGradient></defs></svg>
+      <div class="overall-pct" id="prog-pct">0%</div>
+      <div class="overall-lbl">DONE</div>
+    </div>
+    <div class="overall-info">
+      <div class="overall-title">เส้นทางสู่การอ่านมังงะ</div>
+      <div class="overall-bars" id="overall-bars"></div>
+    </div>
+  </div>
+
+  <!-- STAGE CARDS -->
+  <div class="section-label anim anim-2">🗂️ Learning Stages</div>
+  <div class="stages-grid anim anim-2" id="stages-grid">
+    <!-- จะ render ด้วย JS -->
+  </div>
+
+  <!-- LEARNING GUIDE -->
+  <div class="guide-section anim anim-3">
+    <div class="section-label">🗺️ เริ่มต้นอย่างไร? — Learning Roadmap</div>
+    <div class="guide-steps" id="guide-steps"></div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="section-label anim anim-3">⚡ Quick Actions</div>
+  <div class="quick-grid anim anim-3">
+    <a class="qa" href="vocab-stage3.html">
+      <div class="qa-icon">🔁</div>
+      <div class="qa-title">SRS Review</div>
+      <div class="qa-desc" id="qa-due">ทบทวนการ์ดที่ถึงเวลา</div>
+    </a>
+    <a class="qa" href="japanese-learning.html">
+      <div class="qa-icon">あ</div>
+      <div class="qa-title">Kana Practice</div>
+      <div class="qa-desc">Hiragana & Katakana Quiz</div>
+    </a>
+    <a class="qa" href="grammar-stage2.html">
+      <div class="qa-icon">🎯</div>
+      <div class="qa-title">Grammar Quiz</div>
+      <div class="qa-desc">ทดสอบ Grammar N5→N4</div>
+    </a>
+    <a class="qa" href="vocab-stage3.html">
+      <div class="qa-icon">🧩</div>
+      <div class="qa-title">Matching Game</div>
+      <div class="qa-desc">จับคู่คำศัพท์ JP ↔ Thai</div>
+    </a>
+    <a class="qa" href="grammar-stage2.html">
+      <div class="qa-icon">⚡</div>
+      <div class="qa-title">Conjugation Speed</div>
+      <div class="qa-desc">ผัน Verb ให้เร็ว! 60 วินาที</div>
+    </a>
+    <a class="qa" href="vocab-stage3.html">
+      <div class="qa-icon">🌱</div>
+      <div class="qa-title">Learn New Words</div>
+      <div class="qa-desc">เรียนคำศัพท์ใหม่วันนี้</div>
+    </a>
+  </div>
+
+  <!-- TIPS -->
+  <div class="section-label anim anim-4">💡 Daily Study Tips</div>
+  <div class="tip-row anim anim-4">
+    <div class="tip"><div class="tip-icon">⏱️</div><div class="tip-title">15 นาที/วัน ดีกว่า 2 ชั่วโมง/สัปดาห์</div><div class="tip-text">สมองจำสิ่งที่ทบทวนสม่ำเสมอได้ดีกว่า การเรียนทุกวัน แม้แค่สั้นๆ สร้าง long-term memory</div></div>
+    <div class="tip"><div class="tip-icon">🎯</div><div class="tip-title">SRS ก่อนเสมอ</div><div class="tip-text">เปิดเว็บ → ทำ SRS Review ก่อนทุกอย่าง ถ้าไม่มีเวลา ทำแค่ SRS พอ ดีกว่าข้ามทั้งวัน</div></div>
+    <div class="tip"><div class="tip-icon">📖</div><div class="tip-title">Output เร็วที่สุดที่ทำได้</div><div class="tip-text">หาอ่านมังงะง่ายๆ เช่น Yotsuba& หรือ Doraemon ตั้งแต่ N5 รู้ครบ สมองจะเชื่อมโยงเร็วมาก</div></div>
+    <div class="tip"><div class="tip-icon">🔥</div><div class="tip-title">Streak คือ superpower</div><div class="tip-text">ติด streak ไว้ ถึงแม้วันไหนยุ่งมาก ทำ SRS แค่ 5 นาทีก็รักษา streak ไว้ได้</div></div>
+  </div>
+
+</div>
+
+  <!-- CREDIT -->
+  <div style="text-align:center;padding:32px 0 8px;border-top:1px solid var(--border);margin-top:16px">
+    <div style="font-family:'Shippori Mincho';font-size:22px;color:var(--sakura);font-weight:700;letter-spacing:2px">Yor</div>
+    <div style="font-size:11px;color:var(--text3);font-family:'DM Mono';letter-spacing:3px;text-transform:uppercase;margin-top:4px">Created &amp; Designed by Yor</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px">Yor's Road to Reading Japanese Manga &nbsp;·&nbsp; 日本語道場</div>
+  </div>
+
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════
+// READ DATA FROM ALL 3 STAGES
+// ═══════════════════════════════════════
+function getS1(){
+  return {
+    hiraLearned: JSON.parse(localStorage.getItem('hiraLearned')||'[]').length,
+    kataLearned: JSON.parse(localStorage.getItem('kataLearned')||'[]').length,
+    vocabKnown:  JSON.parse(localStorage.getItem('vocabKnown')||'[]').length,
+    kanjiKnown:  JSON.parse(localStorage.getItem('kanjiKnown')||'[]').length,
+  };
+}
+function getS2(){
+  const prog = JSON.parse(localStorage.getItem('gd_p')||'{}');
+  const sections = ['verb','part','nai','cond','end'];
+  const vals = sections.map(k=>prog[k]||0);
+  const avg = vals.reduce((a,b)=>a+b,0)/vals.length;
+  return { prog, avg: Math.round(avg), sections };
+}
+function getS3(){
+  const srs = JSON.parse(localStorage.getItem('vd_srs')||'{}');
+  const raw = localStorage.getItem('vd_stats');
+  let stats = {streak:0,lastDate:'',dailyReviewed:0,history:[]};
+  if(raw){try{stats=JSON.parse(raw);}catch(e){}}
+  const cards = Object.values(srs);
+  const learned = cards.filter(c=>c.reps>0).length;
+  const due = cards.filter(c=>c.due<=Date.now()&&c.state!=='new').length;
+  const mature = cards.filter(c=>c.state==='mature').length;
+  return { learned, due, mature, stats, totalCards:250 };
+}
+function today(){return new Date().toISOString().slice(0,10);}
+function getStreak(){
+  const s3=getS3();const st=s3.stats;
+  const td=today();const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(st.lastDate===td||st.lastDate===yest) return st.streak||0;
+  return 0;
+}
+
+// ═══════════════════════════════════════
+// STAGE CONFIGS
+// ═══════════════════════════════════════
+const STAGES=[
+  {
+    cls:'s1',num:'sn1',file:'japanese-learning.html',icon:'🔤',
+    stage:'Stage 1',title:'Kana & Foundation',jp:'かな・基礎',
+    desc:'Hiragana 46 + Katakana 46 ตัวอักษรพื้นฐาน, Grammar N5 เบื้องต้น, Kanji N5 80 ตัว — รากฐานของทุกอย่าง',
+    color:'var(--blue)',hex:'#4a8fff',
+    getProgress(s1){
+      const hira=Math.round(s1.hiraLearned/46*100);
+      const kata=Math.round(s1.kataLearned/46*100);
+      const kanji=Math.min(100,Math.round(s1.kanjiKnown/80*100));
+      const avg=Math.round((hira+kata+kanji)/3);
+      return {
+        pct:avg,
+        bars:[
+          {label:'Hiragana',val:hira,max:46,done:s1.hiraLearned},
+          {label:'Katakana',val:kata,max:46,done:s1.kataLearned},
+          {label:'Kanji N5',val:kanji,max:80,done:s1.kanjiKnown},
+        ],
+        stats:[
+          {num:s1.hiraLearned+s1.kataLearned,lbl:'Kana'},
+          {num:s1.kanjiKnown,lbl:'Kanji'},
+          {num:s1.vocabKnown,lbl:'Vocab'},
+        ]
+      };
+    },
+    unlock:0,
+    actionText:'เปิด Stage 1 →',
+    tip:'เริ่มที่ Hiragana ก่อน ใช้เวลา 1-2 สัปดาห์'
+  },
+  {
+    cls:'s2',num:'sn2',file:'grammar-stage2.html',icon:'📖',
+    stage:'Stage 2',title:'Grammar N5 → N4',jp:'文法道場',
+    desc:'Verb Conjugation, Particles, ない/たい/できる, Conditionals, Sentence Endings — ต้องรู้ก่อนอ่านมังงะ',
+    color:'var(--gold2)',hex:'#f0c84c',
+    getProgress(s2){
+      const labels={verb:'Verb Conj.',part:'Particles',nai:'ない/たい',cond:'Conditionals',end:'Endings'};
+      return {
+        pct:s2.avg,
+        bars:s2.sections.map(k=>({label:labels[k],val:s2.prog[k]||0,max:100,done:s2.prog[k]||0})),
+        stats:[
+          {num:s2.sections.filter(k=>(s2.prog[k]||0)>=70).length,lbl:'บทผ่าน'},
+          {num:5,lbl:'บทรวม'},
+          {num:s2.avg+'%',lbl:'เฉลี่ย'},
+        ]
+      };
+    },
+    unlock:30,
+    actionText:'เปิด Stage 2 →',
+    tip:'ทำ Quiz ทุกบทให้ได้ 70%+ ก่อนไป Stage 3'
+  },
+  {
+    cls:'s3',num:'sn3',file:'vocab-stage3.html',icon:'🌿',
+    stage:'Stage 3',title:'Vocabulary SRS',jp:'語彙道場',
+    desc:'ระบบ SRS ทบทวนคำศัพท์ 1,500-2,000 คำ — เป้าหมาย 250+ คำในเว็บนี้ + ใช้ Anki ต่อ',
+    color:'var(--jade2)',hex:'#4dd9a0',
+    getProgress(s3){
+      const pct=Math.round(s3.learned/s3.totalCards*100);
+      const maturePct=Math.round(s3.mature/s3.totalCards*100);
+      return {
+        pct,
+        bars:[
+          {label:'Learned',val:pct,max:100,done:s3.learned},
+          {label:'Mature',val:maturePct,max:100,done:s3.mature},
+          {label:'Due Today',val:Math.min(100,s3.due*5),max:100,done:s3.due,color:'#e8547a'},
+        ],
+        stats:[
+          {num:s3.learned,lbl:'เรียนแล้ว'},
+          {num:s3.due,lbl:'ต้องทบทวน'},
+          {num:s3.stats.streak||0,lbl:'Day Streak'},
+        ]
+      };
+    },
+    unlock:50,
+    actionText:'เปิด Stage 3 →',
+    tip:'ทำ SRS ทุกวัน 15 นาที — สม่ำเสมอสำคัญกว่าเยอะ'
+  }
+];
+
+// ═══════════════════════════════════════
+// RENDER STAGES
+// ═══════════════════════════════════════
+function renderStages(){
+  const s1=getS1(),s2=getS2(),s3=getS3();
+  const data=[s1,s2,s3];
+  const el=document.getElementById('stages-grid');
+  const s1pct=Math.round((s1.hiraLearned/46+s1.kataLearned/46)/2*100);
+
+  STAGES.forEach((st,i)=>{
+    const raw=i===0?s1:i===1?s2:s3;
+    const prog=st.getProgress(raw);
+    const locked=i===1&&s1pct<st.unlock||i===2&&s2.avg<st.unlock;
+    const card=document.createElement('a');
+    card.className='stage-card '+st.cls;
+    card.href=locked?'#':st.file;
+    if(locked){card.onclick=(e)=>{e.preventDefault();showN(`เรียน Stage ${i} ให้ได้ ${st.unlock}% ก่อนนะ`);};}
+
+    const barsHTML=prog.bars.slice(0,3).map(b=>`
+      <div class="ob-row" style="margin-bottom:6px">
+        <span class="ob-label">${b.label}</span>
+        <div class="ob-bar"><div class="ob-fill" style="width:${b.val}%;background:${b.color||st.hex}88"></div></div>
+        <span class="ob-val" style="color:${b.color||st.hex}">${b.done}${b.max===100?'%':'/'+b.max}</span>
+      </div>`).join('');
+
+    card.innerHTML=`
+      ${locked?`<div class="stage-lock">🔒</div>`:''}
+      <div class="stage-header">
+        <div>
+          <div class="stage-num ${st.num}">${st.stage}</div>
+          <div style="margin-top:8px;font-size:32px">${st.icon}</div>
+        </div>
+        <div class="stage-info">
+          <div class="stage-title">${st.title}</div>
+          <div class="stage-jp">${st.jp}</div>
+          <div style="margin-top:6px">
+            <span style="font-family:'DM Mono';font-size:20px;font-weight:700;color:${st.hex}">${prog.pct}%</span>
+            <span style="font-size:10px;color:var(--text3);margin-left:4px">complete</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:var(--border);border-radius:3px;height:4px;margin-bottom:14px;overflow:hidden">
+        <div style="height:100%;width:${prog.pct}%;background:linear-gradient(90deg,${st.hex}88,${st.hex});border-radius:3px;transition:width .8s ease"></div>
+      </div>
+      <div class="stage-desc">${st.desc}</div>
+      <div style="margin-bottom:14px">${barsHTML}</div>
+      <div class="stage-stats">${prog.stats.map(s=>`<div class="sstat"><div class="sstat-num" style="color:${st.hex}">${s.num}</div><div class="sstat-lbl">${s.lbl}</div></div>`).join('')}</div>
+      <div class="stage-action">
+        <span style="font-size:11px;color:var(--text3)">${st.tip}</span>
+        <span class="open-btn">${locked?'🔒 Locked':st.actionText} →</span>
+      </div>`;
+    el.appendChild(card);
+  });
+}
+
+// ═══════════════════════════════════════
+// OVERALL PROGRESS
+// ═══════════════════════════════════════
+function renderOverall(){
+  const s1=getS1(),s2=getS2(),s3=getS3();
+  const s1pct=Math.round((s1.hiraLearned/46+s1.kataLearned/46+Math.min(1,s1.kanjiKnown/80))/3*100);
+  const s2pct=s2.avg;
+  const s3pct=Math.round(s3.learned/s3.totalCards*100);
+  const overall=Math.round((s1pct*0.3+s2pct*0.3+s3pct*0.4));
+
+  document.getElementById('prog-pct').textContent=overall+'%';
+  const circumference=239;const offset=circumference*(1-overall/100);
+  document.getElementById('prog-circle').style.strokeDashoffset=offset;
+
+  const bars=[
+    {label:'Stage 1 — Kana/Kanji',val:s1pct,color:'#4a8fff'},
+    {label:'Stage 2 — Grammar',val:s2pct,color:'#f0c84c'},
+    {label:'Stage 3 — Vocabulary',val:s3pct,color:'#4dd9a0'},
+  ];
+  document.getElementById('overall-bars').innerHTML=bars.map(b=>`
+    <div class="ob-row">
+      <span class="ob-label">${b.label}</span>
+      <div class="ob-bar"><div class="ob-fill" style="width:${b.val}%;background:${b.color}"></div></div>
+      <span class="ob-val" style="color:${b.color}">${b.val}%</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// TODAY MISSION
+// ═══════════════════════════════════════
+function renderToday(){
+  const s1=getS1(),s2=getS2(),s3=getS3();
+  const s1pct=Math.round((s1.hiraLearned/46+s1.kataLearned/46)/2*100);
+  const streak=getStreak();
+  const due=s3.due;
+  const td=today();
+  const didReviewToday=s3.stats.lastDate===td;
+
+  let icon,title,desc,actions=[];
+  const tasks=[];
+
+  if(s1.hiraLearned===0&&s1.kataLearned===0){
+    // BRAND NEW USER
+    icon='👋';
+    title='ยินดีต้อนรับ! เริ่มจาก Hiragana เลย';
+    desc='คุณยังไม่ได้เรียนเลย เริ่มต้นด้วย Hiragana 46 ตัวอักษร ใช้เวลาแค่ 1-2 สัปดาห์ก็จำได้ทั้งหมด แล้วต่อด้วย Katakana, Grammar และ Vocabulary ตามลำดับ';
+    actions=[{text:'🔤 เริ่มเรียน Hiragana',href:'japanese-learning.html',cls:'btn-primary'}];
+    tasks.push({dot:'todo',text:'เรียน Hiragana วันนี้',sub:'Stage 1 → Hiragana'});
+  } else if(s1.hiraLearned<46){
+    icon='🔤';
+    title=`เรียน Hiragana ต่อ (${s1.hiraLearned}/46)`;
+    desc=`เรียนมาแล้ว ${s1.hiraLearned} ตัว เหลืออีก ${46-s1.hiraLearned} ตัว ทำต่อได้เลย!`;
+    actions=[{text:'📖 เรียน Hiragana ต่อ',href:'japanese-learning.html',cls:'btn-primary'}];
+    tasks.push({dot:'todo',text:'Hiragana ให้ครบ 46',sub:`${s1.hiraLearned}/46 ✓`});
+  } else if(s1.kataLearned<46){
+    icon='ア';
+    title=`เรียน Katakana ต่อ (${s1.kataLearned}/46)`;
+    desc=`Hiragana ครบแล้ว ตอนนี้ Katakana! เหลืออีก ${46-s1.kataLearned} ตัว`;
+    actions=[{text:'ア เรียน Katakana',href:'japanese-learning.html',cls:'btn-primary'}];
+    tasks.push({dot:'done',text:'Hiragana 46/46 ✓',sub:'เสร็จแล้ว!'});
+    tasks.push({dot:'todo',text:'Katakana ให้ครบ 46',sub:`${s1.kataLearned}/46 ✓`});
+  } else if(due>0&&!didReviewToday){
+    icon='🔁';
+    title=`มี ${due} การ์ดรอทบทวน — อย่าลืมนะ!`;
+    desc=`SRS Review คือสิ่งสำคัญที่สุดวันนี้ การ์ด ${due} ใบถึงเวลาทบทวนแล้ว ทำก่อนเลย ใช้เวลาแค่ 5-15 นาที`;
+    actions=[
+      {text:'🔁 ทบทวนเลย',href:'vocab-stage3.html',cls:'btn-jade'},
+      {text:'📖 Grammar',href:'grammar-stage2.html',cls:'btn-ghost'},
+    ];
+    tasks.push({dot:'todo',text:`SRS Review (${due} ใบ)`,sub:'สำคัญที่สุด — ทำก่อน!'});
+    tasks.push({dot:'optional',text:'Quiz Grammar',sub:'grammar-stage2.html'});
+    tasks.push({dot:'optional',text:'เรียนคำใหม่',sub:'vocab-stage3.html'});
+  } else if(s2.avg<50&&s1pct>=80){
+    icon='📖';
+    title='เรียน Grammar ต่อ — ยังไม่ครบครึ่ง';
+    desc=`Grammar เฉลี่ย ${s2.avg}% ทำ Quiz ทุกบทให้ได้ 70%+ จะช่วยให้อ่านประโยคในมังงะได้`;
+    actions=[
+      {text:'📖 เรียน Grammar',href:'grammar-stage2.html',cls:'btn-gold'},
+      {text:'🔁 SRS Review',href:'vocab-stage3.html',cls:'btn-ghost'},
+    ];
+    tasks.push(due>0?{dot:'todo',text:`SRS ${due} ใบ`,sub:'ทำก่อน'}:{dot:'done',text:'SRS ทำแล้ววันนี้',sub:'✓'});
+    tasks.push({dot:'todo',text:'Grammar Quiz',sub:`เฉลี่ย ${s2.avg}%`});
+  } else if(didReviewToday){
+    icon='✅';
+    title=`ยอดเยี่ยม! ทำครบแล้ววันนี้ — Streak: ${streak} วัน`;
+    desc='ทำ SRS ครบแล้ววันนี้ สมองจะจำได้ดีขึ้นเรื่อยๆ ถ้าอยากทำเพิ่ม ลองเรียนคำใหม่ หรือเล่นเกมส์ก็ได้';
+    actions=[
+      {text:'🌱 เรียนคำใหม่',href:'vocab-stage3.html',cls:'btn-jade'},
+      {text:'🎮 Games',href:'grammar-stage2.html',cls:'btn-ghost'},
+    ];
+    tasks.push({dot:'done',text:'SRS Review ✓',sub:'ทำแล้ววันนี้'});
+    tasks.push({dot:'optional',text:'เรียนคำใหม่ (bonus)',sub:'vocab-stage3.html'});
+    tasks.push({dot:'optional',text:'Grammar Games (bonus)',sub:'grammar-stage2.html'});
+  } else {
+    icon='📚';
+    title='เรียนต่อเลย — ทุกอย่างกำลังไปได้ดี';
+    desc='เลือกว่าจะทำอะไรวันนี้ หรือกด SRS ก่อนเป็นอันดับแรกเสมอ';
+    actions=[
+      {text:'🔁 SRS Review',href:'vocab-stage3.html',cls:'btn-jade'},
+      {text:'📖 Grammar',href:'grammar-stage2.html',cls:'btn-ghost'},
+    ];
+    tasks.push({dot:'todo',text:'SRS Review',sub:'ก่อนเสมอ'});
+    tasks.push({dot:'optional',text:'Grammar Quiz',sub:'grammar-stage2.html'});
+  }
+
+  document.getElementById('td-icon').textContent=icon;
+  document.getElementById('td-title').textContent=title;
+  document.getElementById('td-desc').textContent=desc;
+  document.getElementById('td-actions').innerHTML=actions.map(a=>`<a href="${a.href}" class="btn ${a.cls}">${a.text}</a>`).join('');
+  document.getElementById('td-tasks').innerHTML=tasks.map(t=>`
+    <div class="task-item"><div class="task-dot ${t.dot}"></div><div><div class="task-text">${t.text}</div><div class="task-sub">${t.sub}</div></div></div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════
+function renderHeader(){
+  const streak=getStreak();const s3=getS3();const td=today();
+  document.getElementById('hdr-streak').textContent=streak;
+  document.getElementById('hdr-fire').textContent=streak>=7?'🔥':streak>=3?'✨':'💧';
+  const last=s3.stats.lastDate;
+  document.getElementById('hdr-last').textContent=last===td?'✅ เรียนแล้ววันนี้':last?`เรียนล่าสุด: ${last}`:'ยังไม่ได้เรียนวันนี้';
+}
+
+// ═══════════════════════════════════════
+// GUIDE
+// ═══════════════════════════════════════
+const GUIDE=[
+  {num:'1',title:'เรียน Hiragana 46 ตัว',desc:'เปิด Stage 1 → Hiragana เรียนทีละ row จนจำได้ทั้งหมด — ใช้ Grid + Quiz สลับกัน',time:'1-2 สัปดาห์ (15 นาที/วัน)',tcol:'rgba(74,143,255,.2)',ncol:'#4a8fff'},
+  {num:'2',title:'เรียน Katakana 46 ตัว',desc:'เหมือน Hiragana เลย ใช้ logic เดิม ง่ายกว่าเพราะมี Hiragana เป็น base แล้ว',time:'1 สัปดาห์',tcol:'rgba(74,143,255,.2)',ncol:'#4a8fff'},
+  {num:'3',title:'Grammar N5 ใน Stage 2',desc:'เรียนทุกบท → ทำ Quiz ให้ได้ 70%+ ก่อนไปต่อ เน้น Particles (は が を) และ Verb Conjugation',time:'2-4 สัปดาห์',tcol:'rgba(212,168,58,.15)',ncol:'#f0c84c'},
+  {num:'4',title:'เริ่ม SRS ใน Stage 3',desc:'เปิด Stage 3 → เรียนการ์ดใหม่ 15-20 คำ/วัน แล้วทำ SRS Review ทุกเช้า — ทำทุกวันสำคัญมาก',time:'ตลอดไป (15 นาที/วัน)',tcol:'rgba(45,184,126,.12)',ncol:'#4dd9a0'},
+  {num:'5',title:'ติดตั้ง Anki เพิ่ม',desc:'เมื่อเรียนครบ 250 คำในเว็บนี้ ให้ download Kaishi 1.5k หรือ Core 2000 ใน Anki ต่อ เพื่อถึง 1,500-2,000 คำ',time:'หลังจากนั้น',tcol:'rgba(155,122,255,.15)',ncol:'#9b7aff'},
+  {num:'✓',title:'เริ่มอ่านมังงะ!',desc:'พอมีคำ 1,000-1,500 คำ + Grammar N4 → ลองอ่าน Yotsuba& หรือ Shirokuma Cafe ได้เลย ไม่ต้องรู้ทุกคำก็ได้',time:'ภายใน 6-12 เดือน',tcol:'rgba(232,84,122,.15)',ncol:'#e8547a'},
+];
+
+function renderGuide(){
+  const el=document.getElementById('guide-steps');
+  el.innerHTML=GUIDE.map(g=>`
+    <div class="guide-step">
+      <div class="gstep-left"><div class="gstep-num" style="background:${g.tcol};color:${g.ncol};border:1px solid ${g.ncol}44">${g.num}</div></div>
+      <div class="gstep-body">
+        <div class="gstep-title">${g.title}</div>
+        <div class="gstep-desc">${g.desc}</div>
+        <div class="gstep-time" style="background:${g.tcol};color:${g.ncol}">⏱ ${g.time}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// QUICK ACTIONS BADGE
+// ═══════════════════════════════════════
+function renderQA(){
+  const due=getS3().due;
+  document.getElementById('qa-due').textContent=due>0?`${due} การ์ดรอทบทวน!`:'ไม่มีการ์ด due';
+}
+
+// ═══════════════════════════════════════
+// PARTICLES
+// ═══════════════════════════════════════
+function initParticles(){
+  const c=document.getElementById('particles');
+  const chars=['あ','い','う','え','お','か','き','く','け','こ','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ア','イ','ウ','エ','オ','学','語','話','読','書','見'];
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');p.className='p';
+    const size=Math.random()*14+10;
+    p.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;font-size:${size}px;font-family:'Shippori Mincho';color:${Math.random()>.5?'#e8547a':'#4a8fff'};background:transparent;border-radius:0;animation-duration:${Math.random()*20+15}s;animation-delay:${Math.random()*10}s;display:flex;align-items:center;justify-content:center;width:auto;height:auto`;
+    p.textContent=chars[Math.floor(Math.random()*chars.length)];
+    c.appendChild(p);
+  }
+}
+
+// NOTIF
+function showN(m){const e=document.getElementById('notif');e.textContent=m;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2500);}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+window.onload=()=>{
+  initParticles();
+  renderHeader();
+  renderToday();
+  renderOverall();
+  renderStages();
+  renderGuide();
+  renderQA();
+};
+</script>
+</body>
+</html>

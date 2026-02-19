@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文法道場 — Japanese Grammar Stage 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Sarabun:wght@300;400;500;600;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0b0b18;--ink2:#12122a;--ink3:#1a1a38;--paper:#1e1e40;--paper2:#252550;--border:#2e2e5e;--amber:#e8c87a;--amber2:#f5e0a0;--red:#c0392b;--red2:#e74c3c;--jade:#1a7a5e;--jade2:#27ae60;--blue:#2271b3;--blue2:#3498db;--text:#d8d8f0;--text2:#8888bb;--text3:#444480;--white:#f0f0ff;--gold:#d4a520;--gold2:#f0c040;--sw:230px}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}
+body{font-family:'Sarabun','Noto Sans JP',sans-serif;background:var(--ink);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--ink)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sidebar{position:fixed;left:0;top:0;width:var(--sw);height:100vh;background:var(--ink2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.logo{padding:18px 16px 14px;border-bottom:1px solid var(--border);background:linear-gradient(135deg,rgba(232,200,122,.06),transparent)}
+.logo-jp{font-family:'Noto Serif JP';font-size:18px;color:var(--amber);font-weight:900;letter-spacing:2px}
+.logo-en{font-family:'Cinzel';font-size:8px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-top:3px}
+.logo-badge{display:inline-block;background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;font-size:9px;padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:700;letter-spacing:1px}
+.ng{padding:6px 0;border-bottom:1px solid var(--border)}
+.ngl{font-size:8px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:5px 16px 3px}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 16px;cursor:pointer;font-size:12px;color:var(--text2);border-left:3px solid transparent;transition:all .2s}
+.ni:hover{background:var(--paper);color:var(--text)}.ni.active{background:linear-gradient(90deg,rgba(232,200,122,.08),transparent);color:var(--amber);border-left-color:var(--amber)}
+.nicon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.np{margin-left:auto;font-size:9px;background:var(--paper2);padding:2px 5px;border-radius:6px;color:var(--amber);white-space:nowrap}
+.main{margin-left:var(--sw);min-height:100vh}
+.page{display:none;padding:28px;animation:fadeUp .3s ease}.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phd{margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.phd h1{font-family:'Noto Serif JP';font-size:28px;color:var(--white);font-weight:900}
+.phd .jps{font-size:12px;color:var(--amber);margin-top:3px;font-family:'Noto Serif JP'}
+.phd p{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.7;max-width:640px}
+.tabs{display:flex;gap:0;margin-bottom:20px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tab{padding:9px 16px;font-size:12px;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all .2s;font-family:'Sarabun';white-space:nowrap}
+.tab:hover{color:var(--text)}.tab.active{color:var(--amber);border-bottom-color:var(--amber)}
+.tp{display:none}.tp.active{display:block}
+.card{background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
+.ct{font-size:14px;font-weight:700;color:var(--white);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.ibox{background:rgba(26,122,94,.12);border:1px solid var(--jade);border-radius:8px;padding:11px 14px;font-size:13px;color:#5ddb9a;margin-bottom:14px;line-height:1.7}
+.abox{background:rgba(212,165,32,.1);border:1px solid var(--gold);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--amber2);margin-bottom:14px;line-height:1.7}
+.rbox{background:rgba(192,57,43,.1);border-left:4px solid var(--red2);border-radius:0 8px 8px 0;padding:11px 14px;font-size:13px;color:#f0a0a0;margin:10px 0;line-height:1.7}
+.ex{background:var(--ink3);border-left:3px solid var(--amber);padding:10px 14px;border-radius:0 8px 8px 0;margin:8px 0}
+.exj{font-family:'Noto Sans JP';font-size:16px;color:var(--white)}
+.exr{font-size:11px;color:var(--text3);font-style:italic;margin-top:2px}
+.ext{font-size:12px;color:var(--text2);margin-top:4px}
+.exn{font-size:11px;color:var(--gold);margin-top:4px}
+.gt{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+.gt th{background:var(--paper2);color:var(--amber);padding:8px 12px;text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.gt td{padding:9px 12px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top}
+.gt tr:last-child td{border-bottom:none}.gt tr:hover td{background:rgba(232,200,122,.04)}
+.gt .jp{font-family:'Noto Sans JP';font-size:15px;color:var(--white)}
+.gt .am{color:var(--amber);font-weight:700}.gt .jd{color:var(--jade2)}.gt .rd{color:var(--red2)}
+.btn{padding:9px 20px;border:none;border-radius:8px;cursor:pointer;font-family:'Sarabun';font-size:13px;font-weight:600;transition:all .2s}
+.bam{background:var(--amber);color:#000}.bam:hover{background:var(--amber2);transform:translateY(-1px)}
+.bred{background:var(--red2);color:#fff}.bred:hover{background:var(--red)}
+.bjd{background:var(--jade);color:#fff}.bjd:hover{background:var(--jade2)}
+.bol{background:transparent;color:var(--text2);border:1px solid var(--border)}.bol:hover{border-color:var(--amber);color:var(--amber)}
+.qchar{font-family:'Noto Sans JP';font-size:18px;color:var(--white);background:var(--ink3);border:1px solid var(--border);border-radius:10px;padding:14px 18px;margin:14px 0;line-height:1.8;white-space:pre-wrap}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.qopt{padding:9px 18px;background:var(--paper2);border:2px solid var(--border);border-radius:8px;cursor:pointer;font-size:15px;font-family:'Noto Sans JP';color:var(--text);transition:all .15s}
+.qopt:hover{border-color:var(--amber);background:rgba(232,200,122,.08)}
+.qopt.ok{border-color:var(--jade2);background:rgba(39,174,96,.15);color:var(--jade2)}
+.qopt.bad{border-color:var(--red2);background:rgba(231,76,60,.12);color:var(--red2)}
+.sbar{display:flex;justify-content:space-between;align-items:center;background:var(--ink3);border-radius:8px;padding:9px 14px;margin-bottom:14px;font-size:12px;color:var(--text2)}
+.snum{font-family:'Noto Serif JP';font-size:20px;color:var(--amber);font-weight:900}
+.pbar{height:5px;background:var(--paper2);border-radius:3px;overflow:hidden}
+.pbf{height:100%;background:linear-gradient(90deg,var(--jade),var(--amber));border-radius:3px;transition:width .4s}
+.notif{position:fixed;bottom:18px;right:18px;background:var(--paper);border:1px solid var(--border);border-radius:10px;padding:10px 16px;font-size:13px;z-index:999;transform:translateY(60px);opacity:0;transition:all .3s}
+.notif.show{transform:translateY(0);opacity:1}.notif.ok{border-color:var(--jade2);color:#5ddb9a}.notif.bad{border-color:var(--red2);color:var(--red2)}
+.ham{color:var(--amber);font-weight:700}.hjd{color:var(--jade2);font-weight:700}.hrd{color:var(--red2);font-weight:700}
+.vtag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:1px;margin-right:4px}
+.vru{background:rgba(52,152,219,.2);color:#5dade2;border:1px solid #2980b9}
+.vu{background:rgba(39,174,96,.2);color:var(--jade2);border:1px solid var(--jade)}
+.virr{background:rgba(231,76,60,.2);color:var(--red2);border:1px solid var(--red)}
+.acc{margin-bottom:8px}
+.acch{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--paper);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .2s}
+.acch:hover{background:var(--paper2)}.acch.open{border-radius:10px 10px 0 0;border-color:var(--amber)}
+.accb{display:none;background:var(--ink3);border:1px solid var(--amber);border-top:none;border-radius:0 0 10px 10px;padding:14px 16px}
+.accb.open{display:block}
+.gcard{background:var(--paper);border:2px solid var(--border);border-radius:14px;padding:18px;cursor:pointer;transition:all .2s;text-align:center}
+.gcard:hover{border-color:var(--amber);transform:translateY(-3px);box-shadow:0 8px 24px rgba(232,200,122,.1)}
+.gtitle{font-size:15px;font-weight:700;color:var(--white);margin:8px 0 5px}
+.gdesc{font-size:12px;color:var(--text2);line-height:1.5}
+.wbank{display:flex;flex-wrap:wrap;gap:7px;background:var(--ink3);border:1px dashed var(--border);border-radius:10px;padding:12px;min-height:54px;margin:10px 0}
+.wtok{padding:6px 12px;background:var(--paper2);border:1px solid var(--border);border-radius:6px;font-family:'Noto Sans JP';font-size:14px;cursor:pointer;transition:all .15s;user-select:none}
+.wtok:hover{border-color:var(--amber);color:var(--amber)}.wtok.used{opacity:.3;pointer-events:none}.wtok.inans{background:rgba(232,200,122,.15);border-color:var(--amber);color:var(--amber)}
+.azone{display:flex;flex-wrap:wrap;gap:7px;background:rgba(232,200,122,.05);border:2px dashed var(--amber);border-radius:10px;padding:12px;min-height:54px;margin:10px 0;align-items:center}
+.aph{font-size:11px;color:var(--text3)}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+.pop{animation:popIn .3s ease}.shk{animation:shake .3s ease}
+.divider{height:1px;background:var(--border);margin:16px 0}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-jp">文法道場</div>
+    <div class="logo-en">Grammar Dojo · Stage 2</div>
+    <div class="logo-badge">N5 → N4 GRAMMAR</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">Overview</div>
+    <div class="ni active" onclick="nav('home')"><span class="nicon">🏯</span> แดชบอร์ด</div>
+    <div class="ni" onclick="nav('sources')"><span class="nicon">📚</span> แหล่งเรียน</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">บทเรียน</div>
+    <div class="ni" onclick="nav('verb')"><span class="nicon">🔵</span> Verb Conjugation<span class="np" id="np-verb">0%</span></div>
+    <div class="ni" onclick="nav('particle')"><span class="nicon">🟡</span> Particles<span class="np" id="np-part">0%</span></div>
+    <div class="ni" onclick="nav('naitai')"><span class="nicon">🔴</span> ない・たい・できる<span class="np" id="np-nai">0%</span></div>
+    <div class="ni" onclick="nav('cond')"><span class="nicon">🟢</span> Conditionals<span class="np" id="np-cond">0%</span></div>
+    <div class="ni" onclick="nav('endings')"><span class="nicon">🟣</span> Sentence Endings<span class="np" id="np-end">0%</span></div>
+  </div>
+  <div class="ng">
+    <div class="ngl">Practice</div>
+    <div class="ni" onclick="nav('games')"><span class="nicon">🎮</span> Grammar Games</div>
+    <div class="ni" onclick="nav('mquiz')"><span class="nicon">🏆</span> Master Quiz</div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="phd"><h1>ด่านที่ 2 — Grammar N5→N4</h1><div class="jps">文法の道 — Bunpou no Michi</div><p>ครอบคลุมทุกหัวข้อ Grammar จำเป็นก่อนอ่านมังงะ — เรียน → ตัวอย่าง → Quiz → เกมส์</p></div>
+  <div class="g2" style="margin-bottom:16px">
+    <div class="card"><div class="ct">📊 ความก้าวหน้า</div>
+      <div style="display:flex;flex-direction:column;gap:10px" id="home-prog"></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px"><div class="ct">🎯 เป้าหมายวันนี้</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--text2)">
+          <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="g1" style="accent-color:var(--amber)" onchange="saveGoal()"> เรียน 1 บทจนจบ</label>
+          <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="g2" style="accent-color:var(--amber)" onchange="saveGoal()"> ทำ Quiz ≥70%</label>
+          <label style="display:flex;gap:8px;align-items:center;cursor:pointer"><input type="checkbox" id="g3" style="accent-color:var(--amber)" onchange="saveGoal()"> เล่นเกมส์ 1 รอบ</label>
+        </div>
+      </div>
+      <div class="card"><div class="ct">⚡ เริ่มเลย</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="btn bam" onclick="nav('verb')" style="font-size:12px">🔵 Verbs</button>
+          <button class="btn bol" onclick="nav('particle')" style="font-size:12px">🟡 Particles</button>
+          <button class="btn bol" onclick="nav('naitai')" style="font-size:12px">🔴 ない/たい</button>
+          <button class="btn bol" onclick="nav('cond')" style="font-size:12px">🟢 If/When</button>
+          <button class="btn bol" onclick="nav('games')" style="font-size:12px">🎮 Games</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card"><div class="ct">🗺️ Grammar Roadmap N5→N4</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:8px">
+      <div style="background:var(--ink3);border:1px solid #2980b9;border-radius:10px;padding:12px;cursor:pointer" onclick="nav('verb')">
+        <div style="font-size:18px">🔵</div><div style="font-size:12px;font-weight:700;color:var(--white);margin:5px 0">Verb Conjugation</div>
+        <div style="font-size:10px;color:var(--text2)">る/う verbs · て · た</div>
+        <div style="display:inline-block;background:rgba(192,57,43,.2);color:var(--red2);border:1px solid var(--red);border-radius:10px;font-size:9px;font-weight:700;padding:2px 7px;margin-top:6px">N5</div>
+      </div>
+      <div style="background:var(--ink3);border:1px solid #d4a520;border-radius:10px;padding:12px;cursor:pointer" onclick="nav('particle')">
+        <div style="font-size:18px">🟡</div><div style="font-size:12px;font-weight:700;color:var(--white);margin:5px 0">Particles</div>
+        <div style="font-size:10px;color:var(--text2)">は が を に で から</div>
+        <div style="display:inline-block;background:rgba(192,57,43,.2);color:var(--red2);border:1px solid var(--red);border-radius:10px;font-size:9px;font-weight:700;padding:2px 7px;margin-top:6px">N5</div>
+      </div>
+      <div style="background:var(--ink3);border:1px solid var(--red2);border-radius:10px;padding:12px;cursor:pointer" onclick="nav('naitai')">
+        <div style="font-size:18px">🔴</div><div style="font-size:12px;font-weight:700;color:var(--white);margin:5px 0">ない・たい・できる</div>
+        <div style="font-size:10px;color:var(--text2)">ปฏิเสธ อยาก ทำได้</div>
+        <div style="display:inline-block;background:rgba(192,57,43,.2);color:var(--red2);border:1px solid var(--red);border-radius:10px;font-size:9px;font-weight:700;padding:2px 7px;margin-top:6px">N5</div>
+      </div>
+      <div style="background:var(--ink3);border:1px solid var(--jade);border-radius:10px;padding:12px;cursor:pointer" onclick="nav('cond')">
+        <div style="font-size:18px">🟢</div><div style="font-size:12px;font-weight:700;color:var(--white);margin:5px 0">Conditionals</div>
+        <div style="font-size:10px;color:var(--text2)">と · たら · ば</div>
+        <div style="display:inline-block;background:rgba(212,165,32,.2);color:var(--gold2);border:1px solid var(--gold);border-radius:10px;font-size:9px;font-weight:700;padding:2px 7px;margin-top:6px">N4</div>
+      </div>
+      <div style="background:var(--ink3);border:1px solid #8e44ad;border-radius:10px;padding:12px;cursor:pointer" onclick="nav('endings')">
+        <div style="font-size:18px">🟣</div><div style="font-size:12px;font-weight:700;color:var(--white);margin:5px 0">Sentence Endings</div>
+        <div style="font-size:10px;color:var(--text2)">か · ね · よ · よね</div>
+        <div style="display:inline-block;background:rgba(192,57,43,.2);color:var(--red2);border:1px solid var(--red);border-radius:10px;font-size:9px;font-weight:700;padding:2px 7px;margin-top:6px">N5</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SOURCES -->
+<div class="page" id="page-sources">
+  <div class="phd"><h1>📚 แหล่งเรียน Grammar</h1><div class="jps">学習リソース — Learning Resources</div><p>แหล่งเรียนคัดมาแล้วว่าดีที่สุดสำหรับ self-study N5–N4</p></div>
+  <div class="g2">
+    <div class="card" style="border-color:var(--amber)"><div style="font-size:32px;margin-bottom:8px">📗</div><div class="ct">Genki I & II</div><div style="font-size:13px;color:var(--text2);line-height:1.8">หนังสือเรียน Grammar ดีที่สุดสำหรับมือใหม่ โครงสร้างชัดเจน ทุก lesson มีตัวอย่างครบ<br><br><span class="ham">✓ เหมาะกับ:</span> ต้องการโครงสร้างชัดเจน<br><span class="hrd">✗ ข้อเสีย:</span> ต้องซื้อ ~1,200-1,500 บาท</div></div>
+    <div class="card"><div style="font-size:32px;margin-bottom:8px">🌐</div><div class="ct">Tae Kim's Guide</div><div style="font-size:13px;color:var(--text2);line-height:1.8">อธิบาย grammar แบบ logic-based ฟรีทั้งหมด อ่านเร็วกว่า Genki<br><br><span class="ham">✓ เหมาะกับ:</span> ต้องการเรียนเร็ว เน้น logic<br><span class="hjd">✓ ฟรี 100%</span><br><a href="https://guidetojapanese.org" target="_blank" style="color:var(--blue2);font-size:12px">→ guidetojapanese.org</a></div></div>
+    <div class="card"><div style="font-size:32px;margin-bottom:8px">🎥</div><div class="ct">Cure Dolly (YouTube)</div><div style="font-size:13px;color:var(--text2);line-height:1.8">อธิบาย grammar แบบ conceptual เข้าใจ "ทำไม" ของภาษา ไม่แค่ท่อง<br><br><span class="ham">✓ เหมาะกับ:</span> อยากเข้าใจแบบลึก<br><span style="color:var(--red2)">⚠️</span> เสียงแปลกแต่เนื้อหาดีมาก<br><a href="https://youtube.com/@CureDolly" target="_blank" style="color:var(--blue2);font-size:12px">→ YouTube: Cure Dolly Organic</a></div></div>
+    <div class="card"><div style="font-size:32px;margin-bottom:8px">📊</div><div class="ct">Bunpro.jp</div><div style="font-size:13px;color:var(--text2);line-height:1.8">ฝึก grammar แบบ SRS เหมือน Anki แต่เฉพาะ grammar เรียงตาม JLPT<br><br><span class="ham">✓ เหมาะกับ:</span> ต้องการ SRS ทบทวนอย่างเป็นระบบ<br>💰 Trial ฟรี ต่อต้องจ่ายรายเดือน<br><a href="https://bunpro.jp" target="_blank" style="color:var(--blue2);font-size:12px">→ bunpro.jp</a></div></div>
+  </div>
+  <div class="abox">💡 <b>แนะนำ Workflow:</b> เรียนที่นี่ก่อน → ใช้ Tae Kim ขยาย → ใช้ Bunpro ทบทวน — ฟรีทั้งหมดยกเว้น Bunpro subscription</div>
+</div>
+
+<!-- VERB CONJUGATION -->
+<div class="page" id="page-verb">
+  <div class="phd"><h1>🔵 Verb Conjugation</h1><div class="jps">動詞の活用 — Doushi no Katsuyou</div><p>Verb ญี่ปุ่น 3 ประเภท ผันต่างกันแต่มี pattern ชัดเจน เข้าใจครั้งเดียวใช้ได้ตลอด</p></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'vb','learn')">📖 เรียน</div>
+    <div class="tab" onclick="stab(this,'vb','te')">て-form</div>
+    <div class="tab" onclick="stab(this,'vb','ta')">た-form</div>
+    <div class="tab" onclick="stab(this,'vb','quiz')">🎯 Quiz</div>
+    <div class="tab" onclick="stab(this,'vb','game')">🎮 เกมส์</div>
+  </div>
+  <!-- LEARN -->
+  <div class="tp active" id="vb-learn">
+    <div class="abox">🔑 Verb 3 ประเภท: <span class="ham">RU-verb</span> (ตัด る), <span class="hjd">U-verb</span> (เปลี่ยน ending), <span class="hrd">Irregular</span> (จำแยก)</div>
+    <div class="acc"><div class="acch" onclick="tacc(this)"><div><div style="font-size:14px;font-weight:700;color:var(--white)"><span class="vtag vru">RU-VERB</span> Group 2 — 一段動詞</div><div style="font-size:12px;color:var(--text2);margin-top:2px">ลงท้าย -eru/-iru → ตัด る แล้วเติม ending</div></div><span style="color:var(--text3)">▼</span></div>
+      <div class="accb"><div class="rbox">📌 <b>กฎ:</b> ตัด <b>る</b> ออก แล้วเติม ending ใหม่</div>
+        <table class="gt"><tr><th>Verb</th><th>ก้าน</th><th>ない</th><th>て-form</th><th>た-form</th><th>ます</th></tr>
+          <tr><td><span class="jp">食べる</span> taberu (กิน)</td><td class="am">食べ</td><td class="jp">食べない</td><td class="jp">食べて</td><td class="jp">食べた</td><td class="jp">食べます</td></tr>
+          <tr><td><span class="jp">見る</span> miru (ดู)</td><td class="am">見</td><td class="jp">見ない</td><td class="jp">見て</td><td class="jp">見た</td><td class="jp">見ます</td></tr>
+          <tr><td><span class="jp">起きる</span> okiru (ตื่น)</td><td class="am">起き</td><td class="jp">起きない</td><td class="jp">起きて</td><td class="jp">起きた</td><td class="jp">起きます</td></tr>
+          <tr><td><span class="jp">寝る</span> neru (นอน)</td><td class="am">寝</td><td class="jp">寝ない</td><td class="jp">寝て</td><td class="jp">寝た</td><td class="jp">寝ます</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="acc"><div class="acch" onclick="tacc(this)"><div><div style="font-size:14px;font-weight:700;color:var(--white)"><span class="vtag vu">U-VERB</span> Group 1 — 五段動詞</div><div style="font-size:12px;color:var(--text2);margin-top:2px">ไม่ใช่ -eru/-iru → เปลี่ยน ending ตามพยัญชนะท้าย</div></div><span style="color:var(--text3)">▼</span></div>
+      <div class="accb"><div class="rbox">📌 ดูพยัญชนะท้าย verb แล้วเปลี่ยน vowel row ตาม ending ที่ต้องการ</div>
+        <table class="gt"><tr><th>Verb</th><th>ท้าย</th><th>ない</th><th>て-form</th><th>た-form</th><th>ます</th></tr>
+          <tr><td><span class="jp">飲む</span> nomu</td><td class="am">む→ま</td><td class="jp">飲まない</td><td class="jp">飲んで</td><td class="jp">飲んだ</td><td class="jp">飲みます</td></tr>
+          <tr><td><span class="jp">書く</span> kaku</td><td class="am">く→か</td><td class="jp">書かない</td><td class="jp">書いて</td><td class="jp">書いた</td><td class="jp">書きます</td></tr>
+          <tr><td><span class="jp">話す</span> hanasu</td><td class="am">す→さ</td><td class="jp">話さない</td><td class="jp">話して</td><td class="jp">話した</td><td class="jp">話します</td></tr>
+          <tr><td><span class="jp">待つ</span> matsu</td><td class="am">つ→た</td><td class="jp">待たない</td><td class="jp">待って</td><td class="jp">待った</td><td class="jp">待ちます</td></tr>
+          <tr><td><span class="jp">行く</span> iku</td><td class="am" style="color:var(--red2)">⚠️ 例外</td><td class="jp">行かない</td><td class="jp" style="color:var(--red2)">行って</td><td class="jp" style="color:var(--red2)">行った</td><td class="jp">行きます</td></tr>
+        </table>
+        <div class="ibox">⚠️ <b>ข้อยกเว้น:</b> 行く → て-form เป็น 行って ไม่ใช่ 行いて</div>
+      </div>
+    </div>
+    <div class="acc"><div class="acch" onclick="tacc(this)"><div><div style="font-size:14px;font-weight:700;color:var(--white)"><span class="vtag virr">IRREGULAR</span> する・くる — ผันพิเศษ</div><div style="font-size:12px;color:var(--text2);margin-top:2px">มีแค่ 2 ตัว แต่ใช้บ่อยมาก จำให้ขึ้นใจ</div></div><span style="color:var(--text3)">▼</span></div>
+      <div class="accb"><div class="g2">
+        <table class="gt"><tr><th colspan="3" style="font-family:'Noto Serif JP';font-size:20px;color:var(--amber)">する — suru (ทำ)</th></tr><tr><th>Form</th><th>Japanese</th><th>แปล</th></tr>
+          <tr><td>Dict</td><td class="jp am">する</td><td>ทำ</td></tr><tr><td>Formal</td><td class="jp">します</td><td>ทำ</td></tr>
+          <tr><td>Negative</td><td class="jp">しない</td><td>ไม่ทำ</td></tr><tr><td>て-form</td><td class="jp">して</td><td>ทำ (te)</td></tr>
+          <tr><td>た-form</td><td class="jp">した</td><td>ทำแล้ว</td></tr><tr><td>Potential</td><td class="jp">できる</td><td>ทำได้</td></tr>
+        </table>
+        <table class="gt"><tr><th colspan="3" style="font-family:'Noto Serif JP';font-size:20px;color:var(--amber)">くる — kuru (มา)</th></tr><tr><th>Form</th><th>Japanese</th><th>แปล</th></tr>
+          <tr><td>Dict</td><td class="jp am">くる</td><td>มา</td></tr><tr><td>Formal</td><td class="jp">きます</td><td>มา</td></tr>
+          <tr><td>Negative</td><td class="jp">こない</td><td>ไม่มา</td></tr><tr><td>て-form</td><td class="jp">きて</td><td>มา (te)</td></tr>
+          <tr><td>た-form</td><td class="jp">きた</td><td>มาแล้ว</td></tr><tr><td>Potential</td><td class="jp">こられる</td><td>มาได้</td></tr>
+        </table>
+      </div></div>
+    </div>
+  </div>
+  <!-- TE-FORM -->
+  <div class="tp" id="vb-te">
+    <div class="abox">🔑 て-form ใช้บ่อยที่สุด — ต่อ verb, request, progressive, permission</div>
+    <div class="g2">
+      <div class="card"><div class="ct">📋 กฎ て-form — U-Verb</div>
+        <table class="gt"><tr><th>ลงท้าย</th><th>เปลี่ยนเป็น</th><th>ตัวอย่าง</th></tr>
+          <tr><td class="am jp">く</td><td class="jp jd">いて</td><td class="jp">書く→書いて</td></tr>
+          <tr><td class="am jp">ぐ</td><td class="jp jd">いで</td><td class="jp">泳ぐ→泳いで</td></tr>
+          <tr><td class="am jp">す</td><td class="jp jd">して</td><td class="jp">話す→話して</td></tr>
+          <tr><td class="am jp">つ・る・う</td><td class="jp jd">って</td><td class="jp">待つ→待って</td></tr>
+          <tr><td class="am jp">む・ぶ・ぬ</td><td class="jp jd">んで</td><td class="jp">飲む→飲んで</td></tr>
+          <tr><td style="color:var(--red2)" class="jp">く (行く)</td><td style="color:var(--red2)" class="jp">って ⚠️</td><td class="jp">行く→行って</td></tr>
+        </table>
+      </div>
+      <div class="card"><div class="ct">📋 ใช้ て-form ทำอะไรได้บ้าง</div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">て</b>ください</div><div class="exr">tabete kudasai</div><div class="ext">กรุณากินด้วย — Request</div></div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">て</b>いる</div><div class="exr">tabete iru</div><div class="ext">กำลังกินอยู่ — Progressive</div></div>
+        <div class="ex"><div class="exj">起き<b style="color:var(--amber)">て</b>、食べて、行く</div><div class="exr">okite, tabete, iku</div><div class="ext">ตื่น กิน แล้วไป — เชื่อม verb</div></div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">て</b>もいい？</div><div class="exr">tabete mo ii?</div><div class="ext">กินได้ไหม? — Permission</div></div>
+      </div>
+    </div>
+  </div>
+  <!-- TA-FORM -->
+  <div class="tp" id="vb-ta">
+    <div class="abox">🔑 た-form = Past tense — กฎเหมือน て-form แค่เปลี่ยน て→た, で→だ</div>
+    <div class="g2">
+      <div class="card"><div class="ct">📋 กฎ た-form</div>
+        <div class="rbox">✅ ง่ายมาก: ใช้กฎเดียวกับ て-form เพียงแต่ <b>て→た</b> และ <b>で→だ</b></div>
+        <table class="gt"><tr><th>て-form</th><th>→ た-form</th><th>แปล</th></tr>
+          <tr><td class="jp">食べて</td><td class="jp am">食べた</td><td>กินแล้ว</td></tr>
+          <tr><td class="jp">飲んで</td><td class="jp am">飲んだ</td><td>ดื่มแล้ว</td></tr>
+          <tr><td class="jp">書いて</td><td class="jp am">書いた</td><td>เขียนแล้ว</td></tr>
+          <tr><td class="jp">して</td><td class="jp am">した</td><td>ทำแล้ว</td></tr>
+          <tr><td class="jp">きて</td><td class="jp am">きた</td><td>มาแล้ว</td></tr>
+        </table>
+      </div>
+      <div class="card"><div class="ct">📋 ใช้ た-form ทำอะไรได้บ้าง</div>
+        <div class="ex"><div class="exj">ご飯を食べ<b style="color:var(--amber)">た</b></div><div class="exr">gohan wo tabeta</div><div class="ext">กินข้าวแล้ว — อดีตกาล</div></div>
+        <div class="ex"><div class="exj">見<b style="color:var(--amber)">た</b>ことがある</div><div class="exr">mita koto ga aru</div><div class="ext">เคยดูแล้ว — ประสบการณ์</div></div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">た</b>ら帰る</div><div class="exr">tabetara kaeru</div><div class="ext">พอกินแล้วก็กลับ — たら conditional</div></div>
+        <div class="ibox" style="margin-top:8px">💡 た-form เป็น base ของ conditional たら ด้วย!</div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="vb-quiz"><div id="vb-quiz-c"></div></div>
+  <div class="tp" id="vb-game"><div id="vb-game-c"></div></div>
+</div>
+
+<!-- PARTICLES -->
+<div class="page" id="page-particle">
+  <div class="phd"><h1>🟡 Particles — 助詞</h1><div class="jps">じょし — คำช่วยบอกหน้าที่ในประโยค</div><p>Particles คือหัวใจของประโยคญี่ปุ่น บอกว่าแต่ละคำมีบทบาทอะไร</p></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'pt','all')">📊 ภาพรวม</div>
+    <div class="tab" onclick="stab(this,'pt','hawaga')">は vs が</div>
+    <div class="tab" onclick="stab(this,'pt','nide')">に vs で</div>
+    <div class="tab" onclick="stab(this,'pt','quiz')">🎯 Quiz</div>
+    <div class="tab" onclick="stab(this,'pt','game')">🎮 Fill-in-blank</div>
+  </div>
+  <div class="tp active" id="pt-all">
+    <div class="ibox">💡 Particles ทำหน้าที่แสดง <b>ความสัมพันธ์</b> ระหว่างคำในประโยค ไม่มีความหมายเดี่ยว</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px" id="ptcards"></div>
+  </div>
+  <div class="tp" id="pt-hawaga">
+    <div class="abox">🔑 <b>は vs が</b> — ความแตกต่างที่สำคัญและยากที่สุดใน grammar ญี่ปุ่น</div>
+    <div class="g2">
+      <div class="card" style="border-color:var(--blue2)">
+        <div class="ct" style="color:var(--blue2)">は (wa) — Topic Marker</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8"><b style="color:var(--white)">หน้าที่:</b> แนะนำ "หัวข้อที่จะพูดถึง"<br><br>ใช้เมื่อ: แนะนำตัวเอง, Contrast, General statement</div>
+        <div class="ex" style="margin-top:10px"><div class="exj">私<b style="color:var(--blue2)">は</b>田中です</div><div class="exr">Watashi wa Tanaka desu</div><div class="ext">ฉันชื่อทานากะ — Topic</div></div>
+        <div class="ex"><div class="exj">猫<b style="color:var(--blue2)">は</b>好きだけど犬は嫌い</div><div class="exr">neko wa suki dakedo...</div><div class="ext">แมวชอบ แต่หมาไม่ชอบ — Contrast</div></div>
+      </div>
+      <div class="card" style="border-color:var(--jade2)">
+        <div class="ct" style="color:var(--jade2)">が (ga) — Subject Marker</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8"><b style="color:var(--white)">หน้าที่:</b> เน้น subject อย่างชัดเจน<br><br>ใช้เมื่อ: เน้น "ใคร/อะไร", suki/kirai, potential form</div>
+        <div class="ex" style="margin-top:10px"><div class="exj">誰<b style="color:var(--jade2)">が</b>来ましたか</div><div class="exr">dare ga kimashita ka</div><div class="ext">ใครมา? — เน้น "ใคร"</div></div>
+        <div class="ex"><div class="exj">日本語<b style="color:var(--jade2)">が</b>好きです</div><div class="exr">nihongo ga suki desu</div><div class="ext">ชอบภาษาญี่ปุ่น — suki ใช้ が</div></div>
+      </div>
+    </div>
+    <div class="abox" style="margin-top:4px">💡 <b>Tip:</b> ตอบ "ใคร/อะไรทำ?" = <b>が</b> / แนะนำหัวข้อ = <b>は</b></div>
+  </div>
+  <div class="tp" id="pt-nide">
+    <div class="abox">🔑 <b>に vs で</b> — ทั้งคู่แปลว่า "ที่" ในบางกรณีแต่ใช้ต่างกัน</div>
+    <div class="g2">
+      <div class="card" style="border-color:var(--red2)">
+        <div class="ct" style="color:var(--red2)">に (ni) — Direction / Static Location</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8">ใช้กับ: ทิศทาง/ปลายทาง, สถานที่อยู่นิ่ง (ある/いる), เวลา, ผู้รับ</div>
+        <div class="ex" style="margin-top:8px"><div class="exj">東京<b style="color:var(--red2)">に</b>行く</div><div class="ext">ไปโตเกียว — ปลายทาง</div></div>
+        <div class="ex"><div class="exj">本棚<b style="color:var(--red2)">に</b>本がある</div><div class="ext">มีหนังสืออยู่บนชั้น — สิ่งของนิ่ง</div></div>
+        <div class="ex"><div class="exj">三時<b style="color:var(--red2)">に</b>来る</div><div class="ext">มาตอนบ่ายสาม — เวลา</div></div>
+      </div>
+      <div class="card" style="border-color:var(--gold)">
+        <div class="ct" style="color:var(--gold2)">で (de) — Location of Action / Means</div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.8">ใช้กับ: สถานที่ทำกิจกรรม, วิธีการ/เครื่องมือ, ภาษา, วัสดุ</div>
+        <div class="ex" style="margin-top:8px"><div class="exj">学校<b style="color:var(--gold2)">で</b>勉強する</div><div class="ext">เรียนที่โรงเรียน — ทำกิจกรรมที่</div></div>
+        <div class="ex"><div class="exj">バス<b style="color:var(--gold2)">で</b>行く</div><div class="ext">ไปด้วยรถบัส — วิธีการ</div></div>
+        <div class="ex"><div class="exj">日本語<b style="color:var(--gold2)">で</b>話す</div><div class="ext">พูดภาษาญี่ปุ่น — ภาษา</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="pt-quiz"><div id="pt-quiz-c"></div></div>
+  <div class="tp" id="pt-game"><div id="pt-game-c"></div></div>
+</div>
+
+<!-- NAI TAI DEKIRU -->
+<div class="page" id="page-naitai">
+  <div class="phd"><h1>🔴 ない・たい・できる</h1><div class="jps">否定・願望・可能 — ปฏิเสธ อยาก ทำได้</div><p>3 patterns ที่ใช้บ่อยที่สุดในมังงะและชีวิตประจำวัน</p></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'nt','nai')">ない ปฏิเสธ</div>
+    <div class="tab" onclick="stab(this,'nt','tai')">たい อยาก</div>
+    <div class="tab" onclick="stab(this,'nt','dek')">できる ทำได้</div>
+    <div class="tab" onclick="stab(this,'nt','quiz')">🎯 Quiz</div>
+    <div class="tab" onclick="stab(this,'nt','game')">🎮 เกมส์</div>
+  </div>
+  <div class="tp active" id="nt-nai">
+    <div class="abox">🔑 <b>ない (nai)</b> = ไม่... — รูปปฏิเสธพื้นฐาน</div>
+    <div class="g2">
+      <div class="card"><div class="ct">📋 วิธีสร้าง ない-form</div>
+        <div class="rbox"><b>RU-verb:</b> ตัด る → เติม ない<br>食べ<b>る</b> → 食べ<b>ない</b><br><br><b>U-verb:</b> เปลี่ยน ending เป็น あ-row → เติม ない<br>飲<b>む</b> → 飲<b>まない</b><br>書<b>く</b> → 書<b>かない</b><br><br><b>Irregular:</b><br>する → しない | くる → こない<br>ある → ない (ไม่มี)</div>
+      </div>
+      <div class="card"><div class="ct">📋 ตัวอย่างในมังงะ</div>
+        <div class="ex"><div class="exj">わから<b style="color:var(--red2)">ない</b>！</div><div class="exr">wakaranai!</div><div class="ext">ไม่เข้าใจ! — พบบ่อยมาก</div></div>
+        <div class="ex"><div class="exj">もう諦め<b style="color:var(--red2)">ない</b></div><div class="exr">mou akiramenai</div><div class="ext">ฉันจะไม่ยอมแพ้</div></div>
+        <div class="ex"><div class="exj">嘘じゃ<b style="color:var(--red2)">ない</b></div><div class="exr">uso ja nai</div><div class="ext">ไม่ได้โกหก!</div></div>
+        <div class="ex"><div class="exj">信じられ<b style="color:var(--red2)">ない</b>…</div><div class="exr">shinjirarenai</div><div class="ext">เชื่อไม่ได้เลย…</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="nt-tai">
+    <div class="abox">🔑 <b>たい (tai)</b> = อยากจะ... — ใช้ stem เดียวกับ ます-form แล้วเติม たい</div>
+    <div class="g2">
+      <div class="card"><div class="ct">📋 วิธีสร้าง たい-form</div>
+        <div class="rbox"><b>ทุก verb type:</b> ใช้ ます-stem แล้วเติม たい<br><br>食べ<b>ます</b> → 食べ<b>たい</b><br>飲み<b>ます</b> → 飲み<b>たい</b><br>し<b>ます</b> → し<b>たい</b><br>き<b>ます</b> → き<b>たい</b></div>
+        <div class="ibox" style="margin-top:8px">⚠️ たい ใช้พูดถึงความต้องการของ "ตัวเอง" เท่านั้น</div>
+      </div>
+      <div class="card"><div class="ct">📋 ตัวอย่างในมังงะ</div>
+        <div class="ex"><div class="exj">もっと強くなり<b style="color:var(--amber)">たい</b></div><div class="ext">อยากเก่งกว่านี้</div></div>
+        <div class="ex"><div class="exj">君のことが知り<b style="color:var(--amber)">たい</b></div><div class="ext">อยากรู้จักเธอให้มากขึ้น</div></div>
+        <div class="ex"><div class="exj">早く帰り<b style="color:var(--amber)">たい</b>…</div><div class="ext">อยากกลับบ้านเร็วๆ...</div></div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">たく</b>ない</div><div class="ext">ไม่อยากกิน — ปฏิเสธ たい = たくない</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="nt-dek">
+    <div class="abox">🔑 <b>できる (dekiru)</b> = ทำได้ — มี 2 วิธีสร้าง</div>
+    <div class="g2">
+      <div class="card"><div class="ct">📋 Potential Form</div>
+        <div class="rbox"><b>RU-verb:</b> stem + られる<br>食べる → 食べ<b>られる</b><br><br><b>U-verb:</b> เปลี่ยน u→e<br>飲む → 飲<b>める</b> | 書く → 書<b>ける</b><br>話す → 話<b>せる</b> | 待つ → 待<b>てる</b><br><br><b>Irregular:</b><br>する → <b>できる</b> | くる → こられる</div>
+      </div>
+      <div class="card"><div class="ct">📋 ことができる (formal)</div>
+        <div class="rbox"><b>Dict form + こと + ができる</b><br><br>食べる + こと + ができる<br>= 食べることができる<br>= สามารถกินได้</div>
+        <div class="ibox" style="margin-top:8px">💡 manga ส่วนใหญ่ใช้ Potential form เพราะสั้นกว่า เช่น 話せる แทน 話すことができる</div>
+        <div class="ex" style="margin-top:8px"><div class="exj">私には<b style="color:var(--jade2)">できる</b>！</div><div class="ext">ฉันทำได้!</div></div>
+        <div class="ex"><div class="exj">まだ戦え<b style="color:var(--jade2)">る</b></div><div class="ext">ยังสู้ได้</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="nt-quiz"><div id="nt-quiz-c"></div></div>
+  <div class="tp" id="nt-game"><div id="nt-game-c"></div></div>
+</div>
+
+<!-- CONDITIONALS -->
+<div class="page" id="page-cond">
+  <div class="phd"><h1>🟢 Conditionals — ถ้า/เมื่อ</h1><div class="jps">条件形 — Jouken-kei (N4)</div><p>conditional 3 แบบหลัก แต่ละแบบมีความหมายและบริบทต่างกัน</p></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'cd','ov')">📊 ภาพรวม</div>
+    <div class="tab" onclick="stab(this,'cd','to')">と natural</div>
+    <div class="tab" onclick="stab(this,'cd','tara')">たら if/when</div>
+    <div class="tab" onclick="stab(this,'cd','ba')">ば if</div>
+    <div class="tab" onclick="stab(this,'cd','quiz')">🎯 Quiz</div>
+  </div>
+  <div class="tp active" id="cd-ov">
+    <div class="abox">🔑 <b>เลือกใช้อะไร:</b> と (ธรรมชาติ/กฎ) | たら (เหตุการณ์เจาะจง) | ば (เงื่อนไขทั่วไป)</div>
+    <table class="gt"><tr><th>Pattern</th><th>สร้างจาก</th><th>ความหมาย</th><th>ใช้เมื่อ</th><th>ตัวอย่าง</th></tr>
+      <tr><td><span class="jp am" style="font-size:20px">と</span></td><td>Dict form + と</td><td class="jd">ธรรมชาติ / กฎแน่นอน</td><td>ผลลัพธ์เกิดเสมอ</td><td class="jp">春になると花が咲く</td></tr>
+      <tr><td><span class="jp am" style="font-size:20px">たら</span></td><td>た-form + ら</td><td class="jd">ถ้า/เมื่อ (เจาะจง)</td><td>เหตุการณ์เดียว/สมมติ</td><td class="jp">お金があったら旅行する</td></tr>
+      <tr><td><span class="jp am" style="font-size:20px">ば</span></td><td>e-stem + ば</td><td class="jd">ถ้า (เงื่อนไขทั่วไป)</td><td>สมมติ มักมีคำแนะนำ</td><td class="jp">早く起きれば間に合う</td></tr>
+    </table>
+    <div class="g3" style="margin-top:12px">
+      <div class="ex"><div class="exj">春になると花が咲く</div><div class="ext">ถึงฤดูใบไม้ผลิ ดอกไม้ก็บาน (เสมอ)</div><div class="exn">と — กฎธรรมชาติ</div></div>
+      <div class="ex"><div class="exj">お金があったら旅行する</div><div class="ext">ถ้ามีเงินก็จะเดินทาง</div><div class="exn">たら — สมมติสถานการณ์</div></div>
+      <div class="ex"><div class="exj">早く起きれば間に合う</div><div class="ext">ถ้าตื่นเร็วก็ทัน</div><div class="exn">ば — เงื่อนไขคำแนะนำ</div></div>
+    </div>
+  </div>
+  <div class="tp" id="cd-to">
+    <div class="abox">🔑 <b>〜と</b> — ผลลัพธ์ที่เกิดขึ้น "เสมอ" โดยธรรมชาติ ควบคุมไม่ได้</div>
+    <div class="card"><div class="ct">📋 Dict form + と + ผลลัพธ์</div>
+      <div class="rbox">✅ ใช้เมื่อ: ผลลัพธ์เป็น "กฎ" หรือ "ธรรมชาติ"<br>❌ ไม่ใช้กับ: คำสั่ง request, permission, ความตั้งใจของผู้พูด</div>
+      <div class="g2" style="margin-top:8px">
+        <div><div class="ex"><div class="exj">右に曲がる<b style="color:var(--jade2)">と</b>駅があります</div><div class="ext">เลี้ยวขวาจะมีสถานีรถไฟ</div></div>
+        <div class="ex"><div class="exj">このボタンを押す<b style="color:var(--jade2)">と</b>電気がつく</div><div class="ext">กดปุ่มนี้ไฟก็ติด</div></div></div>
+        <div><div class="ex"><div class="exj">たくさん食べる<b style="color:var(--jade2)">と</b>太る</div><div class="ext">กินเยอะก็อ้วน (กฎธรรมชาติ)</div></div>
+        <div class="ex"><div class="exj">冬になる<b style="color:var(--jade2)">と</b>雪が降る</div><div class="ext">ถึงหน้าหนาวหิมะก็ตก</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="cd-tara">
+    <div class="abox">🔑 <b>〜たら</b> — た-form + ら — ใช้บ่อยที่สุดในสนทนาประจำวัน</div>
+    <div class="card"><div class="ct">📋 た-form + ら + ผลลัพธ์</div>
+      <div class="rbox">✅ ใช้กับ: สมมติสถานการณ์, เหตุการณ์เดี่ยว, "พอทำแล้ว"<br>✅ ใช้ได้กับ: คำสั่ง, request ← ต่างจาก と</div>
+      <div class="g2" style="margin-top:8px">
+        <div><div class="ex"><div class="exj">お金があっ<b style="color:var(--amber)">たら</b>旅行する</div><div class="ext">ถ้ามีเงินก็จะเที่ยว</div></div>
+        <div class="ex"><div class="exj">家に帰っ<b style="color:var(--amber)">たら</b>電話して</div><div class="ext">พอกลับบ้านแล้วโทรมานะ</div></div></div>
+        <div><div class="ex"><div class="exj">もし彼女だっ<b style="color:var(--amber)">たら</b>どうする？</div><div class="ext">ถ้าเป็นแฟนล่ะ จะทำยังไง?</div></div>
+        <div class="ex"><div class="exj">食べ<b style="color:var(--amber)">たら</b>寝てもいい</div><div class="ext">กินแล้วก็นอนได้</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="cd-ba">
+    <div class="abox">🔑 <b>〜ば</b> — Hypothetical conditional — มักใช้กับคำแนะนำ</div>
+    <div class="card"><div class="ct">📋 สร้าง ば-form</div>
+      <div class="g2"><div class="rbox"><b>Verb RU:</b> stem + れば<br>食べる → 食べ<b>れば</b><br>見る → 見<b>れば</b><br><br><b>Verb U:</b> u → e + ば<br>飲む → 飲<b>めば</b><br>書く → 書<b>けば</b></div>
+      <div class="rbox"><b>Adj い:</b> ตัด い → ければ<br>高い → 高<b>ければ</b><br>安い → 安<b>ければ</b><br><br><b>Adj な / Noun + なら:</b><br>元気なら | 学生なら</div></div>
+      <div class="g2" style="margin-top:8px">
+        <div class="ex"><div class="exj">早く起き<b style="color:var(--jade2)">れば</b>間に合う</div><div class="ext">ถ้าตื่นเร็วก็ทัน</div></div>
+        <div class="ex"><div class="exj">安<b style="color:var(--jade2)">ければ</b>買う</div><div class="ext">ถ้าถูกก็ซื้อ</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="tp" id="cd-quiz"><div id="cd-quiz-c"></div></div>
+</div>
+
+<!-- SENTENCE ENDINGS -->
+<div class="page" id="page-endings">
+  <div class="phd"><h1>🟣 Sentence Endings</h1><div class="jps">文末表現 — か・ね・よ・よね</div><p>Final particles บอก tone และความสัมพันธ์ระหว่างผู้พูดกับผู้ฟัง — เห็นบ่อยมากในมังงะ</p></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'se','learn')">📖 เรียน</div>
+    <div class="tab" onclick="stab(this,'se','manga')">📕 ในมังงะ</div>
+    <div class="tab" onclick="stab(this,'se','quiz')">🎯 Quiz</div>
+  </div>
+  <div class="tp active" id="se-learn">
+    <div class="ibox">💡 Final particles ไม่มีคำแปลตรงๆ ต้องเข้าใจ "feeling" — ดูตัวอย่างเยอะๆ จะเข้าใจเอง</div>
+    <div id="end-cards"></div>
+  </div>
+  <div class="tp" id="se-manga">
+    <div class="abox">📕 ตัวอย่างจากมังงะ/อนิเมะ — สังเกต particle ท้ายประโยค</div>
+    <div id="end-manga"></div>
+  </div>
+  <div class="tp" id="se-quiz"><div id="se-quiz-c"></div></div>
+</div>
+
+<!-- GAMES -->
+<div class="page" id="page-games">
+  <div class="phd"><h1>🎮 Grammar Games</h1><div class="jps">文法ゲーム — ฝึก Grammar ผ่านเกมส์</div><p>5 เกมส์ครอบคลุมทุก Grammar topic — คะแนนสูงสุดบันทึกไว้</p></div>
+  <div id="g-lobby">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">
+      <div class="gcard" onclick="gplay('pf')"><div style="font-size:36px">🎯</div><div class="gtitle">Particle Fill-in</div><div class="gdesc">เลือก Particle ที่ถูกต้องในช่องว่าง — 45 วินาที ตอบให้เยอะที่สุด</div><div style="margin-top:8px;font-size:11px;color:var(--amber)">Best: <span id="hs-pf">—</span></div></div>
+      <div class="gcard" onclick="gplay('cs')"><div style="font-size:36px">⚡</div><div class="gtitle">Conjugation Speed</div><div class="gdesc">ผัน verb ให้เร็ว! 60 วินาที — ทั้ง て, た, ない, potential</div><div style="margin-top:8px;font-size:11px;color:var(--amber)">Best: <span id="hs-cs">—</span></div></div>
+      <div class="gcard" onclick="gplay('sb')"><div style="font-size:36px">🧩</div><div class="gtitle">Sentence Builder</div><div class="gdesc">เรียงคำให้เป็นประโยคที่ถูกต้อง — ฝึก word order</div><div style="margin-top:8px;font-size:11px;color:var(--amber)">Best: <span id="hs-sb">—</span></div></div>
+      <div class="gcard" onclick="gplay('cm')"><div style="font-size:36px">🔗</div><div class="gtitle">Conditional Match</div><div class="gdesc">จับคู่ประโยคกับ conditional ที่เหมาะสม (と たら ば)</div><div style="margin-top:8px;font-size:11px;color:var(--amber)">Best: <span id="hs-cm">—</span></div></div>
+      <div class="gcard" onclick="gplay('tc')"><div style="font-size:36px">🌏</div><div class="gtitle">Translation Challenge</div><div class="gdesc">เลือกคำแปลที่ตรงกับประโยคญี่ปุ่น — ครอบคลุมทุก pattern</div><div style="margin-top:8px;font-size:11px;color:var(--amber)">Best: <span id="hs-tc">—</span></div></div>
+    </div>
+    <div class="card" style="margin-top:16px"><div class="ct">🏆 High Scores</div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:8px" id="hs-grid"></div></div>
+  </div>
+  <div id="g-arena" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap">
+      <button class="btn bol" onclick="gexit()" style="font-size:12px">← ออก</button>
+      <div style="font-size:16px;font-weight:700;color:var(--white)" id="g-title"></div>
+      <div style="margin-left:auto;display:flex;gap:16px;align-items:center" id="g-hud"></div>
+    </div>
+    <div id="g-content"></div>
+  </div>
+</div>
+
+<!-- MASTER QUIZ -->
+<div class="page" id="page-mquiz">
+  <div class="phd"><h1>🏆 Master Quiz</h1><div class="jps">総合テスト — ทดสอบครบทุกหัวข้อ</div><p>20 ข้อ ผสมทุก Grammar topic ทดสอบความรู้รวม</p></div>
+  <div id="mq-start">
+    <div class="card" style="text-align:center;max-width:440px;margin:0 auto">
+      <div style="font-size:52px;margin-bottom:14px">🏆</div>
+      <div style="font-size:18px;font-weight:700;color:var(--white);margin-bottom:8px">Grammar Master Quiz</div>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.7">20 ข้อ ครอบคลุม Verb Conjugation, Particles, ない/たい/できる, Conditionals และ Sentence Endings</div>
+      <button class="btn bam" onclick="startMQ()" style="font-size:14px;padding:11px 28px">🚀 เริ่ม Master Quiz</button>
+      <div style="margin-top:12px;font-size:12px;color:var(--text3)">Best: <span id="mq-hs">—</span></div>
+    </div>
+  </div>
+  <div id="mq-game" style="display:none"></div>
+  <div id="mq-result" style="display:none"></div>
+</div>
+
+</main>
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════
+function nav(id) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')==="nav('"+id+"')")n.classList.add('active');});
+  const lazy={particle:buildPTCards,endings:buildEndCards,games:buildHSGrid};
+  if(lazy[id]) lazy[id]();
+  initHomeProgress();
+}
+
+function stab(el,grp,id) {
+  const page = el.closest('.page');
+  page.querySelectorAll('.tp').forEach(p=>{
+    if(p.id.startsWith(grp+'-')) p.classList.remove('active');
+  });
+  page.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const panel = document.getElementById(grp+'-'+id);
+  if(panel) panel.classList.add('active');
+  el.classList.add('active');
+  // Lazy init quiz/game
+  const quizMap={
+    'vb-quiz':()=>initQ('vb','vb-quiz-c',VB_Q),
+    'vb-game':()=>initVBGame(),
+    'pt-quiz':()=>initQ('pt','pt-quiz-c',PT_Q),
+    'pt-game':()=>initPFill('pt-game-c'),
+    'nt-quiz':()=>initQ('nt','nt-quiz-c',NT_Q),
+    'nt-game':()=>initNTGame(),
+    'cd-quiz':()=>initQ('cd','cd-quiz-c',CD_Q),
+    'se-quiz':()=>initQ('se','se-quiz-c',SE_Q),
+    'se-manga':buildMangaEnds,
+  };
+  const key=grp+'-'+id;
+  if(quizMap[key]) quizMap[key]();
+}
+
+function tacc(header) {
+  const body=header.nextElementSibling;
+  const open=body.classList.contains('open');
+  header.classList.toggle('open',!open);
+  body.classList.toggle('open',!open);
+  header.querySelector('span:last-child').textContent=open?'▼':'▲';
+}
+
+// ═══════════════════════════════════════
+// STORAGE
+// ═══════════════════════════════════════
+function saveScore(k,v){const s=JSON.parse(localStorage.getItem('gd')||'{}');if(!s[k]||v>s[k])s[k]=v;localStorage.setItem('gd',JSON.stringify(s));}
+function getScore(k){return JSON.parse(localStorage.getItem('gd')||'{}')[k]||0;}
+function saveProg(k,pct){const s=JSON.parse(localStorage.getItem('gd_p')||'{}');if(pct>(s[k]||0))s[k]=pct;localStorage.setItem('gd_p',JSON.stringify(s));}
+function getProg(k){return JSON.parse(localStorage.getItem('gd_p')||'{}')[k]||0;}
+function saveGoal(){const s={g1:document.getElementById('g1').checked,g2:document.getElementById('g2').checked,g3:document.getElementById('g3').checked};localStorage.setItem('gd_goals',JSON.stringify(s));}
+
+function showN(msg,type='ok'){const el=document.getElementById('notif');el.textContent=msg;el.className='notif '+type+' show';setTimeout(()=>el.classList.remove('show'),2000);}
+
+// ═══════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════
+function initHomeProgress(){
+  const el=document.getElementById('home-prog');if(!el)return;
+  const keys=[{k:'verb',label:'🔵 Verb Conjugation'},{k:'part',label:'🟡 Particles'},{k:'nai',label:'🔴 ない/たい/できる'},{k:'cond',label:'🟢 Conditionals'},{k:'end',label:'🟣 Sentence Endings'}];
+  el.innerHTML=keys.map(x=>{const pct=getProg(x.k);return`<div><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px"><span>${x.label}</span><span style="color:var(--amber)">${pct}%</span></div><div class="pbar"><div class="pbf" style="width:${pct}%"></div></div></div>`;}).join('');
+  // Update nav progress
+  [{k:'verb',id:'np-verb'},{k:'part',id:'np-part'},{k:'nai',id:'np-nai'},{k:'cond',id:'np-cond'},{k:'end',id:'np-end'}].forEach(x=>{const el=document.getElementById(x.id);if(el)el.textContent=getProg(x.k)+'%';});
+  // Restore goals
+  const g=JSON.parse(localStorage.getItem('gd_goals')||'{}');
+  ['g1','g2','g3'].forEach(id=>{const el=document.getElementById(id);if(el&&g[id])el.checked=true;});
+}
+
+// ═══════════════════════════════════════
+// PARTICLE CARDS
+// ═══════════════════════════════════════
+const PDATA=[
+  {p:'は',ro:'wa',use:'Topic Marker',th:'บอกหัวข้อที่พูดถึง',col:'#3498db',exs:[{j:'私は学生です',t:'ฉันเป็นนักเรียน'},{j:'これは本です',t:'นี่คือหนังสือ'}]},
+  {p:'が',ro:'ga',use:'Subject Marker',th:'เน้น subject / ใช้กับ suki',col:'#27ae60',exs:[{j:'猫がいます',t:'มีแมวอยู่'},{j:'日本語が好き',t:'ชอบภาษาญี่ปุ่น'}]},
+  {p:'を',ro:'wo',use:'Object Marker',th:'บอก direct object',col:'#e74c3c',exs:[{j:'ご飯を食べる',t:'กินข้าว'},{j:'本を読む',t:'อ่านหนังสือ'}]},
+  {p:'に',ro:'ni',use:'Direction / Time',th:'ไปที่ / ตอน / อยู่ที่',col:'#e67e22',exs:[{j:'東京に行く',t:'ไปโตเกียว'},{j:'三時に来る',t:'มาตอนบ่ายสาม'}]},
+  {p:'で',ro:'de',use:'Location of Action',th:'ทำที่... / ด้วย...',col:'#d4a520',exs:[{j:'学校で勉強する',t:'เรียนที่โรงเรียน'},{j:'バスで行く',t:'ไปด้วยรถบัส'}]},
+  {p:'の',ro:'no',use:'Possessive',th:'ของ / ที่ (modifier)',col:'#9b59b6',exs:[{j:'私の本',t:'หนังสือของฉัน'},{j:'日本の食べ物',t:'อาหารญี่ปุ่น'}]},
+  {p:'と',ro:'to',use:'And / With',th:'และ / กับ',col:'#16a085',exs:[{j:'友達と遊ぶ',t:'เล่นกับเพื่อน'},{j:'猫と犬',t:'แมวและหมา'}]},
+  {p:'から',ro:'kara',use:'From / Because',th:'จาก / เพราะ',col:'#2980b9',exs:[{j:'東京から来た',t:'มาจากโตเกียว'},{j:'好きだから',t:'เพราะชอบ'}]},
+  {p:'まで',ro:'made',use:'Until / Up to',th:'จนถึง / ถึง',col:'#c0392b',exs:[{j:'駅まで歩く',t:'เดินไปถึงสถานี'},{j:'六時まで働く',t:'ทำงานถึงหกโมง'}]},
+  {p:'も',ro:'mo',use:'Also / Either',th:'ด้วย / ก็ / เหมือนกัน',col:'#1a7a5e',exs:[{j:'私も行く',t:'ฉันก็ไปด้วย'},{j:'猫も好き',t:'ชอบแมวด้วย'}]},
+];
+
+function buildPTCards(){
+  const el=document.getElementById('ptcards');if(!el||el.children.length>0)return;
+  PDATA.forEach(p=>{
+    const d=document.createElement('div');
+    d.style.cssText='background:var(--paper);border:1px solid var(--border);border-radius:12px;padding:16px;transition:all .2s';
+    d.onmouseover=()=>d.style.borderColor=p.col;d.onmouseout=()=>d.style.borderColor='var(--border)';
+    d.innerHTML=`<div style="font-family:'Noto Serif JP';font-size:44px;color:${p.col};text-align:center;font-weight:900;text-shadow:0 0 16px ${p.col}44">${p.p}</div>
+      <div style="font-size:11px;color:var(--text2);text-align:center">${p.ro}</div>
+      <div style="font-size:12px;font-weight:700;color:${p.col};text-align:center;margin-top:3px">${p.use}</div>
+      <div style="font-size:11px;color:var(--text);margin-top:5px;line-height:1.5">${p.th}</div>
+      <div style="margin-top:8px;display:flex;flex-direction:column;gap:5px">
+        ${p.exs.map(e=>`<div style="background:var(--ink3);border-radius:6px;padding:6px 9px"><div style="font-family:'Noto Sans JP';font-size:13px;color:var(--white)">${e.j}</div><div style="font-size:11px;color:var(--text2);margin-top:2px">${e.t}</div></div>`).join('')}
+      </div>`;
+    el.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════
+// ENDINGS CARDS
+// ═══════════════════════════════════════
+const EDATA=[
+  {p:'か',ro:'ka',feel:'คำถาม',col:'#3498db',desc:'เติมท้ายประโยคทำเป็นคำถาม',
+   exs:[{j:'食べましたか？',t:'กินแล้วหรือยัง?'},{j:'日本語が好きですか？',t:'ชอบภาษาญี่ปุ่นไหม?'},{j:'どこに行くの？',t:'จะไปไหน? (informal)'}]},
+  {p:'ね',ro:'ne',feel:'ขอความเห็นด้วย',col:'#27ae60',desc:'"ใช่ไหม?" / "นะ" — ทำให้บทสนทนานุ่มนวล ขอความเห็นจากผู้ฟัง',
+   exs:[{j:'いい天気ですね',t:'อากาศดีนะ (ใช่ไหม?)'},{j:'おいしいね！',t:'อร่อยนะ!'},{j:'難しいね...',t:'ยากนะ...'}]},
+  {p:'よ',ro:'yo',feel:'ยืนยัน/เน้น',col:'#e74c3c',desc:'เน้นสิ่งที่ผู้พูดรู้แต่ผู้ฟังอาจไม่รู้ — บอกข้อมูลใหม่หรือเน้นความมั่นใจ',
+   exs:[{j:'これは危ないよ！',t:'นี่อันตรายนะ! (บอกให้รู้)'},{j:'大丈夫だよ',t:'โอเคนะ (ยืนยัน)'},{j:'知ってるよ！',t:'รู้แล้ว! (เน้น)'}]},
+  {p:'よね',ro:'yone',feel:'ยืนยัน + ขอความเห็น',col:'#9b59b6',desc:'ผสม よ + ね — ยืนยันสิ่งที่รู้พร้อมขอความเห็นจากผู้ฟัง',
+   exs:[{j:'これは高いよね？',t:'นี่แพงนะ ใช่ไหม?'},{j:'彼は優しいよね',t:'เขาใจดีนะ (ยืนยัน+ขอเห็นด้วย)'},{j:'難しいよね...',t:'ยากนะ... (shared feeling)'}]},
+];
+
+function buildEndCards(){
+  const el=document.getElementById('end-cards');if(!el||el.children.length>0)return;
+  EDATA.forEach(e=>{
+    const d=document.createElement('div');d.className='card';d.style.borderColor=e.col;d.style.marginBottom='14px';
+    d.innerHTML=`<div style="display:flex;align-items:center;gap:18px;margin-bottom:12px">
+      <div style="font-family:'Noto Serif JP';font-size:48px;color:${e.col};font-weight:900;min-width:56px;text-shadow:0 0 18px ${e.col}44">${e.p}</div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--white)">${e.ro} — ${e.feel}</div><div style="font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6">${e.desc}</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:7px">${e.exs.map(x=>`<div class="ex"><div class="exj">${x.j}</div><div class="ext">${x.t}</div></div>`).join('')}</div>`;
+    el.appendChild(d);
+  });
+}
+
+function buildMangaEnds(){
+  const el=document.getElementById('end-manga');if(!el||el.children.length>0)return;
+  const exs=[
+    {j:'これで終わりだ、よ！',note:'よ — ประกาศจบ เน้นข้อมูล',p:'よ',col:'#e74c3c'},
+    {j:'一緒に行こう、ね？',note:'ね — ขอความเห็นด้วยอย่างอ่อนโยน',p:'ね',col:'#27ae60'},
+    {j:'お前には関係ないか？',note:'か — คำถาม (casual)',p:'か',col:'#3498db'},
+    {j:'強くなったよね...',note:'よね — สังเกตว่าเปลี่ยนไป + ขอยืนยัน',p:'よね',col:'#9b59b6'},
+    {j:'わかってるよ！うるさい！',note:'よ — เน้นความหงุดหงิด',p:'よ',col:'#e74c3c'},
+    {j:'美味しいね、このラーメン',note:'ね — shared experience',p:'ね',col:'#27ae60'},
+    {j:'本当に行くのか？',note:'か — สงสัย ถามจริงๆ',p:'か',col:'#3498db'},
+    {j:'好きだよ...',note:'よ — confession! เน้นความจริงใจ',p:'よ',col:'#e74c3c'},
+    {j:'そうだよね、わかってた',note:'よね — ยืนยันสิ่งที่รู้สึกอยู่แล้ว',p:'よね',col:'#9b59b6'},
+  ];
+  exs.forEach(m=>{
+    const d=document.createElement('div');
+    d.style.cssText=`background:var(--ink3);border-left:4px solid ${m.col};border-radius:0 10px 10px 0;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px`;
+    d.innerHTML=`<div><div style="font-family:'Noto Sans JP';font-size:17px;color:var(--white)">${m.j}</div><div style="font-size:12px;color:var(--text2);margin-top:3px">${m.note}</div></div>
+      <span style="background:${m.col}22;color:${m.col};border:1px solid ${m.col}66;padding:3px 10px;border-radius:10px;font-size:12px;font-family:'Noto Serif JP';flex-shrink:0">${m.p}</span>`;
+    el.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════
+// QUIZ DATA
+// ═══════════════════════════════════════
+const VB_Q=[
+  {q:'食べる — て-form คืออะไร?',opts:['食べて','食べって','食べれ','食べない'],ans:'食べて',note:'RU-verb: ตัด る → เติม て'},
+  {q:'飲む — ない-form คืออะไร?',opts:['飲まない','飲むない','飲みない','飲めない'],ans:'飲まない',note:'U-verb mu→ma + ない'},
+  {q:'書く — て-form คืออะไร?',opts:['書いて','書って','書くて','書きて'],ans:'書いて',note:'U-verb ku → いて'},
+  {q:'する — ない-form คืออะไร?',opts:['しない','すない','さない','せない'],ans:'しない',note:'Irregular: する → しない'},
+  {q:'見る — ます-form คืออะไร?',opts:['見ます','見します','見ります','見えます'],ans:'見ます',note:'RU-verb stem + ます'},
+  {q:'行く — て-form คืออะไร? (ระวัง!)',opts:['行って','行いて','行くて','行きて'],ans:'行って',note:'行く → 行って (exception!)'},
+  {q:'来る (kuru) — ない-form คืออะไร?',opts:['こない','来ない','くない','きない'],ans:'こない',note:'Irregular: くる → こない'},
+  {q:'待つ — た-form คืออะไร?',opts:['待った','待てた','待ちた','待つた'],ans:'待った',note:'U-verb tsu → った'},
+  {q:'食べる — potential form คืออะไร?',opts:['食べられる','食べれる','食べできる','食べえる'],ans:'食べられる',note:'RU-verb: stem + られる'},
+  {q:'話す — て-form คืออะไร?',opts:['話して','話いて','話って','話きて'],ans:'話して',note:'U-verb su → して'},
+];
+
+const PT_Q=[
+  {q:'私___田中です。(ฉันชื่อทานากะ)',opts:['は','が','を','に'],ans:'は',note:'は = topic marker'},
+  {q:'猫___好きです。(ชอบแมว)',opts:['は','が','を','で'],ans:'が',note:'が ใช้กับ suki/kirai'},
+  {q:'ご飯___食べる。(กินข้าว)',opts:['は','が','を','に'],ans:'を',note:'を = direct object marker'},
+  {q:'東京___行く。(ไปโตเกียว)',opts:['が','に','で','も'],ans:'に',note:'に = direction/destination'},
+  {q:'学校___勉強する。(เรียนที่โรงเรียน)',opts:['に','で','を','は'],ans:'で',note:'で = location of activity'},
+  {q:'友達___遊ぶ。(เล่นกับเพื่อน)',opts:['と','も','が','から'],ans:'と',note:'と = with (person)'},
+  {q:'東京___来た。(มาจากโตเกียว)',opts:['に','で','から','まで'],ans:'から',note:'から = from'},
+  {q:'私___行く。(ฉันก็ไปด้วย)',opts:['は','が','も','を'],ans:'も',note:'も = also, too'},
+  {q:'五時___帰る。(กลับตอนห้าโมง)',opts:['で','に','が','を'],ans:'に',note:'に = time marker'},
+  {q:'バス___行く。(ไปด้วยรถบัส)',opts:['に','で','から','と'],ans:'で',note:'で = means of transport'},
+];
+
+const NT_Q=[
+  {q:'食べる + ない = ?',opts:['食べない','食べくない','食べません','食べなかった'],ans:'食べない',note:'RU-verb: 食べる → 食べない'},
+  {q:'行く + たい = ?',opts:['行きたい','行ったい','行くたい','行たい'],ans:'行きたい',note:'ます-stem: 行きます → 行きたい'},
+  {q:'"ว่ายน้ำได้" = ? (泳ぐ=oyogu)',opts:['泳げる','泳ぐられる','泳ぐできる','泳いれる'],ans:'泳げる',note:'U-verb potential: gu → geru'},
+  {q:'する + たい = ?',opts:['したい','すたい','しくたい','したたい'],ans:'したい',note:'する → したい (irregular)'},
+  {q:'飲む + ない = ?',opts:['飲まない','飲みない','飲むない','飲もない'],ans:'飲まない',note:'U-verb mu→ma: 飲まない'},
+  {q:'"ไม่อยากกิน" (食べる) = ?',opts:['食べたくない','食べたいない','食べなたい','食べないたい'],ans:'食べたくない',note:'たい → たくない (ปฏิเสธ)'},
+  {q:'話す + potential = ?',opts:['話せる','話される','話すえる','話しられる'],ans:'話せる',note:'U-verb su→seru: 話せる'},
+  {q:'くる + ない = ?',opts:['こない','きない','くない','くるない'],ans:'こない',note:'Irregular: くる → こない'},
+];
+
+const CD_Q=[
+  {q:'春になる___桜が咲く\n(กฎธรรมชาติ — เกิดขึ้นเสมอ)',opts:['と','たら','ば','なら'],ans:'と',note:'と = ผลลัพธ์ที่เกิดโดยธรรมชาติเสมอ'},
+  {q:'お金があっ___旅行する\n(สมมติสถานการณ์)',opts:['と','たら','ば','なら'],ans:'たら',note:'たら = สมมติ + ใช้กับ request ได้'},
+  {q:'早く起き___間に合う\n(เงื่อนไขคำแนะนำ)',opts:['と','たら','れば','なら'],ans:'れば',note:'ば = Hypothetical / คำแนะนำ'},
+  {q:'このボタンを押す___電気がつく\n(cause-effect ที่แน่นอน)',opts:['と','たら','ば','から'],ans:'と',note:'と = mechanical/natural cause-effect'},
+  {q:'家に帰っ___電話して\n(พอทำแล้ว + request)',opts:['と','たら','ば','なら'],ans:'たら',note:'たら ใช้กับ request ได้ ต ไม่ได้'},
+  {q:'安___買う\n(ถ้าถูก — adj い conditional)',opts:['ければ','いと','いたら','ならば'],ans:'ければ',note:'Adj い: ตัด い → ければ'},
+  {q:'たら-form ของ 食べる คือ?',opts:['食べたら','食べると','食べれば','食べなら'],ans:'食べたら',note:'たら-form = た-form + ら'},
+];
+
+const SE_Q=[
+  {q:'"อร่อยนะ! (ขอให้เห็นด้วย)"',opts:['おいしいか','おいしいよ','おいしいね','おいしいよね'],ans:'おいしいね',note:'ね = เชื้อเชิญให้ผู้ฟังเห็นด้วย'},
+  {q:'"นี่อันตรายนะ! (บอกข้อมูลใหม่)"',opts:['危ないか','危ないね','危ないよ','危ないよね'],ans:'危ないよ',note:'よ = บอกข้อมูลใหม่/เน้น'},
+  {q:'"กินแล้วหรือยัง?" (คำถาม formal)',opts:['食べましたよ','食べましたね','食べましたよね','食べましたか'],ans:'食べましたか',note:'か = คำถาม'},
+  {q:'"แพงนะ ใช่ไหม? (ยืนยัน + ขอความเห็น)"',opts:['高いか','高いね','高いよ','高いよね'],ans:'高いよね',note:'よね = ยืนยันและขอความเห็น'},
+  {q:'"รู้แล้ว! (เน้น ไม่ต้องบอก)"',opts:['知ってるか','知ってるね','知ってるよ','知ってるよね'],ans:'知ってるよ',note:'よ = เน้นข้อมูลที่ผู้พูดรู้'},
+  {q:'"ยากนะ... (shared feeling)"',opts:['難しいか','難しいね','難しいよ','難しいよね'],ans:'難しいね',note:'ね = shared feeling'},
+];
+
+// MASTER QUIZ = combined
+const MQ_ALL=[...VB_Q,...PT_Q,...NT_Q,...CD_Q,...SE_Q];
+
+// ═══════════════════════════════════════
+// QUIZ ENGINE
+// ═══════════════════════════════════════
+const qStates={};
+function shuf(a){return[...a].sort(()=>Math.random()-.5);}
+
+function initQ(prefix,containerId,questions){
+  const el=document.getElementById(containerId);if(!el)return;
+  if(el.dataset.init==='1')return;
+  el.dataset.init='1';
+  qStates[prefix]={qs:shuf(questions).slice(0,Math.min(8,questions.length)),idx:0,score:0,ans:false};
+  renderQ(prefix,containerId);
+}
+
+function renderQ(prefix,containerId){
+  const el=document.getElementById(containerId);if(!el)return;
+  const st=qStates[prefix];
+  if(st.idx>=st.qs.length){showQResult(prefix,containerId,st.score,st.qs.length);return;}
+  const q=st.qs[st.idx];st.ans=false;
+  el.innerHTML=`
+    <div class="sbar"><div>ข้อที่ <span style="color:var(--amber)">${st.idx+1}</span>/${st.qs.length}</div><div class="snum">${st.score}</div><div style="font-size:11px">คะแนน</div></div>
+    <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(st.idx/st.qs.length)*100}%"></div></div>
+    <div class="qchar">${q.q}</div>
+    <div class="qopts" id="${prefix}-opts"></div>
+    <div id="${prefix}-note" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:7px"></div>
+    <button class="btn bam" id="${prefix}-nxt" style="display:none;margin-top:12px" onclick="nextQ('${prefix}','${containerId}')">ข้อต่อไป →</button>
+  `;
+  const oc=document.getElementById(prefix+'-opts');
+  q.opts.forEach(o=>{
+    const b=document.createElement('div');b.className='qopt';
+    b.style.fontFamily=/[\u3040-\u30ff\u4e00-\u9fff]/.test(o)?'"Noto Sans JP"':'"Sarabun"';
+    b.textContent=o;
+    b.onclick=()=>{
+      if(st.ans)return;st.ans=true;
+      oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){st.score+=10;showN('✓ ถูกต้อง!','ok');}else showN('✗ ผิด','bad');
+      document.getElementById(prefix+'-note').textContent='💡 '+q.note;
+      document.getElementById(prefix+'-nxt').style.display='block';
+    };
+    oc.appendChild(b);
+  });
+}
+
+function nextQ(prefix,containerId){
+  const st=qStates[prefix];st.idx++;
+  renderQ(prefix,containerId);
+  const kmap={vb:'verb',pt:'part',nt:'nai',cd:'cond',se:'end'};
+  if(kmap[prefix]) saveProg(kmap[prefix],Math.round(st.idx/st.qs.length*100));
+  initHomeProgress();
+}
+
+function showQResult(prefix,containerId,score,total){
+  saveScore('q_'+prefix,score);
+  const pct=Math.round(score/(total*10)*100);
+  const emoji=pct>=90?'🏆':pct>=70?'🎉':pct>=50?'😊':'💪';
+  const msg=pct>=90?'ยอดเยี่ยม!':pct>=70?'ดีมาก!':pct>=50?'ยังพอได้':'ยังไม่แม่น ลองอีกครั้ง';
+  document.getElementById(containerId).innerHTML=`
+    <div style="text-align:center;max-width:360px;margin:0 auto;padding:20px">
+      <div style="font-size:52px">${emoji}</div>
+      <div style="font-family:'Noto Serif JP';font-size:64px;color:var(--amber);font-weight:900;line-height:1">${score}</div>
+      <div style="font-size:13px;color:var(--text2);margin-top:6px">${score}/${total*10} — ${pct}%</div>
+      <div style="font-size:15px;color:var(--white);margin-top:6px">${msg}</div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:18px">
+        <button class="btn bam" onclick="resetQ('${prefix}','${containerId}')">🔄 ทำอีกครั้ง</button>
+        <button class="btn bol" onclick="nav('games')">🎮 เล่นเกมส์</button>
+      </div>
+    </div>`;
+}
+
+function resetQ(prefix,containerId){
+  const el=document.getElementById(containerId);if(el)el.dataset.init='';
+  const qmap={vb:VB_Q,pt:PT_Q,nt:NT_Q,cd:CD_Q,se:SE_Q};
+  initQ(prefix,containerId,qmap[prefix]);
+}
+
+// ═══════════════════════════════════════
+// VERB GAME (speed conjugation mini)
+// ═══════════════════════════════════════
+const VBG_D=[
+  {v:'食べる',type:'RU',form:'て-form',ans:'食べて'},{v:'飲む',type:'U',form:'ない-form',ans:'飲まない'},
+  {v:'書く',type:'U',form:'て-form',ans:'書いて'},{v:'する',type:'IRR',form:'て-form',ans:'して'},
+  {v:'見る',type:'RU',form:'た-form',ans:'見た'},{v:'行く',type:'U',form:'て-form',ans:'行って'},
+  {v:'来る',type:'IRR',form:'ない-form',ans:'こない'},{v:'話す',type:'U',form:'て-form',ans:'話して'},
+  {v:'待つ',type:'U',form:'た-form',ans:'待った'},{v:'起きる',type:'RU',form:'ない-form',ans:'起きない'},
+];
+let vbgS={};
+function initVBGame(){
+  const el=document.getElementById('vb-game-c');if(!el||el.dataset.init==='1')return;
+  el.dataset.init='1';
+  vbgS={qs:shuf(VBG_D),idx:0,score:0,combo:0,tLeft:45,ans:false};
+  el.innerHTML=`
+    <div class="sbar"><div>⚡ Verb Speed — 45 วินาที</div><div class="snum" id="vbg-s">0</div><div style="font-size:11px" id="vbg-t">45</div></div>
+    <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:100%" id="vbg-pb"></div></div>
+    <div id="vbg-q"></div>`;
+  renderVBGQ();
+  const tmr=setInterval(()=>{
+    vbgS.tLeft-=0.1;
+    const t=document.getElementById('vbg-t'),pb=document.getElementById('vbg-pb');
+    if(t){t.textContent=Math.ceil(vbgS.tLeft);if(vbgS.tLeft<=10)t.style.color='var(--red2)';}
+    if(pb) pb.style.width=(vbgS.tLeft/45*100)+'%';
+    if(vbgS.tLeft<=0){clearInterval(tmr);saveScore('vbg',vbgS.score);
+      const q=document.getElementById('vbg-q');if(q)q.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px">🏆</div><div style="font-family:'Noto Serif JP';font-size:48px;color:var(--amber);font-weight:900">${vbgS.score}</div><div style="color:var(--text2);margin-top:8px">คะแนน | Best: ${getScore('vbg')}</div><button class="btn bam" style="margin-top:14px" onclick="document.getElementById('vb-game-c').dataset.init='';initVBGame()">🔄 เล่นอีก</button></div>`;}
+  },100);
+  el._timer=tmr;
+}
+
+function renderVBGQ(){
+  const el=document.getElementById('vbg-q');if(!el)return;
+  vbgS.ans=false;
+  const q=vbgS.qs[vbgS.idx%vbgS.qs.length];vbgS.idx++;
+  const typeTag={RU:'<span class="vtag vru">RU</span>',U:'<span class="vtag vu">U</span>',IRR:'<span class="vtag virr">IRR</span>'}[q.type];
+  const wrongs=shuf(VBG_D.filter(x=>x.ans!==q.ans)).slice(0,3).map(x=>x.ans);
+  const opts=shuf([q.ans,...wrongs]);
+  el.innerHTML=`<div style="text-align:center;margin:0 0 16px">${typeTag}<div style="font-family:'Noto Serif JP';font-size:52px;color:var(--white);margin:6px 0">${q.v}</div><div style="background:var(--amber);color:#000;border-radius:16px;padding:3px 14px;font-size:12px;font-weight:700;display:inline-block">${q.form}</div></div>
+    <div class="qopts" id="vbg-opts"></div><div id="vbg-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div>`;
+  const oc=document.getElementById('vbg-opts');
+  opts.forEach(o=>{
+    const b=document.createElement('div');b.className='qopt';b.style.fontFamily="'Noto Sans JP'";b.textContent=o;
+    b.onclick=()=>{
+      if(vbgS.ans)return;vbgS.ans=true;
+      oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){vbgS.combo++;vbgS.score+=10*(vbgS.combo>=3?2:1);showN('✓'+(vbgS.combo>=3?' COMBO!':''),'ok');}
+      else{vbgS.combo=0;showN('✗ '+q.ans,'bad');}
+      document.getElementById('vbg-s').textContent=vbgS.score;
+      setTimeout(renderVBGQ,360);
+    };
+    oc.appendChild(b);
+  });
+}
+
+// ═══════════════════════════════════════
+// NT GAME (ない/たい/できる match)
+// ═══════════════════════════════════════
+function initNTGame(){
+  const el=document.getElementById('nt-game-c');if(!el||el.dataset.init==='1')return;
+  el.dataset.init='1';
+  const qs=[
+    {v:'食べる',target:'ない-form',ans:'食べない',opts:['食べない','食べたい','食べられる','食べます']},
+    {v:'飲む',target:'たい-form',ans:'飲みたい',opts:['飲みたい','飲まない','飲めない','飲みます']},
+    {v:'書く',target:'potential',ans:'書ける',opts:['書ける','書かない','書きたい','書きます']},
+    {v:'する',target:'ない-form',ans:'しない',opts:['しない','したい','できない','します']},
+    {v:'見る',target:'たい-form',ans:'見たい',opts:['見たい','見ない','見られる','見ます']},
+    {v:'話す',target:'potential',ans:'話せる',opts:['話せる','話さない','話したい','話します']},
+    {v:'来る',target:'ない-form',ans:'こない',opts:['こない','きたい','こられる','きます']},
+    {v:'飲む',target:'ない-form',ans:'飲まない',opts:['飲まない','飲みたい','飲めない','飲みます']},
+  ];
+  let ntgS={qs:shuf(qs),idx:0,score:0,ans:false};
+  function renderNTGQ(){
+    if(ntgS.idx>=ntgS.qs.length){el.innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px">✅</div><div style="font-family:'Noto Serif JP';font-size:48px;color:var(--amber);font-weight:900">${ntgS.score}</div><div style="color:var(--text2);margin-top:8px">คะแนน</div><button class="btn bam" style="margin-top:14px" onclick="document.getElementById('nt-game-c').dataset.init='';initNTGame()">🔄 เล่นอีก</button></div>`;return;}
+    const q=ntgS.qs[ntgS.idx];ntgS.ans=false;
+    el.innerHTML=`<div class="sbar"><div>ข้อที่ ${ntgS.idx+1}/${ntgS.qs.length}</div><div class="snum">${ntgS.score}</div></div>
+      <div class="qchar">เลือก <b style="color:var(--amber)">${q.target}</b> ของ<br><span style="font-family:'Noto Serif JP';font-size:32px">${q.v}</span></div>
+      <div class="qopts" id="ntg-opts"></div>`;
+    const oc=document.getElementById('ntg-opts');
+    q.opts.forEach(o=>{
+      const b=document.createElement('div');b.className='qopt';b.style.fontFamily="'Noto Sans JP'";b.textContent=o;
+      b.onclick=()=>{if(ntgS.ans)return;ntgS.ans=true;
+        oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+        if(o===q.ans){ntgS.score+=10;showN('✓','ok');}else showN('✗ '+q.ans,'bad');
+        setTimeout(()=>{ntgS.idx++;renderNTGQ();},500);
+      };oc.appendChild(b);
+    });
+  }
+  renderNTGQ();
+}
+
+// ═══════════════════════════════════════
+// PARTICLE FILL GAME (inline for pt-game)
+// ═══════════════════════════════════════
+const PF_D=[
+  {s:'私',p:'は',rest:'学生です',note:'Topic marker'},{s:'猫',p:'が',rest:'好きです',note:'suki uses が'},
+  {s:'ご飯',p:'を',rest:'食べる',note:'Direct object'},{s:'東京',p:'に',rest:'行く',note:'Direction'},
+  {s:'学校',p:'で',rest:'勉強する',note:'Location of action'},{s:'友達',p:'と',rest:'遊ぶ',note:'With person'},
+  {s:'東京',p:'から',rest:'来た',note:'From'},{s:'私',p:'も',rest:'行く',note:'Also/too'},
+  {s:'バス',p:'で',rest:'行く',note:'Means'},{s:'五時',p:'に',rest:'帰る',note:'Time'},
+  {s:'本棚',p:'に',rest:'本がある',note:'Location of existence'},{s:'日本語',p:'で',rest:'話す',note:'Language'},
+];
+
+function initPFill(containerId){
+  const el=document.getElementById(containerId);if(!el||el.dataset.init==='1')return;
+  el.dataset.init='1';
+  let pfS={qs:shuf(PF_D),idx:0,score:0,tLeft:45,ans:false};
+  el.innerHTML=`<div class="sbar"><div>🎯 Particle Fill — 45 วินาที</div><div class="snum" id="pff-s">0</div><div style="font-size:11px" id="pff-t">45</div></div>
+    <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:100%" id="pff-pb"></div></div><div id="pff-q"></div>`;
+  function render(){
+    const q=pfS.qs[pfS.idx%pfS.qs.length];pfS.idx++;pfS.ans=false;
+    const allP=['は','が','を','に','で','の','と','から','まで','も'];
+    const opts=shuf([q.p,...shuf(allP.filter(x=>x!==q.p)).slice(0,3)]);
+    const qel=document.getElementById('pff-q');if(!qel)return;
+    qel.innerHTML=`<div style="font-size:12px;color:var(--text2);margin-bottom:12px">เลือก Particle ที่เหมาะสม</div>
+      <div class="qchar"><span style="font-family:'Noto Sans JP'">${q.s}</span><span style="font-family:'Noto Serif JP';font-size:20px;color:var(--amber);border-bottom:2px solid var(--amber);padding:0 8px;margin:0 2px">　　</span><span style="font-family:'Noto Sans JP'">${q.rest}</span></div>
+      <div class="qopts" id="pff-opts"></div><div id="pff-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div>`;
+    const oc=document.getElementById('pff-opts');
+    opts.forEach(o=>{
+      const b=document.createElement('div');b.className='qopt';b.style.cssText="font-family:'Noto Serif JP';font-size:22px;min-width:60px;text-align:center";b.textContent=o;
+      b.onclick=()=>{if(pfS.ans)return;pfS.ans=true;
+        oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.p)x.classList.add('ok');else if(x===b&&o!==q.p)x.classList.add('bad');});
+        if(o===q.p){pfS.score+=10;document.getElementById('pff-s').textContent=pfS.score;showN('✓','ok');}else showN('✗ '+q.p,'bad');
+        document.getElementById('pff-fb').textContent='💡 '+q.p+' = '+q.note;
+        setTimeout(render,450);
+      };oc.appendChild(b);
+    });
+  }
+  render();
+  const tmr=setInterval(()=>{
+    pfS.tLeft-=0.1;
+    const t=document.getElementById('pff-t'),pb=document.getElementById('pff-pb');
+    if(t){t.textContent=Math.ceil(pfS.tLeft);if(pfS.tLeft<=10)t.style.color='var(--red2)';}
+    if(pb) pb.style.width=(pfS.tLeft/45*100)+'%';
+    if(pfS.tLeft<=0){clearInterval(tmr);saveScore('pff',pfS.score);
+      document.getElementById('pff-q').innerHTML=`<div style="text-align:center;padding:16px"><div style="font-size:48px">🏆</div><div style="font-family:'Noto Serif JP';font-size:48px;color:var(--amber);font-weight:900">${pfS.score}</div><div style="color:var(--text2);margin-top:8px">Best: ${getScore('pff')}</div><button class="btn bam" style="margin-top:14px" onclick="document.getElementById('${containerId}').dataset.init='';initPFill('${containerId}')">🔄 เล่นอีก</button></div>`;}
+  },100);
+}
+
+// ═══════════════════════════════════════
+// GAMES PAGE ENGINE
+// ═══════════════════════════════════════
+let gActive=null,gTimer=null;
+function buildHSGrid(){
+  const el=document.getElementById('hs-grid');if(!el)return;
+  const gs=[{id:'pf',n:'Particle Fill',i:'🎯'},{id:'cs',n:'Conj Speed',i:'⚡'},{id:'sb',n:'Sent Builder',i:'🧩'},{id:'cm',n:'Cond Match',i:'🔗'},{id:'tc',n:'Translation',i:'🌏'}];
+  el.innerHTML=gs.map(g=>`<div style="background:var(--ink3);border:1px solid var(--border);border-radius:8px;padding:10px;text-align:center"><div style="font-size:18px">${g.i}</div><div style="font-size:11px;font-weight:600;color:var(--white);margin-top:3px">${g.n}</div><div style="font-size:18px;color:var(--amber);font-family:'Noto Serif JP';font-weight:700">${getScore('g_'+g.id)||'—'}</div></div>`).join('');
+  gs.forEach(g=>{const e=document.getElementById('hs-'+g.id);if(e)e.textContent=getScore('g_'+g.id)||'—';});
+}
+
+function gplay(id){
+  gActive=id;if(gTimer){clearInterval(gTimer);gTimer=null;}
+  document.getElementById('g-lobby').style.display='none';
+  document.getElementById('g-arena').style.display='block';
+  const titles={pf:'🎯 Particle Fill-in',cs:'⚡ Conjugation Speed',sb:'🧩 Sentence Builder',cm:'🔗 Conditional Match',tc:'🌏 Translation Challenge'};
+  document.getElementById('g-title').textContent=titles[id]||id;
+  ({pf:startGPF,cs:startGCS,sb:startGSB,cm:startGCM,tc:startGTC})[id]?.();
+}
+
+function gexit(){
+  if(gTimer){clearInterval(gTimer);gTimer=null;}
+  document.getElementById('g-lobby').style.display='block';
+  document.getElementById('g-arena').style.display='none';
+  document.getElementById('g-hud').innerHTML='';
+  document.getElementById('g-content').innerHTML='';
+  buildHSGrid();
+}
+
+function gover(id,score,extra){
+  if(gTimer){clearInterval(gTimer);gTimer=null;}
+  const hs=getScore('g_'+id);saveScore('g_'+id,score);const isNew=score>=hs&&score>0;
+  document.getElementById('g-content').innerHTML=`<div style="text-align:center;max-width:360px;margin:0 auto;padding:22px"><div style="font-size:52px">${isNew?'🏆':'🎮'}</div><div style="font-size:12px;color:${isNew?'var(--amber)':'var(--text2)'};font-weight:700;letter-spacing:2px;margin:10px 0">${isNew?'🎉 NEW HIGH SCORE!':'GAME OVER'}</div><div style="font-family:'Noto Serif JP';font-size:66px;color:${isNew?'var(--amber)':'var(--white)'};font-weight:900;line-height:1">${score}</div>${extra?`<div style="font-size:12px;color:var(--text2);margin-top:6px">${extra}</div>`:''}<div style="font-size:10px;color:var(--text3);margin-top:3px">Best: ${Math.max(hs,score)}</div><div style="display:flex;gap:10px;justify-content:center;margin-top:20px"><button class="btn bam" onclick="gplay('${id}')">🔄 อีกครั้ง</button><button class="btn bol" onclick="gexit()">← เลือกเกมส์</button></div></div>`;
+  document.getElementById('g-hud').innerHTML='';
+}
+
+// ─── G1: PARTICLE FILL ───
+let gpf={};
+function startGPF(){
+  gpf={qs:shuf(PF_D),idx:0,score:0,tLeft:45,ans:false};
+  document.getElementById('g-hud').innerHTML=`<div style="text-align:center"><div style="font-size:9px;color:var(--text2)">TIME</div><div style="font-size:22px;color:var(--amber);font-weight:900;font-family:'Noto Serif JP'" id="gpf-t">45</div></div><div style="text-align:center"><div style="font-size:9px;color:var(--text2)">SCORE</div><div style="font-size:22px;color:var(--red2);font-weight:900;font-family:'Noto Serif JP'" id="gpf-s">0</div></div>`;
+  renderGPF();
+  gTimer=setInterval(()=>{gpf.tLeft-=0.1;const t=document.getElementById('gpf-t');if(t){t.textContent=Math.ceil(gpf.tLeft);if(gpf.tLeft<=10)t.style.color='var(--red2)';}if(gpf.tLeft<=0)gover('pf',gpf.score,'ตอบถูก '+(gpf.score/10|0)+' ข้อ');},100);
+}
+function renderGPF(){
+  const c=document.getElementById('g-content');if(!c)return;
+  gpf.ans=false;const q=gpf.qs[gpf.idx%gpf.qs.length];gpf.idx++;
+  const allP=['は','が','を','に','で','の','と','から','まで','も'];
+  const opts=shuf([q.p,...shuf(allP.filter(x=>x!==q.p)).slice(0,3)]);
+  c.innerHTML=`<div style="max-width:480px;margin:0 auto"><div style="font-size:12px;color:var(--text2);margin-bottom:10px">เลือก Particle</div>
+    <div class="qchar"><span style="font-family:'Noto Sans JP'">${q.s}</span><span style="font-family:'Noto Serif JP';font-size:20px;color:var(--amber);border-bottom:2px solid var(--amber);padding:0 8px;margin:0 2px">　　</span><span style="font-family:'Noto Sans JP'">${q.rest}</span></div>
+    <div class="qopts" id="gpf-opts"></div><div id="gpf-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div></div>`;
+  const oc=document.getElementById('gpf-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.cssText="font-family:'Noto Serif JP';font-size:22px;min-width:60px;text-align:center";b.textContent=o;
+    b.onclick=()=>{if(gpf.ans)return;gpf.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.p)x.classList.add('ok');else if(x===b&&o!==q.p)x.classList.add('bad');});
+      if(o===q.p){gpf.score+=10;document.getElementById('gpf-s').textContent=gpf.score;showN('✓','ok');}else showN('✗ '+q.p,'bad');
+      document.getElementById('gpf-fb').textContent='💡 '+q.p+' = '+q.note;setTimeout(renderGPF,400);};oc.appendChild(b);});
+}
+
+// ─── G2: CONJUGATION SPEED ───
+let gcs={};
+const GCS_D=[...VBG_D,{v:'泳ぐ',type:'U',form:'potential',ans:'泳げる'},{v:'起きる',type:'RU',form:'て-form',ans:'起きて'}];
+function startGCS(){
+  gcs={qs:shuf(GCS_D),idx:0,score:0,combo:0,tLeft:60,ans:false};
+  document.getElementById('g-hud').innerHTML=`<div style="text-align:center"><div style="font-size:9px;color:var(--text2)">TIME</div><div style="font-size:22px;color:var(--amber);font-weight:900;font-family:'Noto Serif JP'" id="gcs-t">60</div></div><div style="text-align:center"><div style="font-size:9px;color:var(--text2)">SCORE</div><div style="font-size:22px;color:var(--red2);font-weight:900;font-family:'Noto Serif JP'" id="gcs-s">0</div></div><div style="text-align:center"><div style="font-size:9px;color:var(--text2)">COMBO</div><div style="font-size:22px;color:var(--jade2);font-weight:900;font-family:'Noto Serif JP'" id="gcs-c">x1</div></div>`;
+  renderGCS();
+  gTimer=setInterval(()=>{gcs.tLeft-=0.1;const t=document.getElementById('gcs-t');if(t){t.textContent=Math.ceil(gcs.tLeft);if(gcs.tLeft<=10)t.style.color='var(--red2)';}if(gcs.tLeft<=0)gover('cs',gcs.score,'Combo สูงสุด: '+gcs.combo);},100);
+}
+function renderGCS(){
+  const c=document.getElementById('g-content');if(!c)return;
+  gcs.ans=false;const q=gcs.qs[gcs.idx%gcs.qs.length];gcs.idx++;
+  const typeTag={RU:'<span class="vtag vru">RU</span>',U:'<span class="vtag vu">U</span>',IRR:'<span class="vtag virr">IRR</span>'}[q.type];
+  const wrongs=shuf(GCS_D.filter(x=>x.ans!==q.ans)).slice(0,3).map(x=>x.ans);
+  const opts=shuf([q.ans,...wrongs]);
+  c.innerHTML=`<div style="max-width:480px;margin:0 auto;text-align:center">${typeTag}<div style="font-family:'Noto Serif JP';font-size:52px;color:var(--white);margin:6px 0">${q.v}</div><div style="background:var(--amber);color:#000;border-radius:16px;padding:3px 14px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:16px">${q.form}</div>
+    <div class="qopts" id="gcs-opts" style="justify-content:center"></div><div id="gcs-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div></div>`;
+  const oc=document.getElementById('gcs-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontFamily="'Noto Sans JP'";b.textContent=o;
+    b.onclick=()=>{if(gcs.ans)return;gcs.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){gcs.combo++;gcs.score+=10*(gcs.combo>=3?2:1);showN('✓'+(gcs.combo>=3?' COMBO×2':''),'ok');}else{gcs.combo=0;showN('✗ '+q.ans,'bad');}
+      document.getElementById('gcs-s').textContent=gcs.score;document.getElementById('gcs-c').textContent='x'+(gcs.combo||1);setTimeout(renderGCS,360);};oc.appendChild(b);});
+}
+
+// ─── G3: SENTENCE BUILDER ───
+const GSB_D=[
+  {w:['私','は','学生','です'],th:'ฉันเป็นนักเรียน'},
+  {w:['ご飯','を','食べ','ます'],th:'กินข้าว'},
+  {w:['東京','に','行く'],th:'ไปโตเกียว'},
+  {w:['学校','で','勉強','する'],th:'เรียนที่โรงเรียน'},
+  {w:['友達','と','遊ぶ'],th:'เล่นกับเพื่อน'},
+  {w:['日本語','が','好き','です'],th:'ชอบภาษาญี่ปุ่น'},
+  {w:['映画','を','見','たい'],th:'อยากดูหนัง'},
+  {w:['もっと','強く','なり','たい'],th:'อยากเก่งกว่านี้'},
+];
+let gsb={};
+function startGSB(){gsb={qs:shuf(GSB_D),idx:0,score:0,ans:[]};renderGSB();}
+function renderGSB(){
+  const c=document.getElementById('g-content');if(!c)return;
+  const q=gsb.qs[gsb.idx%gsb.qs.length];gsb.ans=[];
+  document.getElementById('g-hud').innerHTML=`<div style="text-align:center"><div style="font-size:9px;color:var(--text2)">SCORE</div><div style="font-size:22px;color:var(--amber);font-weight:900;font-family:'Noto Serif JP'" id="gsb-s">${gsb.score}</div></div>`;
+  c.innerHTML=`<div style="max-width:540px;margin:0 auto"><div style="font-size:12px;color:var(--text2);margin-bottom:8px">เรียงคำให้เป็นประโยค:</div>
+    <div style="font-size:16px;color:var(--amber2);background:var(--ink3);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-weight:700">${q.th}</div>
+    <div class="azone" id="gsb-ans"><span class="aph">คลิกคำด้านล่างเพื่อเรียง...</span></div>
+    <div class="wbank" id="gsb-bank"></div>
+    <div id="gsb-fb" style="min-height:24px;font-size:13px;font-weight:700;margin-top:10px"></div>
+    <div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn bjd" onclick="checkGSB()" style="font-size:12px">✓ ตรวจ</button>
+      <button class="btn bol" onclick="resetGSBQ()" style="font-size:12px">🔄 รีเซ็ต</button>
+      <button class="btn bam" id="gsb-nxt" style="display:none;font-size:12px" onclick="nextGSB()">ข้อต่อไป →</button>
+    </div></div>`;
+  const bank=document.getElementById('gsb-bank');
+  shuf([...q.w]).forEach(w=>{
+    const t=document.createElement('div');t.className='wtok';t.textContent=w;t.dataset.orig=w;
+    t.onclick=()=>{if(t.classList.contains('used'))return;t.classList.add('used');gsb.ans.push(w);const az=document.getElementById('gsb-ans');const ph=az.querySelector('.aph');if(ph)ph.remove();const at=document.createElement('div');at.className='wtok inans';at.textContent=w;at.onclick=()=>{const i=gsb.ans.lastIndexOf(w);if(i>-1)gsb.ans.splice(i,1);at.remove();t.classList.remove('used');if(az.children.length===0)az.innerHTML='<span class="aph">คลิกคำด้านล่างเพื่อเรียง...</span>';};az.appendChild(at);};
+    bank.appendChild(t);
+  });
+  gsb.currentQ=q;
+}
+function checkGSB(){const q=gsb.currentQ;const ok=gsb.ans.join('')===q.w.join('');const fb=document.getElementById('gsb-fb');const nxt=document.getElementById('gsb-nxt');if(ok){gsb.score+=15;if(fb){fb.textContent='✓ ถูกต้อง! +15';fb.style.color='var(--jade2)';}document.getElementById('gsb-s').textContent=gsb.score;if(nxt)nxt.style.display='block';showN('✓','ok');}else{if(fb){fb.textContent='✗ ไม่ถูก — คำตอบ: '+q.w.join(' ');fb.style.color='var(--red2)';}showN('✗','bad');}}
+function resetGSBQ(){document.querySelectorAll('.wtok.used').forEach(t=>t.classList.remove('used'));gsb.ans=[];const az=document.getElementById('gsb-ans');az.innerHTML='<span class="aph">คลิกคำด้านล่างเพื่อเรียง...</span>';const fb=document.getElementById('gsb-fb');if(fb)fb.textContent='';const nxt=document.getElementById('gsb-nxt');if(nxt)nxt.style.display='none';}
+function nextGSB(){gsb.idx++;if(gsb.idx>=gsb.qs.length){gover('sb',gsb.score,'ตอบถูก '+(gsb.score/15|0)+'/'+gsb.qs.length);return;}renderGSB();}
+
+// ─── G4: CONDITIONAL MATCH ───
+const GCM_D=[
+  {s:'春になる___桜が咲く',ans:'と',why:'กฎธรรมชาติ'},
+  {s:'お金があっ___旅行する',ans:'たら',why:'สมมติสถานการณ์'},
+  {s:'早く起き___間に合う',ans:'れば',why:'เงื่อนไขคำแนะนำ'},
+  {s:'このボタンを押す___電気がつく',ans:'と',why:'cause-effect แน่นอน'},
+  {s:'家に帰っ___電話して',ans:'たら',why:'พอทำแล้ว + request'},
+  {s:'安___買う',ans:'ければ',why:'adj い conditional'},
+  {s:'もし彼女だっ___どうする？',ans:'たら',why:'สมมติ hypothetical'},
+  {s:'早く来___一緒に行ける',ans:'れば',why:'ถ้า...ก็ทำได้'},
+];
+let gcm={};
+function startGCM(){gcm={qs:shuf(GCM_D),idx:0,score:0,ans:false};document.getElementById('g-hud').innerHTML=`<div style="text-align:center"><div style="font-size:9px;color:var(--text2)">SCORE</div><div style="font-size:22px;color:var(--amber);font-weight:900;font-family:'Noto Serif JP'" id="gcm-s">0</div></div>`;renderGCM();}
+function renderGCM(){
+  const c=document.getElementById('g-content');if(!c)return;gcm.ans=false;
+  if(gcm.idx>=gcm.qs.length){gover('cm',gcm.score,'ตอบถูก '+(gcm.score/12|0)+'/'+gcm.qs.length);return;}
+  const q=gcm.qs[gcm.idx];
+  const allC=['と','たら','れば','ければ','なら'];
+  const opts=shuf([q.ans,...shuf(allC.filter(x=>x!==q.ans)).slice(0,3)]);
+  c.innerHTML=`<div style="max-width:480px;margin:0 auto"><div style="font-size:12px;color:var(--text2);margin-bottom:10px">เลือก Conditional ที่เหมาะสม</div>
+    <div class="qchar"><span style="font-family:'Noto Sans JP'">${q.s.replace('___','<span style="font-family:\'Noto Serif JP\';font-size:20px;color:var(--amber);border-bottom:2px solid var(--amber);padding:0 8px;margin:0 2px">　　</span>')}</span></div>
+    <div class="qopts" id="gcm-opts"></div><div id="gcm-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div>
+    <button class="btn bam" id="gcm-nxt" style="display:none;margin-top:10px" onclick="gcm.idx++;renderGCM()">ข้อต่อไป →</button></div>`;
+  const oc=document.getElementById('gcm-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.cssText="font-family:'Noto Serif JP';font-size:20px;min-width:70px;text-align:center";b.textContent=o;
+    b.onclick=()=>{if(gcm.ans)return;gcm.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){gcm.score+=12;document.getElementById('gcm-s').textContent=gcm.score;showN('✓','ok');}else showN('✗ '+q.ans,'bad');
+      document.getElementById('gcm-fb').textContent='💡 '+q.ans+' = '+q.why;document.getElementById('gcm-nxt').style.display='block';};oc.appendChild(b);});
+}
+
+// ─── G5: TRANSLATION CHALLENGE ───
+const GTC_D=[
+  {j:'食べたくない',opts:['อยากกิน','ไม่อยากกิน','กินแล้ว','กินได้'],ans:'ไม่อยากกิน'},
+  {j:'話せる',opts:['พูดแล้ว','ไม่พูด','พูดได้','อยากพูด'],ans:'พูดได้'},
+  {j:'行かない',opts:['ไปแล้ว','อยากไป','ไม่ไป','ไปได้'],ans:'ไม่ไป'},
+  {j:'食べたら帰る',opts:['กินแล้วกลับ','ถ้ากินก็ไม่กลับ','กลับแล้วกิน','กินเพราะกลับ'],ans:'กินแล้วกลับ'},
+  {j:'強くなりたい',opts:['อยากเก่งขึ้น','เก่งขึ้นแล้ว','ไม่อยากเก่ง','เก่งมาก'],ans:'อยากเก่งขึ้น'},
+  {j:'できない',opts:['ทำได้','ทำแล้ว','ไม่ทำ','ทำไม่ได้'],ans:'ทำไม่ได้'},
+  {j:'いい天気ですね',opts:['อากาศร้อนนะ','อากาศดีนะ','ฝนตกนะ','หนาวนะ'],ans:'อากาศดีนะ'},
+  {j:'危ないよ！',opts:['อันตรายนะ (บอก)','อันตรายไหม?','ไม่อันตราย','อันตรายมาก'],ans:'อันตรายนะ (บอก)'},
+  {j:'早く起きれば間に合う',opts:['ถ้าตื่นเร็วก็ทัน','ตื่นเร็วทันแล้ว','ตื่นช้าก็ทัน','ไม่ทันถ้าตื่น'],ans:'ถ้าตื่นเร็วก็ทัน'},
+  {j:'知ってるよ！',opts:['รู้ไหม?','รู้แล้ว! (เน้น)','ไม่รู้','อยากรู้'],ans:'รู้แล้ว! (เน้น)'},
+];
+let gtc={};
+function startGTC(){gtc={qs:shuf(GTC_D),idx:0,score:0,ans:false};document.getElementById('g-hud').innerHTML=`<div style="text-align:center"><div style="font-size:9px;color:var(--text2)">SCORE</div><div style="font-size:22px;color:var(--amber);font-weight:900;font-family:'Noto Serif JP'" id="gtc-s">0</div></div><div style="text-align:center"><div style="font-size:9px;color:var(--text2)">ข้อที่</div><div style="font-size:22px;color:var(--text2);font-weight:900;font-family:'Noto Serif JP'" id="gtc-i">1/10</div></div>`;renderGTC();}
+function renderGTC(){
+  const c=document.getElementById('g-content');if(!c)return;gtc.ans=false;
+  if(gtc.idx>=gtc.qs.length){gover('tc',gtc.score,'ตอบถูก '+(gtc.score/12|0)+'/'+gtc.qs.length);return;}
+  const q=gtc.qs[gtc.idx];document.getElementById('gtc-i').textContent=(gtc.idx+1)+'/'+gtc.qs.length;
+  c.innerHTML=`<div style="max-width:480px;margin:0 auto"><div style="font-size:12px;color:var(--text2);margin-bottom:10px">เลือกคำแปลที่ถูกต้อง</div>
+    <div class="qchar" style="text-align:center;font-family:'Noto Sans JP';font-size:24px">${q.j}</div>
+    <div class="qopts" id="gtc-opts"></div><div id="gtc-fb" style="min-height:22px;font-size:13px;color:var(--text2);margin-top:7px"></div>
+    <button class="btn bam" id="gtc-nxt" style="display:none;margin-top:10px" onclick="gtc.idx++;renderGTC()">ข้อต่อไป →</button></div>`;
+  const oc=document.getElementById('gtc-opts');
+  q.opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontFamily="'Sarabun'";b.textContent=o;
+    b.onclick=()=>{if(gtc.ans)return;gtc.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){gtc.score+=12;document.getElementById('gtc-s').textContent=gtc.score;showN('✓','ok');}else showN('✗','bad');
+      document.getElementById('gtc-nxt').style.display='block';};oc.appendChild(b);});
+}
+
+// ═══════════════════════════════════════
+// MASTER QUIZ
+// ═══════════════════════════════════════
+let mqS={};
+function startMQ(){
+  document.getElementById('mq-start').style.display='none';
+  document.getElementById('mq-game').style.display='block';
+  mqS={qs:shuf(MQ_ALL).slice(0,20),idx:0,score:0,ans:false};
+  renderMQ();
+}
+function renderMQ(){
+  const el=document.getElementById('mq-game');if(!el)return;
+  if(mqS.idx>=mqS.qs.length){showMQResult();return;}
+  const q=mqS.qs[mqS.idx];mqS.ans=false;
+  el.innerHTML=`<div class="sbar"><div>ข้อที่ <span style="color:var(--amber)">${mqS.idx+1}</span>/20</div><div class="snum">${mqS.score}</div><div>คะแนน</div></div>
+    <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(mqS.idx/20)*100}%"></div></div>
+    <div class="qchar" style="white-space:pre-wrap">${q.q}</div>
+    <div class="qopts" id="mq-opts"></div>
+    <div id="mq-note" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:7px"></div>
+    <button class="btn bam" id="mq-nxt" style="display:none;margin-top:12px" onclick="mqNext()">ข้อต่อไป →</button>`;
+  const oc=document.getElementById('mq-opts');
+  q.opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontFamily=/[\u3040-\u30ff\u4e00-\u9fff]/.test(o)?'"Noto Sans JP"':'"Sarabun"';b.textContent=o;
+    b.onclick=()=>{if(mqS.ans)return;mqS.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
+      if(o===q.ans){mqS.score+=10;showN('✓','ok');}else showN('✗','bad');
+      document.getElementById('mq-note').textContent='💡 '+q.note;document.getElementById('mq-nxt').style.display='block';};oc.appendChild(b);});
+}
+function mqNext(){mqS.idx++;renderMQ();}
+function showMQResult(){
+  document.getElementById('mq-game').style.display='none';const el=document.getElementById('mq-result');el.style.display='block';
+  const pct=Math.round(mqS.score/200*100);const emoji=pct>=90?'🏆':pct>=70?'🎉':pct>=50?'😊':'💪';
+  const msg=pct>=90?'Grammar Master! ยอดเยี่ยมมาก!':pct>=70?'ดีมาก ใกล้แล้ว!':pct>=50?'พอได้ ทบทวนเพิ่มนะ':'ยังต้องเรียนเพิ่มอีก';
+  const hs=getScore('mq');saveScore('mq',mqS.score);const isNew=mqS.score>=hs&&mqS.score>0;
+  document.getElementById('mq-hs').textContent=Math.max(hs,mqS.score);
+  el.innerHTML=`<div style="text-align:center;max-width:420px;margin:0 auto;padding:24px">
+    <div style="font-size:60px">${emoji}</div>
+    <div style="font-size:12px;color:${isNew?'var(--amber)':'var(--text2)'};font-weight:700;letter-spacing:2px;margin:12px 0">${isNew?'🎉 NEW HIGH SCORE!':'RESULT'}</div>
+    <div style="font-family:'Noto Serif JP';font-size:80px;color:${isNew?'var(--amber)':'var(--white)'};font-weight:900;line-height:1">${mqS.score}</div>
+    <div style="font-size:14px;color:var(--text2);margin-top:8px">${mqS.score}/200 — ${pct}%</div>
+    <div style="font-size:16px;color:var(--white);margin-top:8px">${msg}</div>
+    <div style="display:flex;gap:12px;justify-content:center;margin-top:24px">
+      <button class="btn bam" onclick="document.getElementById('mq-result').style.display='none';document.getElementById('mq-game').style.display='none';document.getElementById('mq-start').style.display='block'">🔄 ทำอีกครั้ง</button>
+      <button class="btn bol" onclick="nav('home')">🏠 หน้าหลัก</button>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+window.onload=()=>{
+  initHomeProgress();
+  const hs=getScore('mq');document.getElementById('mq-hs').textContent=hs||'—';
+};
+</script>
+
+<style>
+#yor-credit{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(232,84,122,.2);padding:5px 16px;display:flex;align-items:center;justify-content:space-between;z-index:9999;font-family:'Sarabun',sans-serif;flex-wrap:wrap;gap:6px}
+#yor-credit .yc-left{display:flex;align-items:center;gap:10px}
+#yor-credit .yc-name{font-size:12px;font-weight:700;color:#e8547a;letter-spacing:.5px}
+#yor-credit .yc-stage{font-size:10px;color:rgba(200,200,232,.5);font-family:'DM Mono',monospace}
+#yor-credit .yc-back{font-size:10px;color:rgba(200,200,232,.5);text-decoration:none;border:1px solid rgba(232,84,122,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
+#yor-credit .yc-back:hover{color:#e8547a;border-color:#e8547a}
+body{padding-bottom:60px}
+</style>
+<div id="yor-credit">
+  <div class="yc-left">
+    <span class="yc-name">Yor</span>
+    <span class="yc-stage">文法道場 Stage 2 — Grammar N5→N4 &nbsp;·&nbsp; Yor's Road to Reading Japanese Manga</span>
+  </div>
+  <a class="yc-back" href="index.html">← Portal</a>
+</div>
+
+</body>
+</html>

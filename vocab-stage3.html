@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>語彙道場 — Vocabulary Stage 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&family=Sarabun:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060f0b;--bg2:#0d1a13;--bg3:#122018;--surface:#172a1f;--surface2:#1e3629;
+  --border:#254733;--border2:#2f5c3f;
+  --green:#3ddc84;--green2:#5ef5a0;--green3:#a8ffcc;
+  --gold:#d4a83a;--gold2:#f0c84c;--amber:#e8a020;
+  --red:#e05c4a;--red2:#ff7060;--blue:#4a9eff;--purple:#b07aff;
+  --text:#c8f0d8;--text2:#7ab895;--text3:#3d6b52;
+  --white:#e8fff2;
+  --sw:220px;
+  --r:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Sarabun','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 80% 20%,rgba(61,220,132,.04),transparent),radial-gradient(ellipse 50% 60% at 10% 80%,rgba(212,168,58,.03),transparent);pointer-events:none;z-index:0}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+/* SIDEBAR */
+.sidebar{position:fixed;left:0;top:0;width:var(--sw);height:100vh;background:var(--bg2);border-right:1px solid var(--border);z-index:100;display:flex;flex-direction:column;overflow-y:auto}
+.logo{padding:18px 16px 14px;border-bottom:1px solid var(--border)}
+.logo-jp{font-family:'Noto Serif JP';font-size:20px;color:var(--green2);font-weight:900;letter-spacing:2px;text-shadow:0 0 20px rgba(61,220,132,.3)}
+.logo-en{font-family:'DM Mono';font-size:9px;color:var(--text3);letter-spacing:3px;text-transform:uppercase;margin-top:3px}
+.logo-badge{display:inline-block;background:linear-gradient(90deg,var(--gold),var(--amber));color:#000;font-size:9px;padding:2px 8px;border-radius:10px;margin-top:5px;font-weight:700;letter-spacing:1px}
+.ng{padding:4px 0;border-bottom:1px solid var(--border)}
+.ngl{font-size:8px;letter-spacing:2px;color:var(--text3);text-transform:uppercase;padding:7px 16px 3px;font-family:'DM Mono'}
+.ni{display:flex;align-items:center;gap:8px;padding:9px 16px;cursor:pointer;font-size:12px;color:var(--text2);border-left:3px solid transparent;transition:all .2s;position:relative}
+.ni:hover{background:var(--surface);color:var(--text)}.ni.active{background:linear-gradient(90deg,rgba(61,220,132,.08),transparent);color:var(--green2);border-left-color:var(--green)}
+.nbadge{margin-left:auto;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:8px;font-family:'DM Mono';animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.7}}
+.ni .np{margin-left:auto;font-size:9px;background:var(--surface2);padding:2px 5px;border-radius:6px;color:var(--green);font-family:'DM Mono'}
+/* MAIN */
+.main{margin-left:var(--sw);min-height:100vh;position:relative;z-index:1}
+.page{display:none;padding:26px;animation:fadeUp .3s ease}.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.phd{margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.phd h1{font-family:'Playfair Display';font-size:28px;color:var(--white);font-weight:700}
+.phd .jp{font-size:12px;color:var(--green);margin-top:3px;font-family:'Noto Serif JP'}
+.phd p{font-size:13px;color:var(--text2);margin-top:6px;line-height:1.7;max-width:640px}
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px}
+.card+.card{margin-top:12px}
+.ct{font-size:13px;font-weight:700;color:var(--white);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+/* GRID */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+/* BOXES */
+.ibox{background:rgba(61,220,132,.08);border:1px solid var(--border2);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--green3);margin-bottom:12px;line-height:1.7}
+.abox{background:rgba(212,168,58,.08);border:1px solid rgba(212,168,58,.3);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--gold2);margin-bottom:12px;line-height:1.7}
+.rbox{background:rgba(224,92,74,.08);border-left:3px solid var(--red);border-radius:0 8px 8px 0;padding:10px 14px;font-size:13px;color:#ffb0a0;margin:8px 0;line-height:1.7}
+/* BTNS */
+.btn{padding:9px 18px;border:none;border-radius:8px;cursor:pointer;font-family:'Sarabun';font-size:13px;font-weight:600;transition:all .2s}
+.bgr{background:var(--green);color:#000}.bgr:hover{background:var(--green2);transform:translateY(-1px)}
+.bgd{background:var(--gold);color:#000}.bgd:hover{background:var(--gold2)}
+.brd{background:var(--red);color:#fff}.brd:hover{background:var(--red2)}
+.bol{background:transparent;color:var(--text2);border:1px solid var(--border)}.bol:hover{border-color:var(--green);color:var(--green)}
+/* TABS */
+.tabs{display:flex;gap:0;margin-bottom:18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tab{padding:8px 14px;font-size:12px;cursor:pointer;color:var(--text2);border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap}
+.tab:hover{color:var(--text)}.tab.active{color:var(--green);border-bottom-color:var(--green)}
+.tp{display:none}.tp.active{display:block}
+/* FLASHCARD */
+.fcard{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:32px;text-align:center;min-height:240px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:all .3s;position:relative;overflow:hidden}
+.fcard::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(61,220,132,.06),transparent);pointer-events:none}
+.fcard:hover{border-color:var(--green);box-shadow:0 0 30px rgba(61,220,132,.1)}
+.fcard-jp{font-family:'Noto Serif JP';font-size:52px;color:var(--white);font-weight:900;line-height:1.2;text-shadow:0 0 30px rgba(61,220,132,.2)}
+.fcard-kana{font-family:'Noto Sans JP';font-size:18px;color:var(--green);margin-top:4px}
+.fcard-rom{font-family:'DM Mono';font-size:13px;color:var(--text2);margin-top:3px}
+.fcard-th{font-size:18px;color:var(--white);margin-top:8px;line-height:1.5}
+.fcard-type{display:inline-block;font-family:'DM Mono';font-size:9px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:10px;text-transform:uppercase}
+.tag-noun{background:rgba(74,158,255,.2);color:var(--blue);border:1px solid rgba(74,158,255,.4)}
+.tag-verb{background:rgba(61,220,132,.15);color:var(--green);border:1px solid rgba(61,220,132,.3)}
+.tag-adj{background:rgba(176,122,255,.2);color:var(--purple);border:1px solid rgba(176,122,255,.3)}
+.tag-adv{background:rgba(212,168,58,.15);color:var(--gold2);border:1px solid rgba(212,168,58,.3)}
+.tag-expr{background:rgba(224,92,74,.15);color:var(--red2);border:1px solid rgba(224,92,74,.3)}
+/* SRS BUTTONS */
+.srs-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.srs-btn{flex:1;min-width:80px;max-width:120px;padding:10px 8px;border:none;border-radius:10px;cursor:pointer;font-family:'Sarabun';font-size:13px;font-weight:700;transition:all .2s;text-align:center}
+.srs-again{background:rgba(224,92,74,.25);color:var(--red2);border:2px solid rgba(224,92,74,.4)}.srs-again:hover{background:rgba(224,92,74,.4);transform:translateY(-2px)}
+.srs-hard{background:rgba(212,168,58,.2);color:var(--gold2);border:2px solid rgba(212,168,58,.3)}.srs-hard:hover{background:rgba(212,168,58,.35);transform:translateY(-2px)}
+.srs-good{background:rgba(61,220,132,.2);color:var(--green2);border:2px solid rgba(61,220,132,.3)}.srs-good:hover{background:rgba(61,220,132,.35);transform:translateY(-2px)}
+.srs-easy{background:rgba(74,158,255,.2);color:var(--blue);border:2px solid rgba(74,158,255,.3)}.srs-easy:hover{background:rgba(74,158,255,.35);transform:translateY(-2px)}
+.srs-lbl{font-size:9px;color:inherit;opacity:.7;display:block;margin-top:2px;font-family:'DM Mono';font-weight:400}
+/* VOCAB ROW */
+.vrow{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--border);transition:background .15s;cursor:pointer}
+.vrow:hover{background:var(--surface2)}.vrow:last-child{border-bottom:none}
+.vrow-jp{font-family:'Noto Serif JP';font-size:20px;color:var(--white);min-width:60px}
+.vrow-kana{font-family:'Noto Sans JP';font-size:12px;color:var(--green);min-width:80px}
+.vrow-th{font-size:13px;color:var(--text);flex:1}
+.vrow-deck{font-family:'DM Mono';font-size:9px;color:var(--text3);min-width:60px;text-align:right}
+.srs-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-new{background:var(--blue)}.dot-learning{background:var(--gold)}.dot-young{background:var(--green)}.dot-mature{background:var(--text3)}
+/* PBAR */
+.pbar{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.pbf{height:100%;background:linear-gradient(90deg,var(--green),var(--green2));border-radius:3px;transition:width .4s}
+/* QUIZ */
+.qcard{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:22px;margin-bottom:14px}
+.qjp{font-family:'Noto Serif JP';font-size:38px;color:var(--white);text-align:center;margin:12px 0}
+.qopts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.qopt{flex:1;min-width:140px;padding:10px 14px;background:var(--surface2);border:2px solid var(--border);border-radius:8px;cursor:pointer;font-size:13px;color:var(--text);transition:all .15s;text-align:center}
+.qopt:hover{border-color:var(--green);background:rgba(61,220,132,.08)}.qopt.ok{border-color:var(--green2);background:rgba(61,220,132,.15);color:var(--green2)}.qopt.bad{border-color:var(--red2);background:rgba(224,92,74,.12);color:var(--red2)}
+/* STAT */
+.stat-num{font-family:'Playfair Display';font-size:42px;color:var(--green);font-weight:700;line-height:1}
+.stat-lbl{font-size:11px;color:var(--text2);margin-top:4px;font-family:'DM Mono';text-transform:uppercase;letter-spacing:1px}
+/* SEARCH */
+.search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:13px;font-family:'Sarabun';outline:none;transition:border .2s}
+.search:focus{border-color:var(--green)}
+/* NOTIF */
+.notif{position:fixed;bottom:18px;right:18px;background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:10px 16px;font-size:13px;z-index:999;transform:translateY(60px);opacity:0;transition:all .3s;font-family:'DM Mono'}
+.notif.show{transform:translateY(0);opacity:1}.notif.ok{border-color:var(--green2);color:var(--green2)}.notif.bad{border-color:var(--red2);color:var(--red2)}.notif.info{border-color:var(--gold);color:var(--gold2)}
+/* DECK CARDS */
+.deck-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.deck-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:0 12px 0 60px;opacity:.15}
+.deck-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.3)}
+.deck-title{font-size:15px;font-weight:700;color:var(--white);margin:8px 0 4px}
+.deck-count{font-family:'DM Mono';font-size:11px;color:var(--text2)}
+.deck-bar{margin-top:10px}
+/* ANKI STEPS */
+.step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.step-num{width:28px;height:28px;border-radius:50%;background:var(--green);color:#000;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'DM Mono'}
+.step-body{flex:1}
+.step-title{font-size:14px;font-weight:700;color:var(--white);margin-bottom:4px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.7}
+.link{color:var(--blue);text-decoration:none;font-family:'DM Mono';font-size:11px}.link:hover{color:var(--green2)}
+/* FLIP */
+.flip-outer{perspective:1000px;max-width:480px;margin:0 auto}
+.flip-inner{position:relative;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.4,.2,.2,1);min-height:240px}
+.flip-inner.flipped{transform:rotateY(180deg)}
+.flip-front,.flip-back{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px}
+.flip-back{transform:rotateY(180deg)}
+/* TYPING */
+.tinput{width:100%;background:var(--surface2);border:2px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--white);font-family:'Noto Sans JP';font-size:18px;outline:none;text-align:center;transition:border .2s}
+.tinput:focus{border-color:var(--green)}.tinput.ok{border-color:var(--green2);background:rgba(61,220,132,.1)}.tinput.bad{border-color:var(--red2);background:rgba(224,92,74,.08)}
+@keyframes popIn{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}.pop{animation:popIn .3s ease}
+.streak-fire{font-size:32px;animation:popIn .3s ease}
+/* HEATMAP */
+.heat-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:10px}
+.heat-cell{height:16px;border-radius:3px;transition:transform .1s}.heat-cell:hover{transform:scale(1.3)}
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="logo">
+    <div class="logo-jp">語彙道場</div>
+    <div class="logo-en">Vocab Dojo · Stage 3</div>
+    <div class="logo-badge">SRS VOCABULARY SYSTEM</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">Overview</div>
+    <div class="ni active" onclick="nav('home')"><span>🌿</span> แดชบอร์ด<span class="nbadge" id="due-badge" style="display:none">0</span></div>
+    <div class="ni" onclick="nav('anki')"><span>📱</span> ติดตั้ง Anki</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">เรียน</div>
+    <div class="ni" onclick="nav('srs')"><span>🔁</span> SRS Review<span class="np" id="np-srs">0</span></div>
+    <div class="ni" onclick="nav('learn')"><span>🌱</span> เรียนการ์ดใหม่</div>
+    <div class="ni" onclick="nav('browse')"><span>📚</span> คลังคำศัพท์</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">ฝึกซ้อม</div>
+    <div class="ni" onclick="nav('quiz')"><span>🎯</span> Quiz Modes</div>
+    <div class="ni" onclick="nav('match')"><span>🧩</span> Matching Game</div>
+    <div class="ni" onclick="nav('typing')"><span>⌨️</span> Typing Practice</div>
+  </div>
+  <div class="ng">
+    <div class="ngl">Progress</div>
+    <div class="ni" onclick="nav('stats')"><span>📊</span> สถิติ</div>
+    <div class="ni" onclick="nav('decks')"><span>🗂️</span> Deck Manager</div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="phd"><h1>🌿 Vocabulary Stage 3</h1><div class="jp">語彙 — Goi · คำศัพท์</div><p>ระบบ SRS ช่วยทบทวนคำศัพท์ในเวลาที่เหมาะสมที่สุด — เรียน 10-20 คำ/วัน ภายใน 3-6 เดือนมีคำพอ 1,500+ คำอ่านมังงะได้!</p></div>
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card">
+      <div class="ct">📊 Today's Session</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px">
+        <div style="text-align:center"><div class="stat-num" id="h-due" style="color:var(--red2)">0</div><div class="stat-lbl">Due Today</div></div>
+        <div style="text-align:center"><div class="stat-num" id="h-new" style="color:var(--blue)">0</div><div class="stat-lbl">New</div></div>
+        <div style="text-align:center"><div class="stat-num" id="h-learned" style="color:var(--green)">0</div><div class="stat-lbl">Learned</div></div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn bgr" onclick="nav('srs')" style="flex:1">🔁 ทบทวนเลย</button>
+        <button class="btn bgd" onclick="nav('learn')" style="flex:1">🌱 เรียนใหม่</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">🔥 Streak & Progress</div>
+      <div style="display:flex;align-items:center;gap:18px;margin-bottom:12px">
+        <div style="text-align:center"><div class="streak-fire" id="streak-icon">🔥</div><div class="stat-num" id="streak-num" style="font-size:32px;color:var(--gold2)">0</div><div class="stat-lbl">Day Streak</div></div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px"><span>Total Learned</span><span id="h-total">0/300</span></div>
+          <div class="pbar" style="margin-bottom:10px"><div class="pbf" id="h-prog-bar" style="width:0%"></div></div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px"><span>Today's Goal (20 cards)</span><span id="h-goal">0/20</span></div>
+          <div class="pbar"><div class="pbf" id="h-goal-bar" style="width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2))"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card"><div class="ct">🗂️ Deck Overview</div><div id="h-decks"></div></div>
+    <div class="card"><div class="ct">💡 SRS คืออะไร?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.8">
+        <b style="color:var(--white)">Spaced Repetition System</b> — ระบบทบทวนตามช่วงเวลาที่เหมาะสม<br><br>
+        🧠 สมองจะจำได้ดีสุดเมื่อทบทวน <b style="color:var(--green)">ก่อนที่จะลืม</b><br>
+        ⏱️ การ์ดที่จำได้ดี → ทบทวนนานขึ้น<br>
+        ❌ การ์ดที่ตอบผิด → กลับมาเร็วขึ้น<br><br>
+        เรียนวันละ 15-20 นาที ดีกว่านั่งท่องทีเดียว 2 ชั่วโมง!
+      </div>
+    </div>
+  </div>
+  <div class="card"><div class="ct">🗺️ Vocabulary Roadmap สู่ 2,000 คำ</div>
+    <div class="g4" style="margin-top:8px" id="h-road"></div>
+  </div>
+</div>
+
+<!-- ANKI GUIDE -->
+<div class="page" id="page-anki">
+  <div class="phd"><h1>📱 ติดตั้ง Anki</h1><div class="jp">アンキ — เครื่องมือ SRS ที่ดีที่สุดในโลก</div><p>Anki คือซอฟต์แวร์ SRS ฟรีที่นักเรียนภาษาญี่ปุ่นทั่วโลกใช้ ต้องติดตั้งควบคู่กับเว็บนี้</p></div>
+  <div class="g2" style="margin-bottom:14px">
+    <div class="card" style="border-color:var(--border2)"><div class="ct">📥 Download Anki</div>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title">ดาวน์โหลด Anki (ฟรี)</div><div class="step-desc">ไปที่ <a class="link" href="https://apps.ankiweb.net" target="_blank">apps.ankiweb.net</a><br>รองรับ Windows, Mac, Linux, iOS, Android</div></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title">สร้างบัญชี AnkiWeb (ฟรี)</div><div class="step-desc">Sync ข้อมูลระหว่างอุปกรณ์ได้ทันที<br>ไปที่ <a class="link" href="https://ankiweb.net" target="_blank">ankiweb.net</a></div></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title">Download Deck ที่แนะนำ</div><div class="step-desc">ใช้ Anki Shared Decks หรือลิงก์ด้านขวา</div></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title">ตั้งค่า Daily Limit</div><div class="step-desc">New cards: 10-20/day<br>Review limit: 100-200/day (อย่าตั้งสูงเกิน)</div></div></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:12px"><div class="ct">🏆 Deck แนะนำ</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px">
+            <div style="font-size:13px;font-weight:700;color:var(--green2)">⭐ Kaishi 1.5k</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6">Deck ใหม่ล่าสุด ดีที่สุด ครอบคลุม 1,500 คำพบบ่อย มี audio, context sentence ครบ</div>
+            <a class="link" href="https://ankiweb.net/shared/info/1196762551" target="_blank" style="margin-top:4px;display:block">→ ankiweb.net (Kaishi 1.5k)</a>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px">
+            <div style="font-size:13px;font-weight:700;color:var(--gold2)">Core 2000/6000</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6">Classic deck — 2,000 คำพบบ่อยที่สุด มี audio ครบ ใช้กันมายาวนาน</div>
+            <a class="link" href="https://ankiweb.net/shared/info/1237389412" target="_blank" style="margin-top:4px;display:block">→ ankiweb.net (Core 2000)</a>
+          </div>
+          <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px">
+            <div style="font-size:13px;font-weight:700;color:var(--blue)">JLPT Vocab N5-N3</div>
+            <div style="font-size:12px;color:var(--text2);margin-top:3px;line-height:1.6">เน้นตรง JLPT ดีมากถ้าเป้าหมายสอบ N5-N3 + อ่านมังงะ</div>
+            <a class="link" href="https://ankiweb.net/shared/info/2087068651" target="_blank" style="margin-top:4px;display:block">→ ankiweb.net (JLPT N5-N3)</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card"><div class="ct">⚙️ ตั้งค่า Anki ให้ดีที่สุด</div>
+    <div class="g3">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px">📅 Daily Settings</div><div style="font-size:12px;color:var(--text2);line-height:1.8">New cards: <b style="color:var(--green)">15/day</b><br>Reviews: <b style="color:var(--green)">100/day</b><br>เรียนทุกวัน > เรียนนานๆ บางวัน</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px">🎯 ตอบอย่างไร</div><div style="font-size:12px;color:var(--text2);line-height:1.8">Again = ลืมสนิท<br>Hard = จำได้แต่ยาก<br>Good = จำได้ปกติ<br>Easy = รู้ดีมาก</div></div>
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px"><div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:8px">📱 Mobile Tips</div><div style="font-size:12px;color:var(--text2);line-height:1.8">AnkiDroid (Android): ฟรี<br>AnkiMobile (iOS): จ่ายครั้งเดียว<br>Sync ผ่าน AnkiWeb ฟรี</div></div>
+    </div>
+    <div class="abox" style="margin-top:14px">💡 <b>Tip:</b> ทำ SRS ตอนเช้า ก่อนเช็คโทรศัพท์ — สมองสดใหม่จำได้ดีกว่า และเป็น routine ที่ stick ได้ง่ายที่สุด</div>
+  </div>
+</div>
+
+<!-- SRS REVIEW -->
+<div class="page" id="page-srs">
+  <div class="phd"><h1>🔁 SRS Review</h1><div class="jp">復習 — ทบทวนการ์ดที่ถึงเวลา</div></div>
+  <div id="srs-wrap"></div>
+</div>
+
+<!-- LEARN NEW -->
+<div class="page" id="page-learn">
+  <div class="phd"><h1>🌱 เรียนการ์ดใหม่</h1><div class="jp">新しい単語 — คำศัพท์ใหม่วันนี้</div></div>
+  <div id="learn-wrap"></div>
+</div>
+
+<!-- BROWSE -->
+<div class="page" id="page-browse">
+  <div class="phd"><h1>📚 คลังคำศัพท์</h1><div class="jp">単語帳 — ดูคำศัพท์ทั้งหมด</div></div>
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <input class="search" id="br-search" placeholder="🔍 ค้นหา ภาษาญี่ปุ่น / Thai / romaji..." style="flex:2;min-width:220px" oninput="renderBrowse()">
+    <select class="search" id="br-deck" style="flex:1;min-width:140px" onchange="renderBrowse()">
+      <option value="">ทุก Deck</option>
+    </select>
+    <select class="search" id="br-type" style="flex:1;min-width:120px" onchange="renderBrowse()">
+      <option value="">ทุกประเภท</option>
+      <option value="noun">名詞 Noun</option>
+      <option value="verb">動詞 Verb</option>
+      <option value="adj">形容詞 Adj</option>
+      <option value="adv">副詞 Adv</option>
+      <option value="expr">表現 Expr</option>
+    </select>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden"><div id="br-list"></div></div>
+  <div style="font-size:12px;color:var(--text3);margin-top:8px;font-family:'DM Mono'" id="br-count"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="page" id="page-quiz">
+  <div class="phd"><h1>🎯 Quiz Modes</h1><div class="jp">クイズ — ทดสอบความรู้</div></div>
+  <div class="tabs">
+    <div class="tab active" onclick="stab(this,'qz','mc')">🎲 Multiple Choice</div>
+    <div class="tab" onclick="stab(this,'qz','rev')">🔄 Reverse (Thai→JP)</div>
+    <div class="tab" onclick="stab(this,'qz','speed')">⚡ Speed Round</div>
+  </div>
+  <div class="tp active" id="qz-mc"><div id="mc-wrap"></div></div>
+  <div class="tp" id="qz-rev"><div id="rev-wrap"></div></div>
+  <div class="tp" id="qz-speed"><div id="speed-wrap"></div></div>
+</div>
+
+<!-- MATCHING -->
+<div class="page" id="page-match">
+  <div class="phd"><h1>🧩 Matching Game</h1><div class="jp">マッチングゲーム — จับคู่คำศัพท์</div></div>
+  <div id="match-wrap"></div>
+</div>
+
+<!-- TYPING -->
+<div class="page" id="page-typing">
+  <div class="phd"><h1>⌨️ Typing Practice</h1><div class="jp">タイピング練習 — พิมพ์ romaji ให้ถูกต้อง</div></div>
+  <div id="type-wrap"></div>
+</div>
+
+<!-- STATS -->
+<div class="page" id="page-stats">
+  <div class="phd"><h1>📊 สถิติการเรียน</h1><div class="jp">学習統計 — Learning Statistics</div></div>
+  <div class="g3" style="margin-bottom:14px" id="stat-top"></div>
+  <div class="g2">
+    <div class="card"><div class="ct">📈 SRS Distribution</div><div id="stat-dist"></div></div>
+    <div class="card"><div class="ct">🗂️ Deck Progress</div><div id="stat-deck"></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><div class="ct">📅 Activity (12 เดือน)</div><div class="heat-grid" id="heat"></div><div style="display:flex;gap:8px;align-items:center;margin-top:8px;font-size:11px;color:var(--text3)"><span>น้อย</span><div style="background:#122018;width:12px;height:12px;border-radius:2px"></div><div style="background:#1e4a2a;width:12px;height:12px;border-radius:2px"></div><div style="background:#2d7a40;width:12px;height:12px;border-radius:2px"></div><div style="background:var(--green);width:12px;height:12px;border-radius:2px"></div><span>เยอะ</span></div></div>
+</div>
+
+<!-- DECKS -->
+<div class="page" id="page-decks">
+  <div class="phd"><h1>🗂️ Deck Manager</h1><div class="jp">デッキ管理 — จัดการ Deck</div></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px" id="deck-list"></div>
+  <div class="abox" style="margin-top:14px">💡 คลิกที่ Deck เพื่อดูรายละเอียด หรือไปที่ Browse เพื่อดูคำศัพท์ในแต่ละ Deck</div>
+</div>
+
+</main>
+<div class="notif" id="notif"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// VOCABULARY DATA — 250+ words across 5 decks
+// ═══════════════════════════════════════════════════════════
+const DECKS=[
+  {id:'kaishi',name:'Kaishi 1.5k',icon:'⭐',col:'#3ddc84',desc:'คำพบบ่อยที่สุดในชีวิตประจำวัน'},
+  {id:'n5',name:'JLPT N5',icon:'🔵',col:'#4a9eff',desc:'พื้นฐานสุดของภาษาญี่ปุ่น N5'},
+  {id:'n4',name:'JLPT N4',icon:'🟡',col:'#f0c84c',desc:'กลางระดับ N4 — คำพบบ่อยในมังงะ'},
+  {id:'manga',name:'Manga & Anime',icon:'📕',col:'#ff7060',desc:'คำ slang และ expression ในมังงะ'},
+  {id:'daily',name:'Daily Life',icon:'🏠',col:'#b07aff',desc:'คำใช้ในชีวิตประจำวัน ร้านค้า อาหาร'},
+];
+
+// Format: {id, deck, jp, kana, rom, th, type, level}
+// types: noun verb adj adv expr
+const VOCAB=[
+// ─── KAISHI STARTER ───
+{id:'k001',deck:'kaishi',jp:'人',kana:'ひと',rom:'hito',th:'คน, มนุษย์',type:'noun',level:'N5'},
+{id:'k002',deck:'kaishi',jp:'日本',kana:'にほん',rom:'nihon',th:'ญี่ปุ่น (ประเทศ)',type:'noun',level:'N5'},
+{id:'k003',deck:'kaishi',jp:'今',kana:'いま',rom:'ima',th:'ตอนนี้, ขณะนี้',type:'adv',level:'N5'},
+{id:'k004',deck:'kaishi',jp:'何',kana:'なに',rom:'nani',th:'อะไร',type:'noun',level:'N5'},
+{id:'k005',deck:'kaishi',jp:'言う',kana:'いう',rom:'iu',th:'พูด, บอก',type:'verb',level:'N5'},
+{id:'k006',deck:'kaishi',jp:'見る',kana:'みる',rom:'miru',th:'ดู, มอง',type:'verb',level:'N5'},
+{id:'k007',deck:'kaishi',jp:'来る',kana:'くる',rom:'kuru',th:'มา',type:'verb',level:'N5'},
+{id:'k008',deck:'kaishi',jp:'行く',kana:'いく',rom:'iku',th:'ไป',type:'verb',level:'N5'},
+{id:'k009',deck:'kaishi',jp:'食べる',kana:'たべる',rom:'taberu',th:'กิน',type:'verb',level:'N5'},
+{id:'k010',deck:'kaishi',jp:'飲む',kana:'のむ',rom:'nomu',th:'ดื่ม',type:'verb',level:'N5'},
+{id:'k011',deck:'kaishi',jp:'大きい',kana:'おおきい',rom:'ookii',th:'ใหญ่',type:'adj',level:'N5'},
+{id:'k012',deck:'kaishi',jp:'小さい',kana:'ちいさい',rom:'chiisai',th:'เล็ก',type:'adj',level:'N5'},
+{id:'k013',deck:'kaishi',jp:'多い',kana:'おおい',rom:'ooi',th:'เยอะ, มาก',type:'adj',level:'N5'},
+{id:'k014',deck:'kaishi',jp:'少ない',kana:'すくない',rom:'sukunai',th:'น้อย',type:'adj',level:'N5'},
+{id:'k015',deck:'kaishi',jp:'好き',kana:'すき',rom:'suki',th:'ชอบ',type:'adj',level:'N5'},
+{id:'k016',deck:'kaishi',jp:'嫌い',kana:'きらい',rom:'kirai',th:'ไม่ชอบ, เกลียด',type:'adj',level:'N5'},
+{id:'k017',deck:'kaishi',jp:'良い',kana:'いい',rom:'ii',th:'ดี',type:'adj',level:'N5'},
+{id:'k018',deck:'kaishi',jp:'悪い',kana:'わるい',rom:'warui',th:'แย่, ไม่ดี',type:'adj',level:'N5'},
+{id:'k019',deck:'kaishi',jp:'分かる',kana:'わかる',rom:'wakaru',th:'เข้าใจ, รู้',type:'verb',level:'N5'},
+{id:'k020',deck:'kaishi',jp:'思う',kana:'おもう',rom:'omou',th:'คิดว่า, รู้สึก',type:'verb',level:'N5'},
+{id:'k021',deck:'kaishi',jp:'時間',kana:'じかん',rom:'jikan',th:'เวลา',type:'noun',level:'N5'},
+{id:'k022',deck:'kaishi',jp:'場所',kana:'ばしょ',rom:'basho',th:'สถานที่',type:'noun',level:'N4'},
+{id:'k023',deck:'kaishi',jp:'気持ち',kana:'きもち',rom:'kimochi',th:'ความรู้สึก',type:'noun',level:'N4'},
+{id:'k024',deck:'kaishi',jp:'声',kana:'こえ',rom:'koe',th:'เสียง (ของคน)',type:'noun',level:'N4'},
+{id:'k025',deck:'kaishi',jp:'顔',kana:'かお',rom:'kao',th:'ใบหน้า',type:'noun',level:'N5'},
+{id:'k026',deck:'kaishi',jp:'目',kana:'め',rom:'me',th:'ตา',type:'noun',level:'N5'},
+{id:'k027',deck:'kaishi',jp:'手',kana:'て',rom:'te',th:'มือ',type:'noun',level:'N5'},
+{id:'k028',deck:'kaishi',jp:'心',kana:'こころ',rom:'kokoro',th:'หัวใจ, จิตใจ',type:'noun',level:'N4'},
+{id:'k029',deck:'kaishi',jp:'力',kana:'ちから',rom:'chikara',th:'พลัง, ความสามารถ',type:'noun',level:'N4'},
+{id:'k030',deck:'kaishi',jp:'夢',kana:'ゆめ',rom:'yume',th:'ฝัน, ความฝัน',type:'noun',level:'N4'},
+// ─── N5 VOCAB ───
+{id:'n001',deck:'n5',jp:'私',kana:'わたし',rom:'watashi',th:'ฉัน (สุภาพ)',type:'noun',level:'N5'},
+{id:'n002',deck:'n5',jp:'あなた',kana:'あなた',rom:'anata',th:'คุณ',type:'noun',level:'N5'},
+{id:'n003',deck:'n5',jp:'彼',kana:'かれ',rom:'kare',th:'เขา (ผู้ชาย) / แฟน',type:'noun',level:'N5'},
+{id:'n004',deck:'n5',jp:'彼女',kana:'かのじょ',rom:'kanojo',th:'เธอ (ผู้หญิง) / แฟน',type:'noun',level:'N5'},
+{id:'n005',deck:'n5',jp:'家族',kana:'かぞく',rom:'kazoku',th:'ครอบครัว',type:'noun',level:'N5'},
+{id:'n006',deck:'n5',jp:'友達',kana:'ともだち',rom:'tomodachi',th:'เพื่อน',type:'noun',level:'N5'},
+{id:'n007',deck:'n5',jp:'先生',kana:'せんせい',rom:'sensei',th:'ครู, อาจารย์',type:'noun',level:'N5'},
+{id:'n008',deck:'n5',jp:'学生',kana:'がくせい',rom:'gakusei',th:'นักเรียน, นักศึกษา',type:'noun',level:'N5'},
+{id:'n009',deck:'n5',jp:'学校',kana:'がっこう',rom:'gakkou',th:'โรงเรียน',type:'noun',level:'N5'},
+{id:'n010',deck:'n5',jp:'本',kana:'ほん',rom:'hon',th:'หนังสือ',type:'noun',level:'N5'},
+{id:'n011',deck:'n5',jp:'車',kana:'くるま',rom:'kuruma',th:'รถยนต์',type:'noun',level:'N5'},
+{id:'n012',deck:'n5',jp:'電車',kana:'でんしゃ',rom:'densha',th:'รถไฟฟ้า',type:'noun',level:'N5'},
+{id:'n013',deck:'n5',jp:'駅',kana:'えき',rom:'eki',th:'สถานีรถไฟ',type:'noun',level:'N5'},
+{id:'n014',deck:'n5',jp:'水',kana:'みず',rom:'mizu',th:'น้ำ',type:'noun',level:'N5'},
+{id:'n015',deck:'n5',jp:'お金',kana:'おかね',rom:'okane',th:'เงิน',type:'noun',level:'N5'},
+{id:'n016',deck:'n5',jp:'仕事',kana:'しごと',rom:'shigoto',th:'งาน, อาชีพ',type:'noun',level:'N5'},
+{id:'n017',deck:'n5',jp:'名前',kana:'なまえ',rom:'namae',th:'ชื่อ',type:'noun',level:'N5'},
+{id:'n018',deck:'n5',jp:'言葉',kana:'ことば',rom:'kotoba',th:'คำ, ภาษา',type:'noun',level:'N5'},
+{id:'n019',deck:'n5',jp:'話す',kana:'はなす',rom:'hanasu',th:'พูด, คุย',type:'verb',level:'N5'},
+{id:'n020',deck:'n5',jp:'書く',kana:'かく',rom:'kaku',th:'เขียน',type:'verb',level:'N5'},
+{id:'n021',deck:'n5',jp:'読む',kana:'よむ',rom:'yomu',th:'อ่าน',type:'verb',level:'N5'},
+{id:'n022',deck:'n5',jp:'聞く',kana:'きく',rom:'kiku',th:'ฟัง, ถาม',type:'verb',level:'N5'},
+{id:'n023',deck:'n5',jp:'買う',kana:'かう',rom:'kau',th:'ซื้อ',type:'verb',level:'N5'},
+{id:'n024',deck:'n5',jp:'使う',kana:'つかう',rom:'tsukau',th:'ใช้',type:'verb',level:'N5'},
+{id:'n025',deck:'n5',jp:'作る',kana:'つくる',rom:'tsukuru',th:'ทำ, สร้าง',type:'verb',level:'N5'},
+{id:'n026',deck:'n5',jp:'待つ',kana:'まつ',rom:'matsu',th:'รอ, คอย',type:'verb',level:'N5'},
+{id:'n027',deck:'n5',jp:'会う',kana:'あう',rom:'au',th:'พบ, เจอ',type:'verb',level:'N5'},
+{id:'n028',deck:'n5',jp:'帰る',kana:'かえる',rom:'kaeru',th:'กลับบ้าน',type:'verb',level:'N5'},
+{id:'n029',deck:'n5',jp:'起きる',kana:'おきる',rom:'okiru',th:'ตื่นนอน',type:'verb',level:'N5'},
+{id:'n030',deck:'n5',jp:'寝る',kana:'ねる',rom:'neru',th:'นอน, นอนหลับ',type:'verb',level:'N5'},
+{id:'n031',deck:'n5',jp:'新しい',kana:'あたらしい',rom:'atarashii',th:'ใหม่',type:'adj',level:'N5'},
+{id:'n032',deck:'n5',jp:'古い',kana:'ふるい',rom:'furui',th:'เก่า',type:'adj',level:'N5'},
+{id:'n033',deck:'n5',jp:'高い',kana:'たかい',rom:'takai',th:'แพง / สูง',type:'adj',level:'N5'},
+{id:'n034',deck:'n5',jp:'安い',kana:'やすい',rom:'yasui',th:'ถูก (ราคา)',type:'adj',level:'N5'},
+{id:'n035',deck:'n5',jp:'今日',kana:'きょう',rom:'kyou',th:'วันนี้',type:'adv',level:'N5'},
+{id:'n036',deck:'n5',jp:'明日',kana:'あした',rom:'ashita',th:'พรุ่งนี้',type:'adv',level:'N5'},
+{id:'n037',deck:'n5',jp:'昨日',kana:'きのう',rom:'kinou',th:'เมื่อวาน',type:'adv',level:'N5'},
+{id:'n038',deck:'n5',jp:'もう',kana:'もう',rom:'mou',th:'แล้ว / อีกแล้ว',type:'adv',level:'N5'},
+{id:'n039',deck:'n5',jp:'まだ',kana:'まだ',rom:'mada',th:'ยังคง, ยังไม่',type:'adv',level:'N5'},
+{id:'n040',deck:'n5',jp:'とても',kana:'とても',rom:'totemo',th:'มาก, ยิ่งนัก',type:'adv',level:'N5'},
+// ─── N4 VOCAB ───
+{id:'f001',deck:'n4',jp:'決める',kana:'きめる',rom:'kimeru',th:'ตัดสินใจ',type:'verb',level:'N4'},
+{id:'f002',deck:'n4',jp:'始める',kana:'はじめる',rom:'hajimeru',th:'เริ่มต้น',type:'verb',level:'N4'},
+{id:'f003',deck:'n4',jp:'続ける',kana:'つづける',rom:'tsuzukeru',th:'ทำต่อไป, ต่อเนื่อง',type:'verb',level:'N4'},
+{id:'f004',deck:'n4',jp:'終わる',kana:'おわる',rom:'owaru',th:'จบ, สิ้นสุด',type:'verb',level:'N4'},
+{id:'f005',deck:'n4',jp:'変わる',kana:'かわる',rom:'kawaru',th:'เปลี่ยน',type:'verb',level:'N4'},
+{id:'f006',deck:'n4',jp:'考える',kana:'かんがえる',rom:'kangaeru',th:'คิด, ตรึกตรอง',type:'verb',level:'N4'},
+{id:'f007',deck:'n4',jp:'感じる',kana:'かんじる',rom:'kanjiru',th:'รู้สึก',type:'verb',level:'N4'},
+{id:'f008',deck:'n4',jp:'気づく',kana:'きづく',rom:'kizuku',th:'สังเกตเห็น, ตระหนัก',type:'verb',level:'N4'},
+{id:'f009',deck:'n4',jp:'選ぶ',kana:'えらぶ',rom:'erabu',th:'เลือก',type:'verb',level:'N4'},
+{id:'f010',deck:'n4',jp:'調べる',kana:'しらべる',rom:'shiraberu',th:'ค้นหา, ตรวจสอบ',type:'verb',level:'N4'},
+{id:'f011',deck:'n4',jp:'説明する',kana:'せつめいする',rom:'setsumei suru',th:'อธิบาย',type:'verb',level:'N4'},
+{id:'f012',deck:'n4',jp:'練習する',kana:'れんしゅうする',rom:'renshuu suru',th:'ฝึกซ้อม',type:'verb',level:'N4'},
+{id:'f013',deck:'n4',jp:'準備する',kana:'じゅんびする',rom:'junbi suru',th:'เตรียม',type:'verb',level:'N4'},
+{id:'f014',deck:'n4',jp:'心配する',kana:'しんぱいする',rom:'shinpai suru',th:'กังวล, เป็นห่วง',type:'verb',level:'N4'},
+{id:'f015',deck:'n4',jp:'大切な',kana:'たいせつな',rom:'taisetsu na',th:'สำคัญ, มีค่า',type:'adj',level:'N4'},
+{id:'f016',deck:'n4',jp:'必要な',kana:'ひつような',rom:'hitsuyou na',th:'จำเป็น',type:'adj',level:'N4'},
+{id:'f017',deck:'n4',jp:'便利な',kana:'べんりな',rom:'benri na',th:'สะดวก',type:'adj',level:'N4'},
+{id:'f018',deck:'n4',jp:'特別な',kana:'とくべつな',rom:'tokubetsu na',th:'พิเศษ',type:'adj',level:'N4'},
+{id:'f019',deck:'n4',jp:'普通',kana:'ふつう',rom:'futsuu',th:'ปกติ, ธรรมดา',type:'adv',level:'N4'},
+{id:'f020',deck:'n4',jp:'最近',kana:'さいきん',rom:'saikin',th:'เร็วๆ นี้, ช่วงนี้',type:'adv',level:'N4'},
+{id:'f021',deck:'n4',jp:'もちろん',kana:'もちろん',rom:'mochiron',th:'แน่นอน, ก็ได้สิ',type:'adv',level:'N4'},
+{id:'f022',deck:'n4',jp:'やっぱり',kana:'やっぱり',rom:'yappari',th:'อย่างที่คิด, ก็เหมือนเดิม',type:'adv',level:'N4'},
+{id:'f023',deck:'n4',jp:'経験',kana:'けいけん',rom:'keiken',th:'ประสบการณ์',type:'noun',level:'N4'},
+{id:'f024',deck:'n4',jp:'意味',kana:'いみ',rom:'imi',th:'ความหมาย',type:'noun',level:'N4'},
+{id:'f025',deck:'n4',jp:'理由',kana:'りゆう',rom:'riyuu',th:'เหตุผล',type:'noun',level:'N4'},
+{id:'f026',deck:'n4',jp:'問題',kana:'もんだい',rom:'mondai',th:'ปัญหา, โจทย์',type:'noun',level:'N4'},
+{id:'f027',deck:'n4',jp:'答え',kana:'こたえ',rom:'kotae',th:'คำตอบ',type:'noun',level:'N4'},
+{id:'f028',deck:'n4',jp:'文化',kana:'ぶんか',rom:'bunka',th:'วัฒนธรรม',type:'noun',level:'N4'},
+{id:'f029',deck:'n4',jp:'社会',kana:'しゃかい',rom:'shakai',th:'สังคม',type:'noun',level:'N4'},
+{id:'f030',deck:'n4',jp:'機会',kana:'きかい',rom:'kikai',th:'โอกาส',type:'noun',level:'N4'},
+// ─── MANGA & ANIME ───
+{id:'m001',deck:'manga',jp:'敵',kana:'てき',rom:'teki',th:'ศัตรู, ข้าศึก',type:'noun',level:'N4'},
+{id:'m002',deck:'manga',jp:'仲間',kana:'なかま',rom:'nakama',th:'พวกเรา, เพื่อนร่วมทีม',type:'noun',level:'N4'},
+{id:'m003',deck:'manga',jp:'希望',kana:'きぼう',rom:'kibou',th:'ความหวัง',type:'noun',level:'N4'},
+{id:'m004',deck:'manga',jp:'運命',kana:'うんめい',rom:'unmei',th:'โชคชะตา, ชะตากรรม',type:'noun',level:'N4'},
+{id:'m005',deck:'manga',jp:'覚悟',kana:'かくご',rom:'kakugo',th:'ความมุ่งมั่น, ตั้งใจจริง',type:'noun',level:'N3'},
+{id:'m006',deck:'manga',jp:'約束',kana:'やくそく',rom:'yakusoku',th:'สัญญา, นัด',type:'noun',level:'N4'},
+{id:'m007',deck:'manga',jp:'戦う',kana:'たたかう',rom:'tatakau',th:'ต่อสู้',type:'verb',level:'N4'},
+{id:'m008',deck:'manga',jp:'守る',kana:'まもる',rom:'mamoru',th:'ปกป้อง, รักษา',type:'verb',level:'N4'},
+{id:'m009',deck:'manga',jp:'信じる',kana:'しんじる',rom:'shinjiru',th:'เชื่อ, ไว้วางใจ',type:'verb',level:'N4'},
+{id:'m010',deck:'manga',jp:'諦める',kana:'あきらめる',rom:'akirameru',th:'ยอมแพ้, ทอดทิ้ง',type:'verb',level:'N4'},
+{id:'m011',deck:'manga',jp:'助ける',kana:'たすける',rom:'tasukeru',th:'ช่วยเหลือ',type:'verb',level:'N4'},
+{id:'m012',deck:'manga',jp:'勝つ',kana:'かつ',rom:'katsu',th:'ชนะ',type:'verb',level:'N4'},
+{id:'m013',deck:'manga',jp:'負ける',kana:'まける',rom:'makeru',th:'แพ้',type:'verb',level:'N4'},
+{id:'m014',deck:'manga',jp:'強い',kana:'つよい',rom:'tsuyoi',th:'แข็งแกร่ง, เก่ง',type:'adj',level:'N4'},
+{id:'m015',deck:'manga',jp:'弱い',kana:'よわい',rom:'yowai',th:'อ่อนแอ',type:'adj',level:'N4'},
+{id:'m016',deck:'manga',jp:'かっこいい',kana:'かっこいい',rom:'kakkoii',th:'เท่, หล่อ',type:'adj',level:'N5'},
+{id:'m017',deck:'manga',jp:'やばい',kana:'やばい',rom:'yabai',th:'โหด!, เจ๋ง! (สแลง)',type:'expr',level:'N3'},
+{id:'m018',deck:'manga',jp:'なるほど',kana:'なるほど',rom:'naruhodo',th:'ออ, เข้าใจแล้ว',type:'expr',level:'N4'},
+{id:'m019',deck:'manga',jp:'さすが',kana:'さすが',rom:'sasuga',th:'เก่งจริงๆ, ไม่แปลกใจ',type:'expr',level:'N4'},
+{id:'m020',deck:'manga',jp:'本当に',kana:'ほんとうに',rom:'hontouni',th:'จริงๆ, อย่างจริงจัง',type:'adv',level:'N5'},
+{id:'m021',deck:'manga',jp:'絶対に',kana:'ぜったいに',rom:'zettai ni',th:'แน่นอนที่สุด, ต้อง',type:'adv',level:'N4'},
+{id:'m022',deck:'manga',jp:'まじで',kana:'まじで',rom:'majide',th:'จริงเหรอ? (สแลง)',type:'expr',level:'N3'},
+{id:'m023',deck:'manga',jp:'うそ',kana:'うそ',rom:'uso',th:'โกหก / "ไม่จริงนะ!"',type:'expr',level:'N5'},
+{id:'m024',deck:'manga',jp:'死ぬ',kana:'しぬ',rom:'shinu',th:'ตาย',type:'verb',level:'N5'},
+{id:'m025',deck:'manga',jp:'生きる',kana:'いきる',rom:'ikiru',th:'มีชีวิตอยู่',type:'verb',level:'N4'},
+// ─── DAILY LIFE ───
+{id:'d001',deck:'daily',jp:'食べ物',kana:'たべもの',rom:'tabemono',th:'อาหาร',type:'noun',level:'N5'},
+{id:'d002',deck:'daily',jp:'飲み物',kana:'のみもの',rom:'nomimono',th:'เครื่องดื่ม',type:'noun',level:'N5'},
+{id:'d003',deck:'daily',jp:'店',kana:'みせ',rom:'mise',th:'ร้านค้า',type:'noun',level:'N5'},
+{id:'d004',deck:'daily',jp:'病院',kana:'びょういん',rom:'byouin',th:'โรงพยาบาล',type:'noun',level:'N5'},
+{id:'d005',deck:'daily',jp:'銀行',kana:'ぎんこう',rom:'ginkou',th:'ธนาคาร',type:'noun',level:'N5'},
+{id:'d006',deck:'daily',jp:'会社',kana:'かいしゃ',rom:'kaisha',th:'บริษัท',type:'noun',level:'N5'},
+{id:'d007',deck:'daily',jp:'電話',kana:'でんわ',rom:'denwa',th:'โทรศัพท์',type:'noun',level:'N5'},
+{id:'d008',deck:'daily',jp:'天気',kana:'てんき',rom:'tenki',th:'อากาศ, ดินฟ้าอากาศ',type:'noun',level:'N5'},
+{id:'d009',deck:'daily',jp:'料理',kana:'りょうり',rom:'ryouri',th:'อาหาร (การทำ) / ทำอาหาร',type:'noun',level:'N5'},
+{id:'d010',deck:'daily',jp:'旅行',kana:'りょこう',rom:'ryokou',th:'การท่องเที่ยว',type:'noun',level:'N5'},
+{id:'d011',deck:'daily',jp:'音楽',kana:'おんがく',rom:'ongaku',th:'ดนตรี',type:'noun',level:'N5'},
+{id:'d012',deck:'daily',jp:'映画',kana:'えいが',rom:'eiga',th:'ภาพยนตร์',type:'noun',level:'N5'},
+{id:'d013',deck:'daily',jp:'スポーツ',kana:'スポーツ',rom:'supootsu',th:'กีฬา',type:'noun',level:'N5'},
+{id:'d014',deck:'daily',jp:'買い物',kana:'かいもの',rom:'kaimono',th:'การซื้อของ, ช้อปปิ้ง',type:'noun',level:'N5'},
+{id:'d015',deck:'daily',jp:'散歩',kana:'さんぽ',rom:'sanpo',th:'เดินเล่น',type:'noun',level:'N5'},
+{id:'d016',deck:'daily',jp:'暑い',kana:'あつい',rom:'atsui',th:'ร้อน (อากาศ)',type:'adj',level:'N5'},
+{id:'d017',deck:'daily',jp:'寒い',kana:'さむい',rom:'samui',th:'หนาว',type:'adj',level:'N5'},
+{id:'d018',deck:'daily',jp:'疲れる',kana:'つかれる',rom:'tsukareru',th:'เหนื่อย, อ่อนเพลีย',type:'verb',level:'N5'},
+{id:'d019',deck:'daily',jp:'忘れる',kana:'わすれる',rom:'wasureru',th:'ลืม',type:'verb',level:'N5'},
+{id:'d020',deck:'daily',jp:'覚える',kana:'おぼえる',rom:'oboeru',th:'จำ, เรียนรู้',type:'verb',level:'N4'},
+{id:'d021',deck:'daily',jp:'急ぐ',kana:'いそぐ',rom:'isogu',th:'รีบ, เร่งรีบ',type:'verb',level:'N4'},
+{id:'d022',deck:'daily',jp:'困る',kana:'こまる',rom:'komaru',th:'ลำบาก, เดือดร้อน',type:'verb',level:'N4'},
+{id:'d023',deck:'daily',jp:'楽しい',kana:'たのしい',rom:'tanoshii',th:'สนุก, มีความสุข',type:'adj',level:'N5'},
+{id:'d024',deck:'daily',jp:'嬉しい',kana:'うれしい',rom:'ureshii',th:'ดีใจ, มีความสุข',type:'adj',level:'N5'},
+{id:'d025',deck:'daily',jp:'悲しい',kana:'かなしい',rom:'kanashii',th:'เศร้า',type:'adj',level:'N5'},
+];
+
+// ═══════════════════════════════════════════════════════════
+// SRS ENGINE
+// ═══════════════════════════════════════════════════════════
+// Card state: {id, interval, due, lapses, state:'new'|'learning'|'young'|'mature', reps}
+function loadSRS(){return JSON.parse(localStorage.getItem('vd_srs')||'{}')}
+function saveSRS(s){localStorage.setItem('vd_srs',JSON.stringify(s))}
+function loadStats(){const raw=localStorage.getItem('vd_stats');if(raw){try{return JSON.parse(raw);}catch(e){}}return {streak:0,lastDate:'',totalSeen:0,reviewed:0,dailyReviewed:0,history:[]};}
+function saveStats(s){localStorage.setItem('vd_stats',JSON.stringify(s))}
+function now(){return Date.now()}
+function today(){return new Date().toISOString().slice(0,10)}
+
+function getCard(id){
+  const s=loadSRS();
+  if(!s[id]) s[id]={id,interval:0,due:0,lapses:0,state:'new',reps:0};
+  return s[id];
+}
+function updateCard(id,rating){
+  const s=loadSRS();const c=s[id]||{id,interval:0,due:0,lapses:0,state:'new',reps:0};
+  c.reps++;
+  const now_=now();
+  const MIN=60000,HOUR=3600000,DAY=86400000;
+  if(rating===0){// Again
+    c.lapses++;c.interval=Math.max(1,c.interval*.2);c.state='learning';c.due=now_+10*MIN;
+  }else if(rating===1){// Hard
+    c.interval=Math.max(1,c.interval*.8||1);c.state='learning';c.due=now_+HOUR;
+  }else if(rating===2){// Good
+    if(c.state==='new'){c.interval=1;c.state='young';}
+    else if(c.state==='learning'){c.interval=3;}
+    else{c.interval=Math.round(c.interval*(2+Math.random()*.2));}
+    if(c.interval>=21)c.state='mature';else if(c.interval>1)c.state='young';
+    c.due=now_+c.interval*DAY;
+  }else{// Easy
+    c.interval=c.state==='new'?4:Math.round(c.interval*2.5);
+    c.state=c.interval>=21?'mature':'young';c.due=now_+c.interval*DAY;
+  }
+  s[id]=c;saveSRS(s);
+  const st=loadStats();st.totalSeen=Object.values(s).filter(x=>x.reps>0).length;
+  const td=today();if(st.lastDate!==td){st.dailyReviewed=0;}st.dailyReviewed=(st.dailyReviewed||0)+1;st.lastDate=td;
+  if(!st.history)st.history=[];if(st.history[st.history.length-1]!==td)st.history.push(td);
+  saveStats(st);
+  return s[id];
+}
+function getDueCards(){const s=loadSRS();const n=now();return VOCAB.filter(v=>{const c=s[v.id];return c&&c.due<=n&&c.state!=='new';});}
+function getNewCards(){const s=loadSRS();return VOCAB.filter(v=>!s[v.id]||s[v.id].state==='new');}
+
+// ═══════════════════════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════════════════════
+const pageInits={};
+function nav(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>{if(n.getAttribute('onclick')==="nav('"+id+"')")n.classList.add('active');});
+  if(!pageInits[id]){pageInits[id]=true;({home:initHome,browse:initBrowse,srs:initSRS,learn:initLearn,quiz:initQuiz,match:initMatch,typing:initTyping,stats:initStats,decks:initDecks,anki:()=>{}})[id]?.();}
+  else if(id==='home')updateHome();
+  else if(id==='srs')initSRS();
+  updateBadge();
+}
+function stab(el,g,id){document.querySelectorAll('.tp').forEach(p=>{if(p.id.startsWith(g+'-'))p.classList.remove('active')});document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));document.getElementById(g+'-'+id).classList.add('active');el.classList.add('active');({mc:initMC,rev:initRev,speed:initSpeedQuiz})[id]?.();}
+
+function showN(m,t='ok'){const e=document.getElementById('notif');e.textContent=m;e.className='notif '+t+' show';setTimeout(()=>e.classList.remove('show'),2000);}
+function shuf(a){return[...a].sort(()=>Math.random()-.5);}
+
+function updateBadge(){
+  const due=getDueCards().length;const el=document.getElementById('due-badge');const np=document.getElementById('np-srs');
+  if(el){el.textContent=due;el.style.display=due>0?'inline-block':'none';}
+  if(np)np.textContent=due;
+}
+
+// ═══════════════════════════════════════════════════════════
+// HOME
+// ═══════════════════════════════════════════════════════════
+function initHome(){updateHome();buildRoadmap();}
+function updateHome(){
+  const due=getDueCards().length,nw=getNewCards().length;
+  const st=loadStats();const srs=loadSRS();
+  const learned=Object.values(srs).filter(x=>x.reps>0).length;
+  document.getElementById('h-due').textContent=due;
+  document.getElementById('h-new').textContent=nw;
+  document.getElementById('h-learned').textContent=learned;
+  document.getElementById('h-total').textContent=learned+'/'+VOCAB.length;
+  document.getElementById('h-prog-bar').style.width=(learned/VOCAB.length*100)+'%';
+  document.getElementById('h-goal').textContent=Math.min(st.dailyReviewed||0,20)+'/20';
+  document.getElementById('h-goal-bar').style.width=(Math.min(st.dailyReviewed||0,20)/20*100)+'%';
+  // Streak
+  updateStreak();
+  // Deck overview
+  const el=document.getElementById('h-decks');if(!el)return;
+  const srsData=loadSRS();
+  el.innerHTML=DECKS.map(d=>{
+    const words=VOCAB.filter(v=>v.deck===d.id);const done=words.filter(v=>srsData[v.id]&&srsData[v.id].reps>0).length;const pct=Math.round(done/words.length*100);
+    return`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px"><span>${d.icon} ${d.name}</span><span style="color:${d.col};font-family:'DM Mono'">${done}/${words.length}</span></div><div class="pbar"><div class="pbf" style="width:${pct}%;background:linear-gradient(90deg,${d.col}88,${d.col})"></div></div></div>`;
+  }).join('');
+}
+function updateStreak(){
+  const st=loadStats();const td=today();let s=st.streak||0;
+  if(st.lastDate===td)s=st.streak||1;
+  else{const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);if(st.lastDate===yest)s=st.streak||0;else s=0;}
+  document.getElementById('streak-num').textContent=s;
+  document.getElementById('streak-icon').textContent=s>=7?'🔥':s>=3?'✨':'💧';
+}
+function buildRoadmap(){
+  const el=document.getElementById('h-road');if(!el)return;
+  const steps=[{n:'500 คำ',d:'อ่านง่าย คุยพื้นฐานได้',i:'🌱',t:VOCAB.length},
+    {n:'1,000 คำ',d:'อ่านมังงะง่ายได้',i:'🌿',t:1000},
+    {n:'1,500 คำ',d:'อ่านมังงะเข้าใจ 60-70%',i:'🌳',t:1500},
+    {n:'2,000 คำ',d:'N4 เกือบสอบผ่าน',i:'⭐',t:2000},
+    {n:'6,000 คำ',d:'อ่านได้แทบทุกอย่าง',i:'🏆',t:6000},
+  ];
+  el.innerHTML=steps.map(s=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center"><div style="font-size:22px">${s.i}</div><div style="font-size:13px;font-weight:700;color:var(--white);margin:5px 0">${s.n}</div><div style="font-size:11px;color:var(--text2);line-height:1.5">${s.d}</div></div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SRS REVIEW
+// ═══════════════════════════════════════════════════════════
+let srsQ=[],srsIdx=0,srsFlipped=false,srsSession={correct:0,total:0};
+function initSRS(){
+  srsQ=shuf(getDueCards());srsIdx=0;srsFlipped=false;srsSession={correct:0,total:0};
+  renderSRS();
+}
+function renderSRS(){
+  const el=document.getElementById('srs-wrap');if(!el)return;
+  if(srsQ.length===0){
+    el.innerHTML=`<div style="text-align:center;padding:30px"><div style="font-size:52px">✅</div><div style="font-family:'Playfair Display';font-size:24px;color:var(--white);margin:12px 0">ทบทวนครบแล้ว!</div><div style="font-size:14px;color:var(--text2);margin-bottom:20px">ไม่มีการ์ดที่ต้องทบทวนตอนนี้<br>มาใหม่เมื่อถึงเวลาตามที่ระบบกำหนด</div><div style="display:flex;gap:10px;justify-content:center"><button class="btn bgr" onclick="nav('learn')">🌱 เรียนการ์ดใหม่</button><button class="btn bol" onclick="nav('quiz')">🎯 ทำ Quiz</button></div></div>`;return;
+  }
+  const v=srsQ[srsIdx];const srsData=loadSRS();const c=srsData[v.id]||{state:'new'};
+  const total=srsQ.length;const dotC={new:'dot-new',learning:'dot-learning',young:'dot-young',mature:'dot-mature'}[c.state]||'dot-new';
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    <div style="font-size:12px;color:var(--text2)">การ์ดที่ <span style="color:var(--green)">${srsIdx+1}</span>/${total}</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)"><div class="srs-dot ${dotC}"></div>${c.state||'new'}</div>
+    <div style="font-size:12px;color:var(--text2)">✓ ${srsSession.correct} / ${srsSession.total}</div>
+  </div>
+  <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:${(srsIdx/total)*100}%"></div></div>
+  <div class="flip-outer">
+    <div class="flip-inner" id="srs-flip" onclick="flipSRS()">
+      <div class="flip-front fcard"><div class="fcard-type tag-${v.type}">${{noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',expr:'表現'}[v.type]}</div><div class="fcard-jp">${v.jp}</div><div style="font-size:12px;color:var(--text3);margin-top:8px;font-family:'DM Mono'">tap to reveal</div></div>
+      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:38px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div><div class="fcard-type tag-${v.type}" style="margin-top:8px">${v.level}</div></div>
+    </div>
+  </div>
+  <div id="srs-btns" style="display:none;margin-top:18px">
+    <div class="srs-btns">
+      <button class="srs-btn srs-again" onclick="rateSRS(0)">Again<span class="srs-lbl">< 10m</span></button>
+      <button class="srs-btn srs-hard" onclick="rateSRS(1)">Hard<span class="srs-lbl">1h</span></button>
+      <button class="srs-btn srs-good" onclick="rateSRS(2)">Good<span class="srs-lbl">${srsQ[srsIdx]?Math.max(1,Math.round((srsData[srsQ[srsIdx].id]?.interval||0)*2.2)||1):1}d</span></button>
+      <button class="srs-btn srs-easy" onclick="rateSRS(3)">Easy<span class="srs-lbl">${srsQ[srsIdx]?Math.max(4,Math.round((srsData[srsQ[srsIdx].id]?.interval||0)*2.5)||4):4}d</span></button>
+    </div>
+  </div>`;
+}
+function flipSRS(){srsFlipped=!srsFlipped;document.getElementById('srs-flip').classList.toggle('flipped',srsFlipped);if(srsFlipped)document.getElementById('srs-btns').style.display='block';}
+function rateSRS(r){
+  const v=srsQ[srsIdx];updateCard(v.id,r);srsSession.total++;if(r>=2)srsSession.correct++;
+  srsIdx++;srsFlipped=false;updateHome();updateBadge();renderSRS();
+}
+
+// ═══════════════════════════════════════════════════════════
+// LEARN NEW CARDS
+// ═══════════════════════════════════════════════════════════
+let learnQ=[],learnIdx=0,learnFlip=false;
+function initLearn(){
+  learnQ=shuf(getNewCards()).slice(0,20);learnIdx=0;learnFlip=false;
+  renderLearn();
+}
+function renderLearn(){
+  const el=document.getElementById('learn-wrap');if(!el)return;
+  if(learnQ.length===0){el.innerHTML=`<div class="abox">🌟 ยินดีด้วย! เรียนครบ 20 การ์ดวันนี้แล้ว! กลับมาพรุ่งนี้หรือทำ Quiz ต่อ</div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn bgr" onclick="nav('quiz')" style="flex:1">🎯 ทำ Quiz</button><button class="btn bol" onclick="nav('home')" style="flex:1">🏠 หน้าหลัก</button></div>`;return;}
+  if(learnIdx>=learnQ.length){el.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:52px">🌱</div><div style="font-family:'Playfair Display';font-size:22px;color:var(--white);margin:12px 0">เรียนครบ ${learnQ.length} คำแล้ว!</div><button class="btn bgr" onclick="nav('srs')">🔁 ทบทวนทันที</button></div>`;return;}
+  const v=learnQ[learnIdx];
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:12px;color:var(--text2)">คำที่ <b style="color:var(--green)">${learnIdx+1}</b>/${learnQ.length}</div><span class="fcard-type tag-${v.type}">${v.level}</span></div>
+    <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:${(learnIdx/learnQ.length)*100}%"></div></div>
+    <div class="flip-outer"><div class="flip-inner" id="ln-flip" onclick="flipLearn()">
+      <div class="flip-front fcard"><div class="fcard-jp">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div style="font-size:11px;color:var(--text3);margin-top:10px;font-family:'DM Mono'">tap to see meaning</div></div>
+      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:36px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div></div>
+    </div></div>
+    <div id="ln-btns" style="display:none;margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn bol" onclick="learnRate(0)" style="flex:1">😕 ยาก Remember next time</button>
+      <button class="btn bgr" onclick="learnRate(2)" style="flex:1">👍 โอเค Got it!</button>
+    </div>`;
+  learnFlip=false;
+}
+function flipLearn(){learnFlip=!learnFlip;document.getElementById('ln-flip').classList.toggle('flipped',learnFlip);}
+function learnRate(r){
+  const v=learnQ[learnIdx];updateCard(v.id,r);learnIdx++;learnFlip=false;renderLearn();updateBadge();
+}
+
+// ═══════════════════════════════════════════════════════════
+// BROWSE
+// ═══════════════════════════════════════════════════════════
+function initBrowse(){
+  const sel=document.getElementById('br-deck');if(!sel)return;
+  DECKS.forEach(d=>{const o=document.createElement('option');o.value=d.id;o.textContent=d.icon+' '+d.name;sel.appendChild(o);});
+  renderBrowse();
+}
+function renderBrowse(){
+  const q=(document.getElementById('br-search')?.value||'').toLowerCase();
+  const deck=document.getElementById('br-deck')?.value||'';
+  const type=document.getElementById('br-type')?.value||'';
+  const srsData=loadSRS();
+  let list=VOCAB.filter(v=>{
+    if(deck&&v.deck!==deck)return false;
+    if(type&&v.type!==type)return false;
+    if(q&&!v.jp.includes(q)&&!v.kana.includes(q)&&!v.rom.includes(q)&&!v.th.toLowerCase().includes(q))return false;
+    return true;
+  });
+  const el=document.getElementById('br-list');if(!el)return;
+  el.innerHTML=list.map(v=>{const c=srsData[v.id];const dot={new:'dot-new',learning:'dot-learning',young:'dot-young',mature:'dot-mature'}[c?.state||'new']||'dot-new';
+    return`<div class="vrow" onclick="showWordDetail('${v.id}')"><div class="srs-dot ${dot}" title="${c?.state||'new'}"></div><div class="vrow-jp">${v.jp}</div><div class="vrow-kana">${v.kana}</div><div class="vrow-th">${v.th}</div><span class="fcard-type tag-${v.type}" style="font-size:9px">${v.type}</span><div class="vrow-deck" style="color:${DECKS.find(d=>d.id===v.deck)?.col||'#fff'}">${v.level}</div></div>`;
+  }).join('');
+  document.getElementById('br-count').textContent=`แสดง ${list.length} / ${VOCAB.length} คำ`;
+}
+function showWordDetail(id){
+  const v=VOCAB.find(x=>x.id===id);if(!v)return;
+  const srsData=loadSRS();const c=srsData[v.id]||{state:'new',reps:0,interval:0};
+  showN(`${v.jp} = ${v.th} | reps:${c.reps} | ${c.state}`,'info');
+}
+
+// ═══════════════════════════════════════════════════════════
+// QUIZ: MULTIPLE CHOICE
+// ═══════════════════════════════════════════════════════════
+let mcS={};
+function initQuiz(){initMC();}
+function initMC(){
+  const el=document.getElementById('mc-wrap');if(!el)return;
+  const pool=shuf(VOCAB).slice(0,15);mcS={qs:pool,idx:0,score:0,ans:false};
+  renderMC();
+}
+function renderMC(){
+  const el=document.getElementById('mc-wrap');if(!el)return;
+  if(mcS.idx>=mcS.qs.length){el.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:52px">🎯</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--green);font-weight:700">${mcS.score}/${mcS.qs.length*10}</div><div style="color:var(--text2);margin-top:8px">${Math.round(mcS.score/(mcS.qs.length*10)*100)}% ถูกต้อง</div><button class="btn bgr" onclick="initMC()" style="margin-top:18px">🔄 ทำอีกครั้ง</button></div>`;return;}
+  const v=mcS.qs[mcS.idx];mcS.ans=false;
+  const wrongs=shuf(VOCAB.filter(x=>x.id!==v.id)).slice(0,3);
+  const opts=shuf([v,...wrongs]);
+  el.innerHTML=`<div class="sbar" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;display:flex;justify-content:space-between;margin-bottom:16px;font-size:12px;color:var(--text2)"><span>ข้อที่ ${mcS.idx+1}/${mcS.qs.length}</span><span style="font-family:'Playfair Display';font-size:20px;color:var(--green)">${mcS.score}</span></div>
+    <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(mcS.idx/mcS.qs.length)*100}%"></div></div>
+    <div style="text-align:center;margin-bottom:18px"><span class="fcard-type tag-${v.type}">${v.type}</span><div style="font-family:'Noto Serif JP';font-size:52px;color:var(--white);font-weight:900;margin:10px 0">${v.jp}</div><div style="font-family:'DM Mono';font-size:13px;color:var(--text2)">${v.kana}</div></div>
+    <div class="qopts" id="mc-opts"></div>
+    <div id="mc-note" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:8px"></div>
+    <button class="btn bgr" id="mc-nxt" style="display:none;margin-top:12px" onclick="mcS.idx++;renderMC()">ข้อต่อไป →</button>`;
+  const oc=document.getElementById('mc-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.textContent=o.th;
+    b.onclick=()=>{if(mcS.ans)return;mcS.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===v.th)x.classList.add('ok');else if(x===b&&o.id!==v.id)x.classList.add('bad');});
+      if(o.id===v.id){mcS.score+=10;showN('✓ ถูก!','ok');}else showN('✗ '+v.th,'bad');
+      document.getElementById('mc-note').textContent='💡 '+v.jp+' ('+v.rom+') = '+v.th;document.getElementById('mc-nxt').style.display='block';};oc.appendChild(b);});
+}
+
+// REVERSE QUIZ
+let revS={};
+function initRev(){
+  const el=document.getElementById('rev-wrap');if(!el)return;
+  const pool=shuf(VOCAB).slice(0,15);revS={qs:pool,idx:0,score:0,ans:false};renderRev();
+}
+function renderRev(){
+  const el=document.getElementById('rev-wrap');if(!el)return;
+  if(revS.idx>=revS.qs.length){el.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:52px">🔄</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--green)">${revS.score}/${revS.qs.length*10}</div><button class="btn bgr" onclick="initRev()" style="margin-top:18px">🔄 ทำอีกครั้ง</button></div>`;return;}
+  const v=revS.qs[revS.idx];revS.ans=false;
+  const wrongs=shuf(VOCAB.filter(x=>x.id!==v.id)).slice(0,3);
+  const opts=shuf([v,...wrongs]);
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:12px;color:var(--text2)"><span>ข้อที่ ${revS.idx+1}/${revS.qs.length}</span><span style="font-family:'Playfair Display';font-size:20px;color:var(--green)">${revS.score}</span></div>
+    <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(revS.idx/revS.qs.length)*100}%"></div></div>
+    <div style="text-align:center;background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:20px;margin-bottom:18px"><div style="font-size:13px;color:var(--text2);margin-bottom:8px">ภาษาไทย → เลือก Japanese</div><div style="font-size:22px;color:var(--white);font-weight:700">${v.th}</div><div style="font-family:'DM Mono';font-size:11px;color:var(--text3);margin-top:4px">${v.type}</div></div>
+    <div class="qopts" id="rev-opts"></div>
+    <button class="btn bgr" id="rev-nxt" style="display:none;margin-top:12px" onclick="revS.idx++;renderRev()">ข้อต่อไป →</button>`;
+  const oc=document.getElementById('rev-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontFamily="'Noto Serif JP'";b.style.fontSize='20px';b.textContent=o.jp;
+    b.onclick=()=>{if(revS.ans)return;revS.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===v.jp)x.classList.add('ok');else if(x===b&&o.id!==v.id)x.classList.add('bad');});
+      if(o.id===v.id){revS.score+=10;showN('✓','ok');}else showN('✗ '+v.jp,'bad');document.getElementById('rev-nxt').style.display='block';};oc.appendChild(b);});
+}
+
+// SPEED QUIZ
+let spS={};
+function initSpeedQuiz(){
+  const el=document.getElementById('speed-wrap');if(!el)return;
+  spS={qs:shuf(VOCAB),idx:0,score:0,tLeft:60,combo:0,ans:false};
+  el.innerHTML=`<div style="display:flex;gap:16px;margin-bottom:14px;flex-wrap:wrap">
+    <div style="text-align:center;flex:1"><div style="font-size:9px;color:var(--text2);font-family:'DM Mono';text-transform:uppercase">Time</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--green2);font-weight:700" id="sp-t">60</div></div>
+    <div style="text-align:center;flex:1"><div style="font-size:9px;color:var(--text2);font-family:'DM Mono';text-transform:uppercase">Score</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--gold2);font-weight:700" id="sp-s">0</div></div>
+    <div style="text-align:center;flex:1"><div style="font-size:9px;color:var(--text2);font-family:'DM Mono';text-transform:uppercase">Combo</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--purple);font-weight:700" id="sp-c">×1</div></div>
+  </div>
+  <div class="pbar" style="margin-bottom:16px"><div class="pbf" id="sp-pb" style="width:100%"></div></div>
+  <div id="sp-q"></div>`;
+  renderSP();
+  const tmr=setInterval(()=>{spS.tLeft-=0.1;const t=document.getElementById('sp-t'),pb=document.getElementById('sp-pb');
+    if(t){t.textContent=Math.ceil(spS.tLeft);if(spS.tLeft<=10)t.style.color='var(--red2)';}
+    if(pb)pb.style.width=(spS.tLeft/60*100)+'%';
+    if(spS.tLeft<=0){clearInterval(tmr);document.getElementById('sp-q').innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:52px">⚡</div><div style="font-family:'Playfair Display';font-size:48px;color:var(--gold2)">${spS.score}</div><div style="color:var(--text2)">คะแนน | Combo max: ×${spS.combo}</div><button class="btn bgr" onclick="initSpeedQuiz()" style="margin-top:14px">🔄 เล่นอีก</button></div>`;}
+  },100);
+}
+function renderSP(){
+  const c=document.getElementById('sp-q');if(!c)return;spS.ans=false;
+  const v=spS.qs[spS.idx%spS.qs.length];spS.idx++;
+  const wrongs=shuf(VOCAB.filter(x=>x.id!==v.id)).slice(0,3);const opts=shuf([v,...wrongs]);
+  c.innerHTML=`<div style="text-align:center;margin-bottom:14px"><div style="font-family:'Noto Serif JP';font-size:44px;color:var(--white);font-weight:900">${v.jp}</div><div style="font-family:'DM Mono';font-size:12px;color:var(--text2)">${v.kana}</div></div>
+    <div class="qopts" id="sp-opts"></div>`;
+  const oc=document.getElementById('sp-opts');
+  opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontSize='12px';b.textContent=o.th;
+    b.onclick=()=>{if(spS.ans)return;spS.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===v.th)x.classList.add('ok');else if(x===b&&o.id!==v.id)x.classList.add('bad');});
+      if(o.id===v.id){spS.combo++;spS.score+=10*(spS.combo>=3?2:1);}else{spS.combo=0;}
+      document.getElementById('sp-s').textContent=spS.score;document.getElementById('sp-c').textContent='×'+(spS.combo||1);setTimeout(renderSP,300);};oc.appendChild(b);});
+}
+
+// ═══════════════════════════════════════════════════════════
+// MATCHING GAME
+// ═══════════════════════════════════════════════════════════
+let mGame={pairs:[],selected:null,matched:0,moves:0,startTime:0};
+function initMatch(){
+  const el=document.getElementById('match-wrap');if(!el)return;
+  const words=shuf(VOCAB).slice(0,8);
+  mGame={pairs:shuf([...words.map(v=>({id:v.id+'_jp',vid:v.id,text:v.jp,isJP:true})),...words.map(v=>({id:v.id+'_th',vid:v.id,text:v.th,isJP:false}))]),selected:null,matched:0,moves:0,startTime:Date.now()};
+  renderMatch();
+}
+function renderMatch(){
+  const el=document.getElementById('match-wrap');if(!el)return;
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:12px;color:var(--text2)"><span>🧩 จับคู่ JP ↔ Thai</span><div style="display:flex;gap:16px"><span>✓ <b style="color:var(--green)">${mGame.matched}/8</b></span><span>👆 <b>${mGame.moves}</b></span></div></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="m-grid"></div>`;
+  const grid=document.getElementById('m-grid');
+  mGame.pairs.forEach(p=>{
+    const b=document.createElement('div');b.dataset.id=p.id;b.dataset.vid=p.vid;b.dataset.isJP=p.isJP;
+    b.style.cssText=`background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:12px 8px;cursor:pointer;text-align:center;transition:all .2s;min-height:64px;display:flex;align-items:center;justify-content:center;font-size:${p.isJP?'18px':'13px'};font-family:${p.isJP?"'Noto Serif JP'":"'Sarabun'"};color:var(--white)`;
+    if(p.isJP)b.style.fontWeight='900';
+    b.textContent=p.text;b.onclick=()=>selectMatch(b,p);
+    grid.appendChild(b);
+  });
+}
+const matched_ids=new Set();
+function selectMatch(el,p){
+  if(el.dataset.done==='1')return;
+  if(mGame.selected&&mGame.selected===el)return;
+  el.style.borderColor='var(--green)';el.style.background='rgba(61,220,132,.15)';
+  if(!mGame.selected){mGame.selected=el;return;}
+  mGame.moves++;
+  const prev=mGame.selected;mGame.selected=null;
+  if(prev.dataset.vid===el.dataset.vid&&prev.dataset.isJP!==el.dataset.isJP){
+    // Match!
+    [prev,el].forEach(b=>{b.style.borderColor='var(--green2)';b.style.background='rgba(61,220,132,.2)';b.dataset.done='1';b.onclick=null;});
+    mGame.matched++;showN('✓ Match!','ok');
+    if(mGame.matched===8){const secs=Math.round((Date.now()-mGame.startTime)/1000);setTimeout(()=>{document.getElementById('match-wrap').innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:52px">🧩</div><div style="font-family:'Playfair Display';font-size:28px;color:var(--green);margin:12px 0">จับคู่ครบแล้ว!</div><div style="color:var(--text2)">${mGame.moves} moves | ${secs} วินาที</div><button class="btn bgr" onclick="initMatch()" style="margin-top:18px">🔄 เล่นอีก</button></div>`;},400);}
+  }else{
+    setTimeout(()=>{[prev,el].forEach(b=>{b.style.borderColor='var(--border)';b.style.background='var(--surface)';});},600);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// TYPING PRACTICE
+// ═══════════════════════════════════════════════════════════
+let tpS={};
+function initTyping(){
+  const el=document.getElementById('type-wrap');if(!el)return;
+  tpS={qs:shuf(VOCAB).slice(0,15),idx:0,score:0,ans:false};renderTyping();
+}
+function renderTyping(){
+  const el=document.getElementById('type-wrap');if(!el)return;
+  if(tpS.idx>=tpS.qs.length){el.innerHTML=`<div style="text-align:center;padding:24px"><div style="font-size:52px">⌨️</div><div style="font-family:'Playfair Display';font-size:32px;color:var(--green)">${tpS.score}/${tpS.qs.length*10}</div><button class="btn bgr" onclick="initTyping()" style="margin-top:18px">🔄 ทำอีก</button></div>`;return;}
+  const v=tpS.qs[tpS.idx];tpS.ans=false;
+  el.innerHTML=`<div style="display:flex;justify-content:space-between;margin-bottom:14px;font-size:12px;color:var(--text2)"><span>ข้อที่ ${tpS.idx+1}/${tpS.qs.length}</span><span style="font-family:'Playfair Display';font-size:20px;color:var(--green)">${tpS.score}</span></div>
+    <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(tpS.idx/tpS.qs.length)*100}%"></div></div>
+    <div style="text-align:center;margin-bottom:18px"><div style="font-size:13px;color:var(--text2);margin-bottom:8px">พิมพ์ romaji ของคำนี้</div><div style="font-family:'Noto Serif JP';font-size:52px;color:var(--white);font-weight:900">${v.jp}</div><div style="color:var(--text2);margin-top:4px">${v.th}</div></div>
+    <input class="tinput" id="tp-in" placeholder="พิมพ์ romaji ที่นี่..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter')checkTyping()">
+    <div id="tp-hint" style="font-family:'DM Mono';font-size:12px;color:var(--text3);margin-top:8px">hint: ${v.rom[0]}${'_'.repeat(v.rom.length-1)}</div>
+    <div id="tp-fb" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:8px"></div>
+    <div style="display:flex;gap:8px;margin-top:12px"><button class="btn bgr" onclick="checkTyping()" style="flex:1">✓ ตรวจ</button><button class="btn bol" onclick="tpS.idx++;renderTyping()" style="flex:1">Skip →</button></div>`;
+  setTimeout(()=>document.getElementById('tp-in')?.focus(),100);
+}
+function checkTyping(){
+  if(tpS.ans)return;const v=tpS.qs[tpS.idx];const inp=document.getElementById('tp-in');const fb=document.getElementById('tp-fb');
+  if(!inp)return;const val=inp.value.trim().toLowerCase();
+  const correct=v.rom.toLowerCase().replace(/ suru$/,'').split('/').some(r=>val===r.trim())||val===v.rom.toLowerCase();
+  tpS.ans=true;
+  if(correct){inp.classList.add('ok');tpS.score+=10;fb.textContent='✓ ถูก! '+v.jp+' ('+v.rom+')';fb.style.color='var(--green2)';showN('✓','ok');setTimeout(()=>{tpS.idx++;renderTyping();},700);}
+  else{inp.classList.add('bad');fb.textContent='✗ คำตอบคือ: '+v.rom;fb.style.color='var(--red2)';showN('✗ '+v.rom,'bad');}
+}
+
+// ═══════════════════════════════════════════════════════════
+// STATS
+// ═══════════════════════════════════════════════════════════
+function initStats(){
+  const srsData=loadSRS();const cards=VOCAB.map(v=>({v,c:srsData[v.id]||{state:'new',reps:0}}));
+  const byState={new:0,learning:0,young:0,mature:0};
+  cards.forEach(x=>{byState[x.c.state]=(byState[x.c.state]||0)+1;});
+  const st=loadStats();
+  // Top stats
+  const el=document.getElementById('stat-top');if(el){
+    el.innerHTML=[
+      {n:Object.values(srsData).filter(c=>c.reps>0).length,l:'Total Learned',c:'var(--green)'},
+      {n:byState.mature||0,l:'Mature Cards',c:'var(--text3)'},
+      {n:st.dailyReviewed||0,l:"Today's Reviews",c:'var(--gold2)'},
+    ].map(s=>`<div class="card" style="text-align:center"><div class="stat-num" style="color:${s.c}">${s.n}</div><div class="stat-lbl">${s.l}</div></div>`).join('');
+  }
+  // Distribution
+  const dd=document.getElementById('stat-dist');if(dd){
+    const cols={new:'var(--blue)',learning:'var(--gold)',young:'var(--green)',mature:'var(--text3)'};
+    const labels={new:'New 🔵',learning:'Learning 🟡',young:'Young 🟢',mature:'Mature ⚫'};
+    const total=VOCAB.length;
+    dd.innerHTML=Object.entries(byState).map(([k,v])=>`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px"><span>${labels[k]}</span><span style="color:${cols[k]};font-family:'DM Mono'">${v}</span></div><div class="pbar"><div class="pbf" style="width:${v/total*100}%;background:${cols[k]}"></div></div></div>`).join('');
+  }
+  // Deck stats
+  const dp=document.getElementById('stat-deck');if(dp){
+    dp.innerHTML=DECKS.map(d=>{const words=VOCAB.filter(v=>v.deck===d.id);const done=words.filter(v=>srsData[v.id]&&srsData[v.id].reps>0).length;const pct=Math.round(done/words.length*100);
+      return`<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px"><span>${d.icon} ${d.name}</span><span style="color:${d.col};font-family:'DM Mono'">${done}/${words.length} (${pct}%)</span></div><div class="pbar"><div class="pbf" style="width:${pct}%;background:${d.col}88"></div></div></div>`;
+    }).join('');
+  }
+  // Heatmap (last 48 weeks)
+  const heat=document.getElementById('heat');if(heat){
+    const history=(st.history||[]);heat.innerHTML='';
+    for(let i=47;i>=0;i--){const d=new Date(Date.now()-i*7*86400000);const ds=d.toISOString().slice(0,10);const has=history.includes(ds);const cell=document.createElement('div');cell.className='heat-cell';cell.style.background=has?'var(--green)':'var(--surface)';cell.title=ds;heat.appendChild(cell);}
+  }
+}
+
+// DECKS PAGE
+function initDecks(){
+  const el=document.getElementById('deck-list');if(!el)return;const srsData=loadSRS();
+  el.innerHTML=DECKS.map(d=>{
+    const words=VOCAB.filter(v=>v.deck===d.id);const done=words.filter(v=>srsData[v.id]&&srsData[v.id].reps>0).length;const pct=Math.round(done/words.length*100);
+    const due=words.filter(v=>{const c=srsData[v.id];return c&&c.due<=Date.now()&&c.state!=='new';}).length;
+    return`<div class="deck-card" style="border-color:${d.col}44" onclick="nav('browse')"><div style="font-size:24px">${d.icon}</div><div class="deck-title">${d.name}</div><div class="deck-count" style="color:${d.col}">${words.length} คำ${due>0?' | '+due+' due':''}</div><div style="font-size:11px;color:var(--text3);margin:3px 0">${d.desc}</div><div class="pbar" style="margin-top:10px"><div class="pbf" style="width:${pct}%;background:${d.col}"></div></div><div style="font-size:10px;color:var(--text3);margin-top:4px;font-family:'DM Mono'">${done}/${words.length} (${pct}%)</div></div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+window.onload=()=>{
+  initHome();updateBadge();
+  // Check streak
+  const st=loadStats();const td=today();const yest=new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(st.lastDate&&st.lastDate!==td&&st.lastDate!==yest){st.streak=0;saveStats(st);}
+};
+</script>
+
+<style>
+#yor-credit{position:fixed;bottom:0;left:0;right:0;background:rgba(10,10,15,.92);backdrop-filter:blur(10px);border-top:1px solid rgba(232,84,122,.2);padding:5px 16px;display:flex;align-items:center;justify-content:space-between;z-index:9999;font-family:'Sarabun',sans-serif;flex-wrap:wrap;gap:6px}
+#yor-credit .yc-left{display:flex;align-items:center;gap:10px}
+#yor-credit .yc-name{font-size:12px;font-weight:700;color:#e8547a;letter-spacing:.5px}
+#yor-credit .yc-stage{font-size:10px;color:rgba(200,200,232,.5);font-family:'DM Mono',monospace}
+#yor-credit .yc-back{font-size:10px;color:rgba(200,200,232,.5);text-decoration:none;border:1px solid rgba(232,84,122,.3);border-radius:6px;padding:3px 10px;transition:all .2s}
+#yor-credit .yc-back:hover{color:#e8547a;border-color:#e8547a}
+body{padding-bottom:60px}
+</style>
+<div id="yor-credit">
+  <div class="yc-left">
+    <span class="yc-name">Yor</span>
+    <span class="yc-stage">語彙道場 Stage 3 — Vocabulary SRS &nbsp;·&nbsp; Yor's Road to Reading Japanese Manga</span>
+  </div>
+  <a class="yc-back" href="index.html">← Portal</a>
+</div>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 > Personal Japanese learning system — Stage 1 to 3, with Google login and cloud sync.
 
 **Live:** https://road-to-manga.vercel.app  
-**Version:** v1.4.1
+**Version:** v1.4.2
 
 ---
 
@@ -95,6 +95,13 @@ Stage 3 → SRS Vocabulary 250+ คำ
 ---
 
 ## 📝 Changelog
+
+### v1.4.2 — 2026-02-19
+**Commit:** `v1.4.2 — Fix studied-today detection for Stage 1 + add version badge`
+- 🐛 แก้ "ยังไม่ได้เรียนวันนี้" ที่แสดงผิดแม้เรียน Stage 1 ไปแล้ว
+- ✨ Stage 1 บันทึก `s1_lastStudied` ทุกครั้งที่ผ่าน Quiz round
+- 🔧 Portal เช็คทั้ง SRS (Stage 3) และ Daily Learning (Stage 1) ก่อนแสดงสถานะ
+- ✨ เพิ่ม version badge `v1.4.2` ในหัว Portal
 
 ### v1.4.1 — 2026-02-19
 **Commit:** `v1.4.1 — Fix heatmap tooltip clipping on top rows`

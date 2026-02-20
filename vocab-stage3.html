@@ -144,6 +144,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* HEATMAP */
 .heat-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;margin-top:10px}
 .heat-cell{height:16px;border-radius:3px;transition:transform .1s}.heat-cell:hover{transform:scale(1.3)}
+/* SPEAK BUTTON */
+.speak-btn{background:none;border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:5px 12px;cursor:pointer;font-size:14px;transition:border-color .2s,color .2s;line-height:1}
+.speak-btn:hover{border-color:var(--green);color:var(--green)}
+@keyframes speakPulse{from{opacity:.6}to{opacity:1}}
+.speak-btn.speaking{border-color:var(--green);color:var(--green);animation:speakPulse .6s ease infinite alternate}
 </style>
 </head>
 <body>
@@ -358,6 +363,19 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="notif" id="notif"></div>
 
 <script>
+// ═══════════════════════════════════════════════════════════
+// WEB SPEECH API
+// ═══════════════════════════════════════════════════════════
+function speakJP(text) {
+  if (!window.speechSynthesis || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  u.rate = 0.85;
+  u.pitch = 1;
+  window.speechSynthesis.speak(u);
+}
+
 // ═══════════════════════════════════════════════════════════
 // VOCABULARY DATA — 250+ words across 5 decks
 // ═══════════════════════════════════════════════════════════
@@ -665,8 +683,8 @@ function renderSRS(){
   <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:${(srsIdx/total)*100}%"></div></div>
   <div class="flip-outer">
     <div class="flip-inner" id="srs-flip" onclick="flipSRS()">
-      <div class="flip-front fcard"><div class="fcard-type tag-${v.type}">${{noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',expr:'表現'}[v.type]}</div><div class="fcard-jp">${v.jp}</div><div style="font-size:12px;color:var(--text3);margin-top:8px;font-family:'DM Mono'">tap to reveal</div></div>
-      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:38px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div><div class="fcard-type tag-${v.type}" style="margin-top:8px">${v.level}</div></div>
+      <div class="flip-front fcard"><div class="fcard-type tag-${v.type}">${{noun:'名詞',verb:'動詞',adj:'形容詞',adv:'副詞',expr:'表現'}[v.type]}</div><div class="fcard-jp">${v.jp}</div><button class="speak-btn" style="margin-top:10px" onclick="event.stopPropagation();speakJP('${v.jp.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊 ฟังเสียง</button><div style="font-size:12px;color:var(--text3);margin-top:8px;font-family:'DM Mono'">tap to reveal</div></div>
+      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:38px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div><button class="speak-btn" style="margin-top:8px" onclick="event.stopPropagation();speakJP('${v.jp.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊</button><div class="fcard-type tag-${v.type}" style="margin-top:8px">${v.level}</div></div>
     </div>
   </div>
   <div id="srs-btns" style="display:none;margin-top:18px">
@@ -677,6 +695,7 @@ function renderSRS(){
       <button class="srs-btn srs-easy" onclick="rateSRS(3)">Easy<span class="srs-lbl">${srsQ[srsIdx]?Math.max(4,Math.round((srsData[srsQ[srsIdx].id]?.interval||0)*2.5)||4):4}d</span></button>
     </div>
   </div>`;
+  speakJP(v.jp);
 }
 function flipSRS(){srsFlipped=!srsFlipped;document.getElementById('srs-flip').classList.toggle('flipped',srsFlipped);if(srsFlipped)document.getElementById('srs-btns').style.display='block';}
 function rateSRS(r){
@@ -700,14 +719,15 @@ function renderLearn(){
   el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:12px;color:var(--text2)">คำที่ <b style="color:var(--green)">${learnIdx+1}</b>/${learnQ.length}</div><span class="fcard-type tag-${v.type}">${v.level}</span></div>
     <div class="pbar" style="margin-bottom:16px"><div class="pbf" style="width:${(learnIdx/learnQ.length)*100}%"></div></div>
     <div class="flip-outer"><div class="flip-inner" id="ln-flip" onclick="flipLearn()">
-      <div class="flip-front fcard"><div class="fcard-jp">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div style="font-size:11px;color:var(--text3);margin-top:10px;font-family:'DM Mono'">tap to see meaning</div></div>
-      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:36px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div></div>
+      <div class="flip-front fcard"><div class="fcard-jp">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><button class="speak-btn" style="margin-top:10px" onclick="event.stopPropagation();speakJP('${v.jp.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊 ฟังเสียง</button><div style="font-size:11px;color:var(--text3);margin-top:8px;font-family:'DM Mono'">tap to see meaning</div></div>
+      <div class="flip-back fcard"><div class="fcard-jp" style="font-size:36px">${v.jp}</div><div class="fcard-kana">${v.kana}</div><div class="fcard-rom">${v.rom}</div><div class="fcard-th">${v.th}</div><button class="speak-btn" style="margin-top:8px" onclick="event.stopPropagation();speakJP('${v.jp.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊</button></div>
     </div></div>
     <div id="ln-btns" style="display:none;margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
       <button class="btn bol" onclick="learnRate(0)" style="flex:1">😕 ยาก Remember next time</button>
       <button class="btn bgr" onclick="learnRate(2)" style="flex:1">👍 โอเค Got it!</button>
     </div>`;
   learnFlip=false;
+  speakJP(v.jp);
 }
 function flipLearn(){learnFlip=!learnFlip;document.getElementById('ln-flip').classList.toggle('flipped',learnFlip);}
 function learnRate(r){

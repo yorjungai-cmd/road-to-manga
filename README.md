@@ -1,9 +1,9 @@
 # 🎌 Yor's Road to Reading Japanese Manga
 
-> Personal Japanese learning system — Stage 1 to 3, with Google login and cloud sync.
+> Personal Japanese learning system — Stage 1 to 3, with Google login, cloud sync, and audio pronunciation.
 
-**Live:** https://road-to-manga.vercel.app  
-**Version:** v1.4.2
+**Live:** https://road-to-manga.vercel.app
+**Version:** v1.5.0
 
 ---
 
@@ -39,6 +39,13 @@
 - Progress sync ข้ามเครื่อง ข้าม Browser
 - Fallback เป็น localStorage ถ้าไม่ได้ login
 - Auto-sync ทุก 30 วินาที + sync ตอนปิดหน้าต่าง
+
+### 🔊 Audio Pronunciation *(new in v1.5)*
+- **Web Speech API** — ออกเสียงภาษาญี่ปุ่นได้ทันทีในเบราว์เซอร์ ไม่ต้องโหลดไฟล์เสียง
+- **Auto-speak** — เล่นเสียงอัตโนมัติเมื่อเปลี่ยนการ์ด / ขึ้นข้อใหม่
+- ปุ่ม 🔊 ทุกจุดที่มี Japanese text — กดฟังซ้ำได้ทุกเมื่อ
+- ครอบคลุม **Stage 1** (Flashcard, Quiz, Daily Learning), **Stage 2** (Grammar Quiz), **Stage 3** (SRS Review, Learn New Cards)
+- ตั้งค่า `lang: ja-JP`, `rate: 0.85` เหมาะกับการเรียน
 
 ### 🎯 Quiz & Games
 - Multiple choice, Reverse quiz, Speed round (60 วินาที)
@@ -79,10 +86,13 @@ Stage 3 → SRS Vocabulary 250+ คำ
 | ส่วน | เทคโนโลยี |
 |------|-----------|
 | Frontend | HTML + CSS + Vanilla JavaScript |
+| Audio | Web Speech API (`SpeechSynthesisUtterance`, ja-JP) |
 | Auth | Firebase Authentication (Google Sign-in) |
 | Database | Firebase Firestore |
 | Hosting | Vercel (auto-deploy จาก GitHub) |
 | Storage fallback | Browser localStorage |
+
+> **Audio support:** Chrome / Edge / Safari รองรับเต็มที่ · Firefox ต้องเปิด `media.webspeech.synth.enabled` ใน about:config
 
 ---
 
@@ -95,6 +105,22 @@ Stage 3 → SRS Vocabulary 250+ คำ
 ---
 
 ## 📝 Changelog
+
+### v1.5.0 — 2026-02-20
+**Commit:** `feat: implement Web Speech API audio pronunciation across all stages`
+- 🔊 เพิ่มระบบ Audio ด้วย **Web Speech API** (`SpeechSynthesisUtterance`, `ja-JP`, rate 0.85)
+- **Stage 1** (`japanese-learning.html`):
+  - ปุ่ม 🔊 + auto-speak บน Hiragana/Katakana Flashcard (เปลี่ยนการ์ดทีก็พูดทันที)
+  - ปุ่ม 🔊 + auto-speak บน Kana Quiz ทุกข้อใหม่
+  - ปุ่ม 🔊 + auto-speak บน Daily Learning Study card
+  - ปุ่ม 🔊 + auto-speak บน Daily Learning Quiz (เฉพาะ round ที่ถามตัวอักษร)
+- **Stage 3** (`vocab-stage3.html`):
+  - ปุ่ม 🔊 + auto-speak บน SRS Review card (front & back)
+  - ปุ่ม 🔊 + auto-speak บน Learn New Cards
+- **Stage 2** (`grammar-stage2.html`):
+  - ปุ่ม 🔊 + auto-speak บน Grammar Quiz ทุก section (Verb, Particle, Nai, Cond, Ending)
+  - ปุ่ม 🔊 + auto-speak บน Master Quiz — ออกเสียงเฉพาะส่วน JP (ตัดก่อน `—`)
+- เพิ่ม CSS `.speak-btn` style ในทุกไฟล์ (hover glow สีตาม theme ของแต่ละ stage)
 
 ### v1.4.2 — 2026-02-19
 **Commit:** `v1.4.2 — Fix studied-today detection for Stage 1 + add version badge`

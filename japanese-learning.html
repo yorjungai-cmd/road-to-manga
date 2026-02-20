@@ -593,6 +593,22 @@ body {
 @keyframes kgShake { 0%{transform:translateX(0)} 25%{transform:translateX(-8px)} 50%{transform:translateX(8px)} 75%{transform:translateX(-4px)} 100%{transform:translateX(0)} }
 @keyframes kgFloat { 0%{opacity:1;transform:translateY(0)} 100%{opacity:0;transform:translateY(-36px)} }
 
+/* SPEAK BUTTON */
+.speak-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: border-color 0.2s, color 0.2s;
+  line-height: 1;
+}
+.speak-btn:hover { border-color: var(--teal2); color: var(--teal2); }
+.speak-btn.speaking { border-color: var(--teal2); color: var(--teal2); animation: speakPulse 0.6s ease infinite alternate; }
+@keyframes speakPulse { from { opacity: 0.6; } to { opacity: 1; } }
+
 </style>
 </head>
 <body>
@@ -926,6 +942,7 @@ body {
           </div>
         </div>
       </div>
+      <button class="speak-btn" id="hira-speak-btn" onclick="speakJP(document.getElementById('hira-char').textContent)" title="ฟังเสียงออกเสียง">🔊</button>
       <div class="fc-controls">
         <button class="btn btn-outline" onclick="prevCard('hira')">← ก่อนหน้า</button>
         <button class="btn btn-success" onclick="markKnown('hira')" id="hira-known-btn">✓ จำได้แล้ว</button>
@@ -939,7 +956,10 @@ body {
     <div id="hira-quiz-area">
       <div class="flashcard-container">
         <div style="font-size:13px;color:var(--text2)">โรมาจิของตัวอักษรนี้คืออะไร?</div>
-        <div style="font-size:80px;font-family:'Noto Serif JP';text-align:center;padding:20px;background:var(--surface);border-radius:16px;width:200px;border:2px solid var(--border)" id="hira-quiz-char">あ</div>
+        <div style="position:relative;display:inline-block">
+          <div style="font-size:80px;font-family:'Noto Serif JP';text-align:center;padding:20px;background:var(--surface);border-radius:16px;width:200px;border:2px solid var(--border)" id="hira-quiz-char">あ</div>
+          <button class="speak-btn" style="position:absolute;bottom:8px;right:8px;font-size:13px;padding:3px 8px" onclick="speakJP(document.getElementById('hira-quiz-char').textContent)" title="ฟังเสียง">🔊</button>
+        </div>
         <div class="quiz-options" id="hira-quiz-opts"></div>
         <div id="hira-quiz-result" style="font-size:16px;font-weight:600;height:24px;text-align:center"></div>
         <div style="display:flex;gap:12px;align-items:center">
@@ -997,6 +1017,7 @@ body {
           </div>
         </div>
       </div>
+      <button class="speak-btn" onclick="speakJP(document.getElementById('kata-char').textContent)" title="ฟังเสียงออกเสียง">🔊</button>
       <div class="fc-controls">
         <button class="btn btn-outline" onclick="prevCard('kata')">← ก่อนหน้า</button>
         <button class="btn btn-success" onclick="markKnown('kata')">✓ จำได้แล้ว</button>
@@ -1009,7 +1030,10 @@ body {
   <div class="tab-panel" id="kata-quiz">
     <div class="flashcard-container">
       <div style="font-size:13px;color:var(--text2)">โรมาจิของตัวอักษรนี้คืออะไร?</div>
-      <div style="font-size:80px;font-family:'Noto Serif JP';text-align:center;padding:20px;background:var(--surface);border-radius:16px;width:200px;border:2px solid var(--border)" id="kata-quiz-char">ア</div>
+      <div style="position:relative;display:inline-block">
+        <div style="font-size:80px;font-family:'Noto Serif JP';text-align:center;padding:20px;background:var(--surface);border-radius:16px;width:200px;border:2px solid var(--border)" id="kata-quiz-char">ア</div>
+        <button class="speak-btn" style="position:absolute;bottom:8px;right:8px;font-size:13px;padding:3px 8px" onclick="speakJP(document.getElementById('kata-quiz-char').textContent)" title="ฟังเสียง">🔊</button>
+      </div>
       <div class="quiz-options" id="kata-quiz-opts"></div>
       <div id="kata-quiz-result" style="font-size:16px;font-weight:600;height:24px;text-align:center"></div>
       <div style="display:flex;gap:12px;align-items:center">
@@ -1399,6 +1423,19 @@ body {
 <div class="notif" id="notif"></div>
 
 <script>
+// ============================================================
+// WEB SPEECH API
+// ============================================================
+function speakJP(text) {
+  if (!window.speechSynthesis || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  u.rate = 0.85;
+  u.pitch = 1;
+  window.speechSynthesis.speak(u);
+}
+
 // ============================================================
 // DATA
 // ============================================================
@@ -2138,6 +2175,7 @@ function updateFC(type) {
   setText(`${type}-char`, data[idx].jp);
   setText(`${type}-read`, data[idx].ro);
   setText(`${type}-fc-counter`, `${idx+1} / ${data.length}`);
+  speakJP(data[idx].jp);
 }
 
 // ============================================================
@@ -2156,6 +2194,7 @@ function showKanaQuizQ(type) {
   const qs = quizState;
   const curr = qs.data[qs.idx];
   setText(`${type}-quiz-char`, curr.jp);
+  speakJP(curr.jp);
   
   // 4 options
   const opts = [curr.ro];
@@ -3607,6 +3646,7 @@ function dlStudy(type, idx) {
           ${isKj ? `<div class="dl-meaning">${c.meaning}</div>` : ''}
           <div class="dl-tip">${c.tip}</div>
           ${isKj ? `<div class="dl-on">On/Kun: ${c.ro}</div>` : ''}
+          <button class="speak-btn" style="margin-top:10px" onclick="speakJP('${c.char.replace(/'/g,"\\'")}')" title="ฟังเสียงออกเสียง">🔊 ฟังเสียง</button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
           <span style="font-size:12px;color:rgba(200,200,240,.35);font-family:'Noto Sans JP'">${idx+1} / ${batch.length}</span>
@@ -3620,6 +3660,7 @@ function dlStudy(type, idx) {
       </div>
       <button class="dl-btn dl-btn-o" style="font-size:11px;padding:6px 12px" onclick="dlInit('${type}')">← กลับหน้าหลัก</button>
     </div>`;
+  speakJP(c.char);
 }
 
 // ══════════════════════════════════════════════════
@@ -3693,13 +3734,17 @@ function dlQuiz(type, round) {
         </div>
         <div class="dl-qprog"><div class="dl-qprogf" style="width:${progPct}%"></div></div>
         <div class="dl-q-label">${isCharQ?(isKj?'Kanji นี้แปลว่าอะไร?':'Romaji ของตัวอักษรนี้คืออะไร?'):(isKj?'Kanji ของคำนี้คืออะไร?':'ตัวอักษรของ romaji นี้คืออะไร?')}</div>
-        <div class="dl-q-char dl-pop ${qStyle}">${questionText(c)}</div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+          <div class="dl-q-char dl-pop ${qStyle}" id="dl-q-char-text">${questionText(c)}</div>
+          ${isCharQ ? `<button class="speak-btn" onclick="speakJP(document.getElementById('dl-q-char-text').textContent)" title="ฟังเสียง">🔊</button>` : ''}
+        </div>
         ${optsHTML}
         <div class="dl-fb" id="dl-fb"></div>
         <div style="font-size:10px;color:rgba(200,200,240,.25);text-align:center;margin-top:8px;font-family:'Noto Sans JP'">${qi+1} / ${qs.length}</div>
       </div>`;
 
     if (isTyping) setTimeout(() => document.getElementById('dl-type-inp')?.focus(), 80);
+    if (isCharQ) speakJP(c.char);
   }
 
   // Expose handlers

@@ -90,6 +90,9 @@ body{font-family:'Sarabun','Noto Sans JP',sans-serif;background:var(--ink);color
 @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
 .pop{animation:popIn .3s ease}.shk{animation:shake .3s ease}
 .divider{height:1px;background:var(--border);margin:16px 0}
+/* SPEAK BUTTON */
+.speak-btn{background:none;border:1px solid var(--border);color:var(--text2);border-radius:20px;padding:4px 10px;cursor:pointer;font-size:13px;transition:border-color .2s,color .2s;line-height:1}
+.speak-btn:hover{border-color:var(--amber);color:var(--amber)}
 </style>
 </head>
 <body>
@@ -535,6 +538,19 @@ body{font-family:'Sarabun','Noto Sans JP',sans-serif;background:var(--ink);color
 
 <script>
 // ═══════════════════════════════════════
+// WEB SPEECH API
+// ═══════════════════════════════════════
+function speakJP(text) {
+  if (!window.speechSynthesis || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ja-JP';
+  u.rate = 0.85;
+  u.pitch = 1;
+  window.speechSynthesis.speak(u);
+}
+
+// ═══════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════
 function nav(id) {
@@ -768,14 +784,16 @@ function renderQ(prefix,containerId){
   const st=qStates[prefix];
   if(st.idx>=st.qs.length){showQResult(prefix,containerId,st.score,st.qs.length);return;}
   const q=st.qs[st.idx];st.ans=false;
+  const jpPart = q.q.split(/\s*[—–-]\s*/)[0].trim();
   el.innerHTML=`
     <div class="sbar"><div>ข้อที่ <span style="color:var(--amber)">${st.idx+1}</span>/${st.qs.length}</div><div class="snum">${st.score}</div><div style="font-size:11px">คะแนน</div></div>
     <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(st.idx/st.qs.length)*100}%"></div></div>
-    <div class="qchar">${q.q}</div>
+    <div class="qchar">${q.q} <button class="speak-btn" onclick="speakJP('${jpPart.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊</button></div>
     <div class="qopts" id="${prefix}-opts"></div>
     <div id="${prefix}-note" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:7px"></div>
     <button class="btn bam" id="${prefix}-nxt" style="display:none;margin-top:12px" onclick="nextQ('${prefix}','${containerId}')">ข้อต่อไป →</button>
   `;
+  speakJP(jpPart);
   const oc=document.getElementById(prefix+'-opts');
   q.opts.forEach(o=>{
     const b=document.createElement('div');b.className='qopt';
@@ -1159,12 +1177,14 @@ function renderMQ(){
   const el=document.getElementById('mq-game');if(!el)return;
   if(mqS.idx>=mqS.qs.length){showMQResult();return;}
   const q=mqS.qs[mqS.idx];mqS.ans=false;
+  const mqJP=q.q.split(/\s*[—–-]\s*/)[0].trim();
   el.innerHTML=`<div class="sbar"><div>ข้อที่ <span style="color:var(--amber)">${mqS.idx+1}</span>/20</div><div class="snum">${mqS.score}</div><div>คะแนน</div></div>
     <div class="pbar" style="margin-bottom:18px"><div class="pbf" style="width:${(mqS.idx/20)*100}%"></div></div>
-    <div class="qchar" style="white-space:pre-wrap">${q.q}</div>
+    <div class="qchar" style="white-space:pre-wrap">${q.q} <button class="speak-btn" onclick="speakJP('${mqJP.replace(/'/g,"\\'")}')" title="ฟังเสียง">🔊</button></div>
     <div class="qopts" id="mq-opts"></div>
     <div id="mq-note" style="min-height:24px;font-size:13px;color:var(--text2);margin-top:7px"></div>
     <button class="btn bam" id="mq-nxt" style="display:none;margin-top:12px" onclick="mqNext()">ข้อต่อไป →</button>`;
+  speakJP(mqJP);
   const oc=document.getElementById('mq-opts');
   q.opts.forEach(o=>{const b=document.createElement('div');b.className='qopt';b.style.fontFamily=/[\u3040-\u30ff\u4e00-\u9fff]/.test(o)?'"Noto Sans JP"':'"Sarabun"';b.textContent=o;
     b.onclick=()=>{if(mqS.ans)return;mqS.ans=true;oc.querySelectorAll('.qopt').forEach(x=>{x.onclick=null;if(x.textContent===q.ans)x.classList.add('ok');else if(x===b&&o!==q.ans)x.classList.add('bad');});
